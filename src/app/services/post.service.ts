@@ -14,11 +14,16 @@ export class PostService {
   postsUrl: string = 'https://jsonplaceholder.typicode.com/posts';
   usersSEurl: string = 'http://localhost:8080/SpringApp/user/getAll';
   userSEsaveUrl: string = 'http://localhost:8080/SpringApp/user/save';
+  loginUrl: string = 'http://localhost:8080/SpringApp/login';
 
   constructor(private http: HttpClient) { }
 
   getPosts(): Observable<Post[]>{
     return this.http.get<Post[]>(this.postsUrl);
+  }
+
+  login(user: UserSE): Observable<UserSE>{
+    return this.http.post<UserSE>(this.loginUrl, user, {headers});
   }
 
   savePost(post: Post): Observable<Post>{

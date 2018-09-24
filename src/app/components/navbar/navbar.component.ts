@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PostService } from '../../services/post.service';
+import { UserSE } from '../models/UserSE';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor() { }
+  usersSE: UserSE[];
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
+  }
+
+  signInUser(email,password) {
+    this.postService.login({email,password} as UserSE).subscribe(userSE=>{
+      console.log(userSE);
+    });
   }
 
 }
