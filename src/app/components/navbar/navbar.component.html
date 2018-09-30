@@ -1,3 +1,4 @@
+
 <nav *ngIf="nav.homeVisible"class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,12 +15,10 @@
   
   <form class="form-inline my-2 my-lg-0">
       <div>
-        <label>Email</label>
-        <input type="text" name="email" class="form-control" #email>
+        <input type="text" name="email" class="form-control" placeholder="Email" #email>
       </div>
       <div>
-        <label>Password</label>
-        <input type="text" name="password" class="form-control" #password>
+        <input type="password" name="password" class="form-control" placeholder="Password" #password>
       </div>
     <button (click)="signInUser(email.value, password.value)" class="btn btn-outline-success my-2 my-sm-0">Login</button>
   </form>
@@ -35,7 +34,53 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         
+        <li class="nav-item active">
+          <a class="nav-link">Ciao {{ user.firstName }}<span class="sr-only">(current)</span></a>
+        </li>
+        
+         <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Corsi di Laurea</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Triennale</a>
+                <a class="dropdown-item" href="#">Magistrale</a>
+             
+              </div>
+            </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Calendario Didattico</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Gestisci Aule</a>
+                <a class="dropdown-item" href="#">Modifica Calendario</a>
+                 
+              </div>
+            </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/staff">Segnalazioni<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link" href="/staff/newcourse">Nuovo corso<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+         
+        <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()">Logout</button>
    
+    </div>
+  </nav>
+
+  <nav *ngIf="nav.teacherVisible" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+          
+          <li class="nav-item active">
+            <a class="nav-link">Ciao {{ user.firstName }}<span class="sr-only">(current)</span></a>
+          </li>
         
          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Corsi di Laurea</a>
@@ -58,7 +103,7 @@
         </li>
       </ul>
          
-        <button class="btn btn-outline-success my-2 my-sm-0">Logout</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()">Logout</button>
    
     </div>
   </nav>

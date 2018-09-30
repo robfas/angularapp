@@ -18,6 +18,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { StaffComponent } from './components/staff/staff.component';
+import { TeacherComponent } from './components/teacher/teacher.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { StaffComponent } from './components/staff/staff.component';
     NotFoundComponent,
     PostDetailComponent,
     StaffComponent,
+    TeacherComponent,
 
    
   ],

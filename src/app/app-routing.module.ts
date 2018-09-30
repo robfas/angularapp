@@ -7,6 +7,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { StudentComponent } from './components/student/student.component';
 import { StaffComponent } from './components/staff/staff.component';
+import { TeacherComponent } from './components/teacher/teacher.component';
 
 const routes: Routes =[
   {path: '', component: HomeComponent},
@@ -14,6 +15,7 @@ const routes: Routes =[
   {path: 'users', component: UsersSEComponent},
   {path: 'student', component: StudentComponent},
   {path: 'staff', component: StaffComponent},
+  {path: 'teacher', component: TeacherComponent},
   {path: 'posts/:id', component: PostDetailComponent},
   {path: '**', component: NotFoundComponent}
 ];
