@@ -19,6 +19,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { StaffComponent } from './components/staff/staff.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
+import { ClassroomComponent } from './components/classroom/classroom.component';
+import { BuildingComponent } from './components/building/building.component';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     PostDetailComponent,
     StaffComponent,
     TeacherComponent,
+    ClassroomComponent,
+    BuildingComponent,
 
    
   ],

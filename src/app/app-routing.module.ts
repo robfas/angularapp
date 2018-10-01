@@ -8,6 +8,7 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
 import { StudentComponent } from './components/student/student.component';
 import { StaffComponent } from './components/staff/staff.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
+import { ClassroomComponent } from './components/classroom/classroom.component';
 
 const routes: Routes =[
   {path: '', component: HomeComponent},
@@ -16,6 +17,7 @@ const routes: Routes =[
   {path: 'student', component: StudentComponent},
   {path: 'staff', component: StaffComponent},
   {path: 'teacher', component: TeacherComponent},
+  {path: 'staff/classroom', component: ClassroomComponent},
   {path: 'posts/:id', component: PostDetailComponent},
   {path: '**', component: NotFoundComponent}
 ];

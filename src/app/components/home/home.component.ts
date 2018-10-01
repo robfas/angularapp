@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   constructor(public nav: NavbarService, private router: Router) { }
     
   ngOnInit() {
-    if (localStorage.getItem('currentUser') != undefined) {
+    if (localStorage.getItem('currentUser')) {
         if (JSON.parse(localStorage.getItem('currentUser')).typeDTO.idType == 2) {
           this.router.navigate(['/teacher']);
         } else if (JSON.parse(localStorage.getItem('currentUser')).typeDTO.idType == 3) {

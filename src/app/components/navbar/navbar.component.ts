@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
   constructor(public nav: NavbarService, private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
-    if(localStorage.getItem('currentUser') != undefined) {
+    if(localStorage.getItem('currentUser')) {
       this.user={
         firstName: JSON.parse(localStorage.getItem('currentUser')).name
       }
