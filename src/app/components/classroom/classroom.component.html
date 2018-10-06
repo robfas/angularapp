@@ -11,7 +11,9 @@
   <input type="text" name="name" class="textbox" placeholder="Nome aula" #name>
   <button (click)="searchClassroom(name.value, build.value)">Cerca</button>
 </form>
-				
+<div *ngIf="valid && (!classes || classes.length === 0)">
+    <p>Non ci sono classi.</p>
+</div>
 				<div class="bs-example">
     <table *ngIf="classes?.length > 0" class="table table-hover" style="margin-top:100px; margin-left:10px;">
         <thead>
@@ -28,8 +30,8 @@
               <td>{{ i+1 }}</td>
               <td>{{ c.name }}</td>
               <td>{{ c.building.name }}</td>
-              <td><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></td>
-              <td><img src="http://localhost:8080/SpringApp/images/edit.png" alt="Modifica" height="30" width="30" onclick="" /></td>
+              <td><a routerLink="/staff/classroom/detail/{{ c.id }}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" /></a></td>
+              <td><a routerLink="/staff/classroom/edit/{{ c.id }}"><img src="http://localhost:8080/SpringApp/images/edit.png" alt="Modifica" height="30" width="30" onclick="" /></a></td>
           </tr>
       </tbody>
     </table>

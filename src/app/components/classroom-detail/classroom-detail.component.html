@@ -1,0 +1,47 @@
+<br>
+<br>
+
+<button class="buttonBack" routerLink="/staff/classroom">Back</button>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">
+                Aula {{ classroom?.name }}
+            </h1>
+            <h3 class="text-center">
+                Edificio {{ classroom?.building.name }}
+            </h3>
+        </div>
+        <div id="no-more-tables">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf" align="center">
+        		<tbody>
+        			<tr>
+        				<th>Indirizzo</th>
+        				<th>{{ classroom?.building.address }}</th>
+        			</tr>
+        			<tr>
+        				<th>Posti disponibili</th>
+        				<th>{{ classroom?.seats }}</th>
+        			</tr>
+        			<tr>
+        				<th>Strumenti didattica</th>
+        				<th>{{ classroom?.name }}</th>
+        			</tr>
+        			<tr>
+        				<th>Ticket</th>
+        				<th>{{ classroom?.name }}</th>
+        			</tr>
+        			
+        			
+        		</tbody>
+        	</table>
+</div>
+</div>
+</div>
+<br>
+
+<agm-map [latitude]="classroom?.latitude" [longitude]="classroom?.longitude" [zoom]="18" [mapTypeId]="'hybrid'">
+  <agm-marker [latitude]="classroom?.latitude" [longitude]="classroom?.longitude"></agm-marker>
+</agm-map>
+    
