@@ -21,6 +21,7 @@ import { StaffComponent } from './components/staff/staff.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
 import { ClassroomComponent } from './components/classroom/classroom.component';
 import { BuildingComponent } from './components/building/building.component';
+import { TicketComponent } from './components/ticket/ticket.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { BuildingComponent } from './components/building/building.component';
     TeacherComponent,
     ClassroomComponent,
     BuildingComponent,
+    TicketComponent,
 
    
   ],

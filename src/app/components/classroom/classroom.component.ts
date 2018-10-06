@@ -31,6 +31,7 @@ export class ClassroomComponent implements OnInit {
     if (idtype == 0) {
     this.classroomService.getClassrooms().subscribe(classes => {
       this.classes = classes;
+      console.log(classes);
     });
   }
     
