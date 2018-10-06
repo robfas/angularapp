@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
-
 import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
 import { StudentComponent } from './components/student/student.component';
@@ -21,6 +20,7 @@ import { StaffComponent } from './components/staff/staff.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
 import { ClassroomComponent } from './components/classroom/classroom.component';
 import { BuildingComponent } from './components/building/building.component';
+import { TicketComponent } from './components/ticket/ticket.component';
 import { ClassroomDetailComponent } from './components/classroom-detail/classroom-detail.component';
 import { ClassroomEditComponent } from './components/classroom-edit/classroom-edit.component';
 
@@ -40,6 +40,7 @@ import { ClassroomEditComponent } from './components/classroom-edit/classroom-ed
     TeacherComponent,
     ClassroomComponent,
     BuildingComponent,
+    TicketComponent,
     ClassroomDetailComponent,
     ClassroomEditComponent,
 

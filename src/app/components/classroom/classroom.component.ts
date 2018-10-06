@@ -25,6 +25,20 @@ export class ClassroomComponent implements OnInit {
     this.valid = false;
   }
 
+<<<<<<< HEAD
+  searchClassroom(classroom, idtype){
+    /*this.postService.saveUserSE({name, surname,email,password,idtype} as UserSE).subscribe(userSE=>{
+      console.log(userSE);
+    });*/
+    console.log(classroom, idtype);
+    if (idtype == 0) {
+    this.classroomService.getClassrooms().subscribe(classes => {
+      this.classes = classes;
+      console.log(classes);
+    });
+  }
+    
+=======
   searchClassroom(searchClassroom, idBuilding){
     this.valid = true;
       if (idBuilding == 0 && searchClassroom == "") {
@@ -44,6 +58,7 @@ export class ClassroomComponent implements OnInit {
           this.classes = classes;
         });
       }
+>>>>>>> 6a746041c1f6372dc74a26a5337991645fc80f2f
   }
 
 }

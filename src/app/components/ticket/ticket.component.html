@@ -1,0 +1,56 @@
+<div class="jumbotron">
+    <div class="container1">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Data</th>
+                <th scope="col">Titolo</th>
+                <th scope="col">Aula</th>
+                <th scope="col">Cognome Docente</th>
+                <th scope="col">Nome Docente</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr> 
+                <td> {{ ticket?.id }} </td> 
+                <td> {{ ticket?.date }} </td> 
+                <td> {{ ticket?.title }} </td>
+                <td> {{ ticket?.classroom.name }} </td>
+                <td> {{ ticket?.teacher.surname }} </td> 
+                <td> {{ ticket?.teacher.name }} </td> 
+                
+              </tr>	
+            </tbody>
+          </table>
+          <p class="font-weight-bold">Contenuto Segnalazione</p>
+          <div class="card card-body mb-3">
+              <p>
+                {{ ticket?.text }}
+              </p>
+          </div>
+          <form>
+              <div class="form-group">
+          <p class="font-weight-bold">Rispondi</p>
+          <div class="card card-body mb-3 bg-transparent">
+              <input type="text" class="form-control input-lg">
+          </div>
+
+          <p class="font-weight-bold">Aggiorna Stato</p>
+          <div class="card card-body mb-3 bg-transparent">
+              <div class="form-row align-items-center">
+                  <div class="col-auto my-1">
+                    <select class="custom-select mr-sm-2" id="form1" name="form1" #stato>
+                        <option value=0>{{ ticket?.status.description }}</option>
+                       
+                  </select>
+                 
+                  </div>
+              </div>
+          </div>
+         
+    </div>
+    <button (click)="function" class="btn btn-success" >Aggiorna</button>
+  </form>
+  </div>
+
