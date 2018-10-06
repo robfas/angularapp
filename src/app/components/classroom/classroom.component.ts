@@ -13,6 +13,7 @@ import { Class } from '../models/Class';
 export class ClassroomComponent implements OnInit {
   buildings: Building[];
   classes: Class[];
+  valid: boolean;
 
   constructor(public nav: NavbarService, public buildingService: BuildingService, public classroomService: ClassroomService) { }
 
@@ -21,19 +22,28 @@ export class ClassroomComponent implements OnInit {
     this.buildingService.getBuildings().subscribe(buildings => {
       this.buildings = buildings;
     });
+    this.valid = false;
   }
 
-  searchClassroom(classroom, idtype){
-    /*this.postService.saveUserSE({name, surname,email,password,idtype} as UserSE).subscribe(userSE=>{
-      console.log(userSE);
-    });*/
-    console.log(classroom, idtype);
-    if (idtype == 0) {
-    this.classroomService.getClassrooms().subscribe(classes => {
-      this.classes = classes;
-    });
-  }
-    
+  searchClassroom(searchClassroom, idBuilding){
+    this.valid = true;
+      if (idBuilding == 0 && searchClassroom == "") {
+        this.classroomService.getAllClassrooms().subscribe(classes => {
+          this.classes = classes;
+        });
+      } else if (idBuilding != 0 && searchClassroom == "") {
+        this.classroomService.getClassroomsByBuilding(idBuilding).subscribe(classes => {
+          this.classes = classes;
+        });
+      } else if (idBuilding == 0 && searchClassroom != "") {
+        this.classroomService.getClassroomsByName(searchClassroom).subscribe(classes => {
+          this.classes = classes;
+        });
+      } else {
+        this.classroomService.getClassroomsByBuildingAndName(idBuilding, searchClassroom).subscribe(classes => {
+          this.classes = classes;
+        });
+      }
   }
 
 }
