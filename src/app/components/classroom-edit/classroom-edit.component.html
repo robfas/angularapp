@@ -1,3 +1,79 @@
-<p>
-  classroom-edit works!
-</p>
+	<div class="row" id="contatti">
+		<div class="container mt-5" >
+		    <div class="row" style="height:550px;">
+			    <div class="col-md-6 maps" >
+			         <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
+			    </div>
+			      <div class="col-md-6">
+			        	<h2 class="text-uppercase mt-3 font-weight-bold text-white">Modifica Aula {{classroom?.name}}</h2>
+			        	<form action="classroomProcess" method="post">
+			          		<div class="row">
+			            		<div class="col-lg-6">
+			             			 <div class="form-group">
+			              				Nome aula: 
+			                			<input type="text" name="name" value="classroom?.name" required>
+			              			</div>
+		            			</div>
+			            		<div class="col-lg-6">
+			              			<div class="form-group">
+			              				Edificio:  <br>
+			                			<select id="buildings" name="build">
+                                  <option *ngFor="let b of buildings" [value]="b.id" [selected]="b.id == classroom?.building.id">
+                                      {{b.name}}
+                                    </option>
+                               
+										</select>
+			              			</div>
+			            		</div>
+			            	</div>
+			            <div class="row">
+			            	<div class="col-lg-6">
+			              		<div class="form-group">
+			              			Posti disponibili:
+			                		<input type="number" name="seats" value=classroom.seats required>
+		              			</div>
+			            	</div>
+			            	<div class="col-12">
+			              		<div class="form-group">
+			              			Strumenti didattica:
+					                <div class="checkbox checkbox-circle">
+                              <option *ngFor="let i of instruments" [value]="i.id" [selected]="b.id == classroom?.building.id">
+                                  {{i.name}}
+                                </option>
+                          <tr *ngFor="let i of instruments">
+                              <tr *ngFor="let j of classroom.instruments">
+                                      <label><input *ngIf="i.id == j.id" name="checkbox" id=i.id type="checkbox" checked="" />i.name</label>
+                                      <input *ngIf="i.id == j.id" name="quantity" id=i.id  type="text" for=i.id value=i.quantity>
+                                  
+                                      <label><input *ngIf="i.id != j.id" name="checkbox" id=i.id type="checkbox" />i.name</label>
+                                    <input *ngIf="i.id != j.id" type="text" for=i.id placeholder="Quantità">
+                                    <br>
+                              </tr>
+                          </tr>
+					                    		
+											<label><input id="altro" type="checkbox"/> Altro</label>
+					                    	<input type="text" id="namealtro" placeholder="Nuovo strumento">
+					                    	<input type="number" id="quantityaltro" placeholder="Quantità">
+
+					                    	
+			                    	</div>
+			              		</div>
+			            	</div>
+							<div class="col-12">
+			              		<div class="form-group">
+			            			<input type="hidden" name="hiddenLat" id="hiddenFieldLat"/>
+			            			<input type="hidden" name="hiddenLon" id="hiddenFieldLon"/>
+			            		</div>
+			            	</div>
+			            	<div class="col-12">
+			              		<button class="btn btn-light" type="submit" onclick="fun()">Invia</button>
+			            	</div>
+			            	
+			          	</div>
+			        </form>
+
+			      </div>
+	    </div>
+	</div>
+</div>

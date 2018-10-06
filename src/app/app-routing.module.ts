@@ -10,6 +10,7 @@ import { StaffComponent } from './components/staff/staff.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
 import { ClassroomComponent } from './components/classroom/classroom.component';
 import { ClassroomDetailComponent } from './components/classroom-detail/classroom-detail.component';
+import { ClassroomEditComponent } from './components/classroom-edit/classroom-edit.component';
 
 const routes: Routes =[
   {path: '', component: HomeComponent},
@@ -21,6 +22,7 @@ const routes: Routes =[
   {path: 'staff/classroom', component: ClassroomComponent},
   {path: 'posts/:id', component: PostDetailComponent},
   {path: 'staff/classroom/detail/:id', component: ClassroomDetailComponent},
+  {path: 'staff/classroom/edit/:id', component: ClassroomEditComponent},
   {path: '**', component: NotFoundComponent}
 ];
 
