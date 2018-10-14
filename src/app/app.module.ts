@@ -23,6 +23,7 @@ import { BuildingComponent } from './components/building/building.component';
 import { TicketComponent } from './components/ticket/ticket.component';
 import { ClassroomDetailComponent } from './components/classroom-detail/classroom-detail.component';
 import { ClassroomEditComponent } from './components/classroom-edit/classroom-edit.component';
+import { CourseComponent } from './components/course/course.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { ClassroomEditComponent } from './components/classroom-edit/classroom-ed
     TicketComponent,
     ClassroomDetailComponent,
     ClassroomEditComponent,
+    CourseComponent,
 
    
   ],

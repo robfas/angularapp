@@ -4,11 +4,12 @@ import { Teacher } from '../models/Teacher';
 
 export interface Ticket {
     id: number;
-    title: string;
-    status: Status;
-    teacher: Teacher;
-    classroom: Class;
-    text: string;
-    date: Date;
-    note: string;
+    title?: string;
+    status?: Status;
+    teacher?: Teacher;
+    classroom?: Class;
+    text?: string;
+    date?: Date;
+   // messages?: TicketMessage[];
+   // note?: string;
 }
