@@ -1,3 +1,93 @@
-<p>
-  classroom-edit works!
-</p>
+
+		<div class="container mt-5" >
+		    <div class="row" style="height:550px;">
+			    
+			      <div class="col-md-6">
+			        	<h2 class="text-uppercase mt-3 font-weight-bold text-black">Modifica Aula {{ classroom?.name }}</h2>
+			        	<form action="classroomProcess" method="post">
+			          		<div class="row">
+			            		<div class="col-lg-6">
+			             			 <div class="form-group">
+			              				Nome aula: 
+										<input type="text" name="name" value="{{classroom?.name}}" required>
+										<br>Lat: 
+										<input type="text" name="name" value="{{classroom?.latitude}}" required>
+										<br>Lng: 
+			                			<input type="text" name="name" value="{{classroom?.longitude}}" required>
+			              			</div>
+		            			</div>
+			            		<div class="col-lg-6">
+			              			<div class="form-group">
+			              				Edificio:  <br>
+			                			<select id="buildings" name="build">
+                                  <option *ngFor="let b of buildings" [value]="b.id" [selected]="b.id == classroom?.building.id">
+                                      {{b.name}}
+                                    </option>
+                               
+										</select>
+			              			</div>
+			            		</div>
+			            	</div>
+			            <div class="row">
+			            	<div class="col-lg-6">
+			              		<div class="form-group">
+			              			Posti disponibili:
+			                		<input type="number" name="seats" value="{{ classroom?.seats }}" required>
+		              			</div>
+			            	</div>
+			            	<div class="col-12">
+			              		<div class="form-group">
+			              			Strumenti didattica:
+					                <div class="checkbox checkbox-circle">
+										<ng-container  *ngFor="let i of classroom?.instruments">
+											<input name="checkbox" id="i.id" type="checkbox" checked="" />
+											{{i.name}}
+											<input name="quantity" id="i.id"  type="number" min="0" placeholder="Quantità" value="{{ i.quantity }}">
+											<br>
+										</ng-container>
+
+										<ng-container *ngIf="instruments?.length > 0">
+											<ng-container *ngFor="let j of instruments">
+												<input [value]="j.id" type="checkbox"/>
+												{{ j.name }}
+												<input name="quantity" id="j.id"  type="number" min="0" placeholder="Quantità">
+												<br>
+											</ng-container>
+										</ng-container>
+											
+					                    		
+											<input id="altro" type="checkbox"/><label> Altro</label>
+					                    	<input type="text" id="namealtro" placeholder="Nuovo strumento">
+					                    	<input type="number" id="quantityaltro" min="0" placeholder="Quantità">
+
+					                    	
+			                    	</div>
+			              		</div>
+			            	</div>
+							<div class="col-12">
+			              		<div class="form-group">
+			            			<input type="hidden" name="hiddenLat" id="hiddenFieldLat"/>
+			            			<input type="hidden" name="hiddenLon" id="hiddenFieldLon"/>
+			            		</div>
+			            	</div>
+			            	
+			            	
+			          	</div>
+			        </form>
+
+				  </div>
+				  <div class="col-md-6 maps" >
+						<div class="form-group">
+								<input placeholder="Cerca" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+							  </div>
+						<agm-map [latitude]="classroom?.latitude" [longitude]="classroom?.longitude" [zoom]="18" [mapTypeId]="'hybrid'">
+
+							<agm-marker [markerDraggable]="true" [latitude]="classroom?.latitude" [longitude]="classroom?.longitude" (dragEnd)="markerDragEnd($event)"></agm-marker>
+							 </agm-map>
+							 <button (click)="reset()">Reimposta posizione</button>
+				   </div>
+				   <div class="col-12">
+						<button class="btn btn-light" type="submit" onclick="fun()">Invia</button>
+				  </div>
+	    </div>
+	</div>

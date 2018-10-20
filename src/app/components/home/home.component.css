@@ -12,8 +12,29 @@
 }
 
 
-.jumbotron{
-    margin-top: 0%;
-    background-color: none;
-    margin-bottom: 0rem;
- }
+
+.jumbotron {
+    position:relative;
+    border-left: 0rem;
+    border-left: 0rem;
+    width: 100%;
+    height: 100%;
+  }
+.container{
+    margin-top: 3rem; 
+}
+
+.jumbotron .img{
+    margin-bottom: 0px;
+    opacity: 0.2;
+    color: #fff;
+    background: #000 url("http://localhost:8080/SpringApp/images/censis_hp.jpg") top center no-repeat;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+}

@@ -1,8 +1,8 @@
 <div class="jumbotron">
   
-      <table class="table">
+      <table  class="table table-bordered dt-responsive" cellspacing="0" width="100%">
           <thead>
-            <tr>
+            <tr bgcolor="#cccccc">
               <th scope="col">Id</th>
               <th scope="col">Data</th>
               <th scope="col">Titolo</th>
@@ -13,7 +13,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr> 
+            <tr bgcolor="#cccccc">
               <td> {{ ticket?.id }} </td>
               <td> {{ ticket?.date | date : shortDate  }} </td> 
               <td> {{ ticket?.title }} </td>

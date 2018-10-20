@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
@@ -54,8 +54,12 @@ import { CourseComponent } from './components/course/course.component';
     HttpClientModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDeqBKjtOUNXR_H33V1oWKYSWWjsGA3J-E'
-    })
+      apiKey: 'AIzaSyDeqBKjtOUNXR_H33V1oWKYSWWjsGA3J-E',
+      language: 'it',
+      libraries: ['geometry', 'places']
+    }),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [DataService, PostService],
   bootstrap: [AppComponent]

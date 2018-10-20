@@ -25,12 +25,9 @@
         				<th>{{ classroom?.seats }}</th>
         			</tr>
         			<tr>
-        				<th>Strumenti didattica</th>
-        				<th>{{ classroom?.name }}</th>
-        			</tr>
-        			<tr>
-        				<th>Ticket</th>
-        				<th>{{ classroom?.name }}</th>
+						<th>Strumenti didattica</th>
+						<tr *ngFor="let i of classroom?.instruments">
+						<th>{{ i.quantity }}x - {{ i.name }}</th>
         			</tr>
         			
         			

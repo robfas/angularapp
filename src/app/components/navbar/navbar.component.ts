@@ -20,7 +20,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
       this.user={
-        firstName: JSON.parse(localStorage.getItem('currentUser')).name
+        firstName: JSON.parse(localStorage.getItem('currentUser')).name,
+        lastName: JSON.parse(localStorage.getItem('currentUser')).surname
       }
     }
   }
@@ -32,12 +33,16 @@ export class NavbarComponent implements OnInit {
                 data => {
                   if (data.typeDTO.idType == 2) {
                     this.user={
-                      firstName: data.name
+                      firstName: data.name,
+                      lastName: data.lastName,
+                      
                     }
                     this.router.navigate(['/teacher']);
                   } else if(data.typeDTO.idType == 3) {
                     this.user={
-                      firstName: data.name
+                      firstName: data.name,
+                      lastName: data.lastName,
+                      
                     }
                     this.router.navigate(['/staff']);
                   } else {

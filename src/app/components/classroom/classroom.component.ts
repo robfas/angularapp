@@ -25,15 +25,6 @@ export class ClassroomComponent implements OnInit {
     this.valid = false;
   }
 
-  /*searchClassroom(classroom, idtype){
-    console.log(classroom, idtype);
-    if (idtype == 0) {
-    this.classroomService.getAllClassrooms().subscribe(classes => {
-      this.classes = classes;
-      console.log(classes);
-    });
-    }*/
-    
   searchClassroom(searchClassroom, idBuilding){
     this.valid = true;
       if (idBuilding == 0 && searchClassroom == "") {
