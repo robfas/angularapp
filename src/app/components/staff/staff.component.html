@@ -1,38 +1,76 @@
-<div class="jumbotron">
-  <div class="container1">
+
+<div class="jumbotron ">
+        <div class="img"></div>
+ 
     <h1 class="display-3">Staff Area</h1>
-    <p></p>
+    <p>Gestisci i corsi di laurea, le segnalazioni e il calendario didattico.</p>
   </div>
+
+
+<div *ngIf="staffService.tableVisible" class="col md-12">
+    <h3>Segnalazioni</h3>
+    <button type="button" class="btn btn-dark mt-2 float-right" (click)="showArchived()">
+        Archiviate
+    </button>
+  <table id="elencotickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+      <thead>
+          <tr bgcolor="#cccccc">
+              <th style="text-align:center"class="never">Id</th>
+              <th style="text-align:center">Data apertura</th>
+              <th style="text-align:center">Titolo</th>
+              <th style="text-align:center">Aula</th>
+              <th style="text-align:center">Cognome Docente</th>
+              <th style="text-align:center">Nome Docente</th>
+              <th style="text-align:center">Stato</th>
+          </tr>
+      </thead>
+      <tbody>                                                                                         
+        <tr *ngFor="let t of tickets;let i = index;"> 
+          <td style="text-align:center"> {{ t.id }} </td>
+          <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
+          <td style="text-align:center"> {{ t.title }} </td>
+          <td style="text-align:center"> {{ t.classroom.name }} </td>
+          <td style="text-align:center"> {{ t.teacher.surname }} </td> 
+          <td style="text-align:center"> {{ t.teacher.name }} </td> 
+          <td style="text-align:center"> {{ t.status.description }} </td>
+          <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+        </tr>
+      </tbody>
+  </table>
 </div>
 
 
-<h3>Segnalazioni recenti</h3>
-<div class="container1">
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Data</th>
-      <th scope="col">Titolo</th>
-      <th scope="col">Aula</th>
-      <th scope="col">Cognome Docente</th>
-      <th scope="col">Nome Docente</th>
-      <th scope="col">Stato</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let t of tickets;let i = index;"> 
-      <td> {{ t.id }} </td>
-      <td> {{ t.date }} </td> 
-      <td> {{ t.title }} </td>
-      <td> {{ t.classroom.name }} </td>
-      <td> {{ t.teacher.surname }} </td> 
-      <td> {{ t.teacher.name }} </td> 
-      <td> {{ t.status.description }} </td>
-      <td><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
-      
-    </tr>	
-  </tbody>
-</table>
+<div *ngIf="staffService.tableArchivedVisible" class="col md-12">
+        <h3>Segnalazioni</h3>
+        <button type="button" class="btn btn-dark mt-2 float-right" (click)="ngOnInit()">
+            Indietro
+        </button>
+  <table id="elencoarchivedtickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+        <thead>
+                <tr bgcolor="#cccccc">
+                    <th style="text-align:center" class="never">Id</th>
+                    <th style="text-align:center">Data apertura</th>
+                    <th style="text-align:center">Titolo</th>
+                    <th style="text-align:center">Aula</th>
+                    <th style="text-align:center">Cognome Docente</th>
+                    <th style="text-align:center">Nome Docente</th>
+                    <th style="text-align:center">Stato</th>
+                </tr>
+            </thead>
+            <tbody>                                                                                         
+                    <tr *ngFor="let t of filteredtickets"> 
+                      <td style="text-align:center"> {{ t.id }} </td>
+                      <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
+                      <td style="text-align:center"> {{ t.title }} </td>
+                      <td style="text-align:center"> {{ t.classroom.name }} </td>
+                      <td style="text-align:center"> {{ t.teacher.surname }} </td> 
+                      <td style="text-align:center"> {{ t.teacher.name }} </td> 
+                      <td style="text-align:center"> {{ t.status.description }} </td>
+                      <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+                    </tr>
+                  </tbody>
+    </table>
+    </div>
 
-</div>
+
+

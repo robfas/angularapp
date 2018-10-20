@@ -34,8 +34,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         
-        <li class="nav-item active">
-          <a class="nav-link">Ciao {{ user.firstName }}<span class="sr-only">(current)</span></a>
+        <li class="nav-item active">     
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#datamodal">Ciao {{ user.firstName }}<span class="sr-only">(current)</span></a>
         </li>
         
          <li class="nav-item dropdown">
@@ -107,3 +107,51 @@
    
     </div>
   </nav>
+
+  <!-- Modal -->
+<div class="modal fade" id="datamodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modifica dati</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" id="name" placeholder="{{ user.firstName }}">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="cognome">Cognome</label>
+                    <input type="text" class="form-control" id="surname" placeholder="{{ user.lastName }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress">Indirizzo</label>
+                  <input type="text" class="form-control" id="inputAddress" placeholder="">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputCity">Città</label>
+                    <input type="text" class="form-control" id="city"  placeholder="">
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label for="inputCity">Stato</label>
+                      <input type="text" class="form-control" id="state" placeholder="">
+                    </div>
+                
+                </div>
+               
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
