@@ -14,26 +14,36 @@
 <div *ngIf="valid && (!classes || classes.length === 0)">
     <p>Non ci sono classi.</p>
 </div>
-				<div class="bs-example">
-    <table *ngIf="classes?.length > 0" class="table table-hover" style="margin-top:100px; margin-left:10px;">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Edificio</th>
-                <th> </th>
-                <th> </th>
-            </tr>
-        </thead>
-        <tbody>      
-          <tr *ngFor="let c of classes;let i = index">
-              <td>{{ i+1 }}</td>
-              <td>{{ c.name }}</td>
-              <td>{{ c.building.name }}</td>
-              <td><a routerLink="/staff/classroom/detail/{{ c.id }}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" /></a></td>
-              <td><a routerLink="/staff/classroom/edit/{{ c.id }}"><img src="http://localhost:8080/SpringApp/images/edit.png" alt="Modifica" height="30" width="30" onclick="" /></a></td>
-          </tr>
-      </tbody>
-    </table>
-</div>
+
+<body>       
+    <div class="col-md-10">           
+        <a id="addRow" class="btn" style="background: #ffa400; border-color: navajowhite;">
+            <span class="glyphicon glyphicon-plus"></span> Aggiungi
+        </a>            
+    </div>
+    <br/><br/>
+    <div class="col-md-12">
+        <table id="elencoProdotti" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+            <thead>
+                <tr>
+                    <th class="never">#</th>
+                    <th style="text-align:center">Nome</th>
+                    <th style="text-align:center">Edificio</th>
+                    <th style="text-align:center"></th>
+                </tr>
+            </thead>
+            <tbody>  
+                <tr *ngFor="let c of classes;let i = index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.building.name }}</td>
+                        <button (click)="dettagli(c.id)" class="btn btn-info">Dettagli</button>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+    
+                                                            
+   
+
 </body>

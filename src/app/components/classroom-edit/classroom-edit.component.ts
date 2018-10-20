@@ -94,4 +94,7 @@ export class ClassroomEditComponent implements OnInit {
     this.classroom.longitude = this.longitude;
   }
 
+  switch(check: String) {
+    console.log(check);
+  }
 }

@@ -1,0 +1,104 @@
+
+<div id="myModal_def" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                
+            <div class="modal-header" style="padding:0">                                                        
+                <h3 id="titolo_modal" style="text-align: center;">Dettagli Aula {{classroom?.name}}</h3>                                                              
+                <label class="switch">
+                    <input (click)="setEditable()" type="checkbox">
+                    <span class="slider round"></span>
+                    </label>
+                </div>
+            <div class="modal-body" style="padding:0">                                    
+                <div class="col-lg-12">
+                        <div class="form-group">
+                                <input placeholder="Cerca" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="pac-container" #search [formControl]="searchControl">
+                                    
+                            </div>
+                                    <agm-map [latitude]="classroom?.latitude" [longitude]="classroom?.longitude" [zoom]="18" [mapTypeId]="'hybrid'">
+    
+                                <agm-marker [markerDraggable]="true" [latitude]="classroom?.latitude" [longitude]="classroom?.longitude" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                                    </agm-map>
+                                    <button (click)="reset()">Reimposta posizione</button>
+                    <form>		
+                        <div class="form-group">
+                            <label for="name" class="control-label">Nome aula</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="name" id="name" value="{{classroom?.name}}" placeholder="Inserisci il nome dell'aula" [disabled]="edit" #name>
+                                <span class="input-group-addon danger"><span class="glyphicon glyphicon-asterisk"></span></span>
+                            </div>
+                        </div>                                                    
+                        <br/>         
+                        <div class="form-group">
+                            <label for="building" class="control-label">Edificio</label>
+                            <div class="input-group">
+                                <select class="form-control" name="building" id="building" [disabled]="edit" style="width: 100%"  [(ngModel)]="selectedBuilding" #building>
+                                    <option *ngFor="let b of buildings" [ngValue]="b" [selected]="b.id == classroom?.building.id">
+                                        {{b.name}}
+                                    </option>                                                                                                                                                                     
+                              </select>
+                              <span class="input-group-addon danger"><span class="glyphicon glyphicon-asterisk"></span></span>
+                            </div>
+                        </div>                                                                                             
+                        <br/>
+                        <div class="form-group">
+                            <label for="address" class="control-label">Indirizzo </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="address" id="address" value="{{classroom?.building.address}}" placeholder="Inserisci l'indirizzo" [disabled]="edit" #address>
+                                <span class="input-group-addon danger"><span class="glyphicon glyphicon-asterisk"></span></span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="seats" class="control-label">Posti disponibili</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="seats" id="seats" value="{{classroom?.seats}}" placeholder="Inserisci il numero di posti disponibili" [disabled]="edit" #seats>
+                                <span class="input-group-addon danger"><span class="glyphicon glyphicon-asterisk"></span></span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="instruments" class="control-label">Strumenti</label>
+                            <div class="input-group">
+                                <div class="checkbox checkbox-circle">
+                                    <ng-container  *ngFor="let i of classroom?.instruments">
+                                        <input [value]="i" (click)="actInstruments(i)" type="checkbox" name="checkbox" [disabled]="edit" [checked]="true"/>
+                                            {{i.name}}
+                                        <input name="quantity" id="classroom?.instruments[h].id.value" (input)="onSearchChange($event.target.value, i.id)" type="number" min="0" placeholder="Quantità" [disabled]="edit" value="{{ i.quantity }}">
+                                        <br>
+                                    </ng-container>
+                                    <div *ngIf="!edit">
+                                        <ng-container *ngIf="instruments?.length > 0">
+                                            <ng-container *ngFor="let j of instruments">
+                                                <input [value]="j" (click)="actInstruments(j)" type="checkbox" unchecked name="advanced" [hidden]="edit" [(ngModel)]="j.checked"/>
+                                                {{ j.name }}
+                                                <input *ngIf="j.checked" (input)="onSearchChange($event.target.value, j.id)" [hidden]="!j.checked" name="quantity" id="j.id"  type="number" min="0" [disabled]="edit" placeholder="Quantità">
+                                                <br>
+                                            </ng-container>
+                                        </ng-container>
+                                    
+                                        <label>Inserisci nuovo strumento</label><br>
+                                        <input type="text" (change)="addInstrument($event.target.value, undefined)" id="namealtro" placeholder="Nome">
+                                        <input type="number" (change)="addInstrument(undefined, $event.target.value)" id="quantityaltro" min="0" placeholder="Quantità">
+                                        <br> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                      
+                        
+                        
+                    </form>
+                </div>                                                                                                          
+            </div>
+            <div class="modal-footer" style="margin-right:20%">
+                <div id="div_footer" class="col-md-12">                            
+                    <button (click)="closeModal()" id="close_modal" class="btn btn-info">Chiudi</button>
+                    <button *ngIf="!edit" id="save_modal" (click)="go(name.value, address.value, seats.value, quantity?.value)" class="btn btn-info">Salva</button>                            
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

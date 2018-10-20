@@ -10,11 +10,7 @@
 			             			 <div class="form-group">
 			              				Nome aula: 
 										<input type="text" name="name" value="{{classroom?.name}}" required>
-										<br>Lat: 
-										<input type="text" name="name" value="{{classroom?.latitude}}" required>
-										<br>Lng: 
-			                			<input type="text" name="name" value="{{classroom?.longitude}}" required>
-			              			</div>
+									</div>
 		            			</div>
 			            		<div class="col-lg-6">
 			              			<div class="form-group">
@@ -40,7 +36,7 @@
 			              			Strumenti didattica:
 					                <div class="checkbox checkbox-circle">
 										<ng-container  *ngFor="let i of classroom?.instruments">
-											<input name="checkbox" id="i.id" type="checkbox" checked="" />
+											<input [value]="i.id" type="checkbox" name="checkbox" [checked]="true"/>
 											{{i.name}}
 											<input name="quantity" id="i.id"  type="number" min="0" placeholder="Quantità" value="{{ i.quantity }}">
 											<br>
@@ -48,18 +44,18 @@
 
 										<ng-container *ngIf="instruments?.length > 0">
 											<ng-container *ngFor="let j of instruments">
-												<input [value]="j.id" type="checkbox"/>
+												<input [value]="j.id" type="checkbox" unchecked name="advanced" [(ngModel)]="j.checked"/>
 												{{ j.name }}
-												<input name="quantity" id="j.id"  type="number" min="0" placeholder="Quantità">
+												<input *ngIf="j.checked" [hidden]="!j.checked" name="quantity" id="j.id"  type="number" min="0" placeholder="Quantità">
 												<br>
 											</ng-container>
 										</ng-container>
-											
+										
 					                    		
 											<input id="altro" type="checkbox"/><label> Altro</label>
 					                    	<input type="text" id="namealtro" placeholder="Nuovo strumento">
 					                    	<input type="number" id="quantityaltro" min="0" placeholder="Quantità">
-
+											<br>
 					                    	
 			                    	</div>
 			              		</div>
