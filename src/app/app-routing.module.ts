@@ -10,9 +10,7 @@ import { StaffComponent } from './components/staff/staff.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
 import { ClassroomComponent } from './components/classroom/classroom.component';
 import { TicketComponent } from './components/ticket/ticket.component';
-import { ClassroomDetailComponent } from './components/classroom-detail/classroom-detail.component';
 import { CourseComponent } from './components/course/course.component';
-import { ClassroomEditComponent } from './components/classroom-edit/classroom-edit.component';
 
 
 const routes: Routes =[
@@ -25,9 +23,7 @@ const routes: Routes =[
   {path: 'staff/classroom', component: ClassroomComponent},
   {path: 'posts/:id', component: PostDetailComponent},
   {path: 'staff/ticket/:id', component: TicketComponent},
-  {path: 'staff/classroom/detail/:id', component: ClassroomDetailComponent},
   {path: 'staff/newcourse', component: CourseComponent},
-  {path: 'staff/classroom/edit/:id', component: ClassroomEditComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

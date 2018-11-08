@@ -5,11 +5,13 @@ import { Class } from '../models/Class';
 import { BuildingService } from '../../services/building.service';
 import { ClassroomService } from '../../services/classroom.service';
 import { Building } from '../models/Building';
-import { Instrument } from '../models/instrument';
-import { InstrumentService } from '../../services/instrument.service';
+import { Tool } from '../models/tool';
+import { ToolService } from '../../services/tool.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavbarService } from '../../services/navbar.service';
+declare var $: any;
+import * as $ from 'jquery';
 
 import { } from 'googlemaps'
 
@@ -23,11 +25,14 @@ export class ClassroomDetailDialogComponent implements OnInit {
   classroom: Class;
   buildings: Building[];
   selectedBuilding: Building;
-  selectedInstruments: Instrument[] = [];
-  edit: boolean = true;
-  instruments: Instrument[] = [];
-  instrTemp: Instrument[];
+  selectedTool: Tool[] = [];
+  edit: boolean = false;
+  valid: boolean = true;
+  tool: Tool[] = [];
+  toolTemp: Tool[];
   displayOpt: string = 'none';
+  ind: number = 0;
+  originalTool: Tool[] = [];
   
   public latitude: number;
   public longitude: number;
@@ -36,22 +41,27 @@ export class ClassroomDetailDialogComponent implements OnInit {
   @ViewChild("search") public searchElementRef: ElementRef;
 
   constructor(public activeModal: NgbActiveModal, public classroomService: ClassroomService,
-    public buildingService: BuildingService, public instrumentService: InstrumentService,
+    public buildingService: BuildingService, public toolService: ToolService,
     public mapsAPILoader: MapsAPILoader, public ngZone: NgZone) { }
 
   ngOnInit() {
     this.classroomService.getClassroomDetail(this.idClassroom).subscribe(classroom=>{
+      
       this.classroom = classroom;
-      this.latitude = this.classroom.latitude;
-      this.longitude = this.classroom.longitude;
-      this.instrumentService.getInstruments().subscribe(instrTemp=>{
-        for (let i in instrTemp) {
-          for (let j in this.classroom.instruments) {
-            if (this.classroom.instruments[j].id == instrTemp[i].id) {
-              this.selectedInstruments.push(this.classroom.instruments[j]);
+      this.originalTool = this.classroom.tool.map(x => Object.assign({}, x)); //deep copy
+      this.latitude = this.classroom.lat;
+      this.longitude = this.classroom.lng;
+      this.toolService.getInstruments().subscribe(instr=>{
+        for (let i in instr) {
+          for (let j in this.classroom.tool) {
+            if (this.classroom.tool[j].id == instr[i].id) {
+              let presentTool: Tool = this.classroom.tool[j];
+              this.selectedTool.push(presentTool);
+              this.tool.push(presentTool);
               break;
-            } else if ( +j == this.classroom.instruments.length - 1) {
-              this.instruments.push(instrTemp[i]);
+            } else if ( +j == this.classroom.tool.length - 1) {
+              let notPresentTool: Tool = instr[i];
+              this.tool.push(notPresentTool);
             }
           }
         }
@@ -64,10 +74,12 @@ export class ClassroomDetailDialogComponent implements OnInit {
     this.searchControl = new FormControl();
 
     //load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {      
+    this.mapsAPILoader.load().then(() => {   
+      try{
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ["address"]
+        types: ["establishment"]
       });
+    
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
@@ -79,10 +91,13 @@ export class ClassroomDetailDialogComponent implements OnInit {
           }
           
           //set latitude, longitude and zoom
-          this.classroom.latitude = place.geometry.location.lat();
-          this.classroom.longitude = place.geometry.location.lng();
+          this.classroom.lat = place.geometry.location.lat();
+          this.classroom.lng = place.geometry.location.lng();
         });
       });
+      autocomplete.setComponentRestrictions
+    } catch (e) {
+    }
     });
   }
 
@@ -91,80 +106,59 @@ export class ClassroomDetailDialogComponent implements OnInit {
   }
 
   setEditable() {
-    if(this.edit == true) {
-      this.edit = false;
-      this.displayOpt = 'none';
-    } else {
+    if(this.edit == false) {
       this.edit = true;
-      this.displayOpt = 'inline';
+    } else {
+      this.edit = false;
     }
   }
 
-  go(name, address, seats, quantity) {
-    if (this.selectedBuilding == undefined) {
-      console.log(name + address + seats + this.classroom.building.name+ " " + quantity);
+  save(id, name, seats) {
+    if(name == "" || seats == "") {
+      this.valid =  false;
     } else {
-      console.log(name + address + seats + this.selectedBuilding.name + " " + quantity);
+      if (this.selectedBuilding == undefined) {
+        this.classroomService.saveClassroom({id, name, seats, lat:this.classroom.lat, lng:this.classroom.lng, building:this.classroom.building, tool:this.selectedTool} as Class).subscribe(classroom=>{
+          console.log(classroom);
+        });
+      } else {
+        this.classroomService.saveClassroom({id, name, seats, lat:this.classroom.lat, lng:this.classroom.lng, building:this.selectedBuilding, tool:this.selectedTool} as Class).subscribe(classroom=>{
+          console.log(classroom);
+        });
+      }
+      this.activeModal.close('Modal Closed');
     }
     
   }
 
-  actInstruments(instru) {
-    if(this.selectedInstruments.indexOf(instru) == -1) {
-      console.log('non c è, aggiungo');
-      this.selectedInstruments.push(instru);
-    } else {
-      console.log('rimuovo');
-      const index: number = this.selectedInstruments.indexOf(instru);
+  instrumentChange(quantity : number, instru) {  
+    const index: number = this.selectedTool.indexOf(instru);
       if (index !== -1) {
-          this.selectedInstruments.splice(index, 1);
-      }        
-    }
-    console.log(this.selectedInstruments);
-  }
-
-  onSearchChange(quantity : number, idinstrument: number) {  
-    for (let i in this.selectedInstruments) {
-      if(this.selectedInstruments[i].id == idinstrument) {
-        this.selectedInstruments[i].quantity = quantity;
-        break;
-      }
-    }
-    console.log(this.selectedInstruments);
-  }
-
-  addInstrument(name: string, quantity: number) {  
-    console.log(quantity)
-    if(name != undefined) {
-      console.log(name);
-      this.selectedInstruments.push({id: undefined, name, quantity} as Instrument);
-      console.log("aggiunto");
-    } else if (quantity != undefined) {
-      for (let i in this.selectedInstruments) {
-        if(this.selectedInstruments[i].id == undefined) {
-          this.selectedInstruments[i].quantity = quantity;
-          break;
-        }
-      }
-      console.log("aggiornato");
-    }
-    console.log(this.selectedInstruments);
+         this.selectedTool[index].quantity = quantity;
+      } else {
+        instru.quantity = quantity;
+        this.selectedTool.push(instru);
+      }    
+    console.log(this.selectedTool);
   }
 
   markerDragEnd($event) {
     console.log($event.coords.lat);
     console.log($event.coords.lng);
-    this.classroom.latitude = $event.coords.lat;
-    this.classroom.longitude = $event.coords.lng;
+    this.classroom.lat = $event.coords.lat;
+    this.classroom.lng = $event.coords.lng;
   }
 
   reset() {
-    this.classroom.latitude = this.latitude;
-    this.classroom.longitude = this.longitude;
+    this.classroom.lat = this.latitude;
+    this.classroom.lng = this.longitude;
   }
 
+<<<<<<< HEAD
   switch(check: String) {
     console.log(check);
   }
   
+=======
+>>>>>>> f03bf69ac55f3b42b5c958f431fb1cddfa8768bf
 }

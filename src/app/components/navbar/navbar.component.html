@@ -35,7 +35,7 @@
       <ul class="navbar-nav mr-auto">
         
         <li class="nav-item active">     
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#datamodal">Ciao {{ user.firstName }}<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#datamodal">Ciao {{ user.name }}<span class="sr-only">(current)</span></a>
         </li>
         
          <li class="nav-item dropdown">
@@ -79,7 +79,7 @@
       <ul class="navbar-nav mr-auto">
           
           <li class="nav-item active">
-            <a class="nav-link">Ciao {{ user.firstName }}<span class="sr-only">(current)</span></a>
+            <a class="nav-link">Ciao {{ user.name }}<span class="sr-only">(current)</span></a>
           </li>
         
          <li class="nav-item dropdown">
@@ -123,11 +123,11 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="name" placeholder="{{ user.firstName }}">
+                    <input type="text" class="form-control" id="name" placeholder="{{ user.name }}">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="cognome">Cognome</label>
-                    <input type="text" class="form-control" id="surname" placeholder="{{ user.lastName }}">
+                    <input type="text" class="form-control" id="surname" placeholder="{{ user.name }}">
                   </div>
                 </div>
                 <div class="form-group">

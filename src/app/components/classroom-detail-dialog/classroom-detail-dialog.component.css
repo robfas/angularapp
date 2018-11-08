@@ -1,14 +1,10 @@
 agm-map {
   height: 300px;
 }
+ngb-modal-backdrop {
+  z-index:998;
+}
 
-
-
-#author a{
-    color: #fff;
-    text-decoration: none;
-      
-  }
   /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
        #map {
@@ -48,11 +44,22 @@ agm-map {
         background-color: #fff;
         font-family: Roboto;
       }
+<<<<<<< HEAD
     
   
         .modal-open {
           pointer-events: auto !important;
         }
+=======
+
+      .pac-container {
+        z-index: 9999 !important;
+      }
+
+      .modal {
+        z-index:999 !important;
+      }
+>>>>>>> f03bf69ac55f3b42b5c958f431fb1cddfa8768bf
 
       .pac-controls {
         display: inline-block;
@@ -149,3 +156,4 @@ agm-map {
   .slider.round:before {
     border-radius: 50%;
   }
+

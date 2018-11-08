@@ -1,0 +1,8 @@
+.modal {
+    z-index: 999;
+}
+
+.pac-container {
+    z-index: 9999 !important;
+    left: 100px !important;
+  }

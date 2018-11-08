@@ -1,12 +1,12 @@
 import { Building } from '../models/Building';
-import { Instrument } from '../models/Instrument';
+import { Tool } from '../models/Tool';
 
 export interface Class {
-    id: number;
-	name: string;
-	seats: number;
-	latitude?: number;
-    longitude?: number;
-    building?: Building;
-    instruments?: Instrument[]; 
+    id: number,
+    name: string,
+    seats: number,
+    lat?: number,
+    lng?: number,
+    building?: Building,
+    tool?: Tool[]
 }

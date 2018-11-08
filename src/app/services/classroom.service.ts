@@ -3,6 +3,8 @@ import { Class} from '../components/models/Class';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+const headers = new HttpHeaders({'Content-Type' : 'application/json'});
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +14,7 @@ export class ClassroomService {
   getByBuildingAndNameUrl: string = 'http://localhost:8080/SpringApp/classroom/getByIdBuildingAndName/';
   getByNameUrl: string = 'http://localhost:8080/SpringApp/classroom/getByName/';
   getByIdUrl: string = 'http://localhost:8080/SpringApp/classroom/getById/';
+  classroomSaveUrl: string = 'http://localhost:8080/SpringApp/classroom/save';
 
   constructor(private http: HttpClient) { }
 
@@ -33,5 +36,9 @@ export class ClassroomService {
 
   getClassroomDetail(id: number): Observable<Class>{
     return this.http.get<Class>(this.getByIdUrl + '/' + id);
+  }
+
+  saveClassroom(classroom: Class): Observable<Class>{
+    return this.http.post<Class>(this.classroomSaveUrl, classroom, {headers});
   }
 }

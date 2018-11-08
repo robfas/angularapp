@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from '../../services/post.service';
 import { LoginService } from '../../services/login.service';
-import { UserSE } from '../models/UserSE';
 import { first } from 'rxjs/operators';
 import{User} from '../models/User';
 import { NavbarService } from '../../services/navbar.service';
@@ -13,15 +12,14 @@ import { NavbarService } from '../../services/navbar.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  usersSE: UserSE[];
   user: User;
   constructor(public nav: NavbarService, private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
       this.user={
-        firstName: JSON.parse(localStorage.getItem('currentUser')).name,
-        lastName: JSON.parse(localStorage.getItem('currentUser')).surname
+        name: JSON.parse(localStorage.getItem('currentUser')).name,
+        surname: JSON.parse(localStorage.getItem('currentUser')).surname
       }
     }
   }
@@ -31,18 +29,16 @@ export class NavbarComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                  if (data.typeDTO.idType == 2) {
+                  if (data.type == "teacher") {
                     this.user={
-                      firstName: data.name,
-                      lastName: data.lastName,
-                      
+                      name: data.name,
+                      surname: data.surname
                     }
                     this.router.navigate(['/teacher']);
-                  } else if(data.typeDTO.idType == 3) {
+                  } else if(data.type  == "employee") {
                     this.user={
-                      firstName: data.name,
-                      lastName: data.lastName,
-                      
+                      name: data.name,
+                      surname: data.surname
                     }
                     this.router.navigate(['/staff']);
                   } else {

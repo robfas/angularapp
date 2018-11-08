@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class LoginService {
-  loginUrl: string = 'http://localhost:8080/SpringApp/login';
+  loginUrl: string = 'http://localhost:8080/SpringApp/user/login';
   
   constructor(private http: HttpClient) { }
 
