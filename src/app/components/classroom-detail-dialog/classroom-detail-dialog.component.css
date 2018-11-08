@@ -48,7 +48,11 @@ agm-map {
         background-color: #fff;
         font-family: Roboto;
       }
-
+    
+  
+        .modal-open {
+          pointer-events: auto !important;
+        }
 
       .pac-controls {
         display: inline-block;
@@ -61,6 +65,7 @@ agm-map {
         font-weight: 300;
       }
 
+    
       #pac-input {
         background-color: #fff;
         font-family: Roboto;

@@ -10,6 +10,7 @@ import { InstrumentService } from '../../services/instrument.service';
 import { NavbarService } from '../../services/navbar.service';
 import { Building } from '../models/Building';
 import { Instrument } from '../models/instrument';
+import { GoogleMap, google } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-classroom-edit',
@@ -97,4 +98,5 @@ export class ClassroomEditComponent implements OnInit {
   switch(check: String) {
     console.log(check);
   }
+
 }

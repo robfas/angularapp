@@ -1,5 +1,4 @@
-
-<div id="myModal_def" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="myModal_def" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
     <div class="modal-dialog">
         <div class="modal-content">
                 
@@ -13,7 +12,7 @@
             <div class="modal-body" style="padding:0">                                    
                 <div class="col-lg-12">
                         <div class="form-group">
-                                <input placeholder="Cerca" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="pac-container" #search [formControl]="searchControl">
+                                <input id="inputsearch" placeholder="Cerca" autocorrect="off" autocapitalize="off" spellcheck="off" type="text/javascript" #search  [formControl]="searchControl">
                                     
                             </div>
                                     <agm-map [latitude]="classroom?.latitude" [longitude]="classroom?.longitude" [zoom]="18" [mapTypeId]="'hybrid'">
