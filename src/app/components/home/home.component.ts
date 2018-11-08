@@ -14,9 +14,9 @@ export class HomeComponent implements OnInit {
     
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
-        if (JSON.parse(localStorage.getItem('currentUser')).typeDTO.idType == 2) {
+        if (JSON.parse(localStorage.getItem('currentUser')).type == "teacher") {
           this.router.navigate(['/teacher']);
-        } else if (JSON.parse(localStorage.getItem('currentUser')).typeDTO.idType == 3) {
+        } else if (JSON.parse(localStorage.getItem('currentUser')).type == "employee") {
           this.router.navigate(['/staff']);
         }
     } else {

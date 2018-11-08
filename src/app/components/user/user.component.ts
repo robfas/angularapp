@@ -13,7 +13,7 @@ export class UserComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.user={
+    /*this.user={
       firstName: 'Giggi',
       lastName: 'Manco',
       age: 30,
@@ -29,16 +29,16 @@ export class UserComponent implements OnInit {
     console.log(this.sayHello());
     console.log(this.user.age);
     this.hasBirthday();
-    console.log(this.user.age);
+    console.log(this.user.age);*/
   }
 
-sayHello(): string{
+/*sayHello(): string{
   return 'Hello' + this.user.firstName;
 }
 
 hasBirthday() {
   this.user.age += 1;
-}
+}*/
 
 }
 
