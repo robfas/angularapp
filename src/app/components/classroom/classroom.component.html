@@ -1,49 +1,79 @@
 <title>Gestisci aule</title>
 
-<body>
+<div class="split left">
+                <form style="margin-top:100px; margin-left:10px;" action="">
+                        <select id="buildings" name="build" #build>
+                        
+                        <option value=0>--- Seleziona un edificio ---</option>
+                        <option *ngFor="let b of buildings" name="box" [value]="b.id">{{ b.name }}</option>
+                        </select>
+                        <br>
+                    <input type="text" name="name" class="textbox" placeholder="Nome aula" #name>
+                    <br>
+                    <button (click)="searchClassroom(name.value, build.value)">Cerca</button>
+                    </form>
+                    <div *ngIf="valid && (!classes || classes.length === 0)">
+                        <p>Non ci sono classi.</p>
+                    </div>
+                
+                    <div class="col-md-10">           
+                        <a id="addRow" class="btn" style="background: #ffa400; border-color: navajowhite;">
+                            <span class="glyphicon glyphicon-plus"></span> Aggiungi
+                        </a>            
+                    </div>
+      </div>
 
-<form style="margin-top:100px; margin-left:10px;" action="">
-	<select id="buildings" name="build" #build>
-	
-      <option value=0>--- Seleziona un edificio ---</option>
-      <option *ngFor="let b of buildings" name="box" [value]="b.id">{{ b.name }}</option>
-	</select>
-  <input type="text" name="name" class="textbox" placeholder="Nome aula" #name>
-  <button (click)="searchClassroom(name.value, build.value)">Cerca</button>
-</form>
-<div *ngIf="valid && (!classes || classes.length === 0)">
-    <p>Non ci sono classi.</p>
-</div>
+      
+      
+      <div class="split right">
 
-<body>       
-    <div class="col-md-10">           
-        <a id="addRow" class="btn" style="background: #ffa400; border-color: navajowhite;">
-            <span class="glyphicon glyphicon-plus"></span> Aggiungi
-        </a>            
-    </div>
-    <br/><br/>
-    <div class="col-md-12">
-        <table id="elencoProdotti" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
-            <thead>
-                <tr>
-                    <th class="never">#</th>
-                    <th style="text-align:center">Nome</th>
-                    <th style="text-align:center">Edificio</th>
-                    <th style="text-align:center"></th>
-                </tr>
-            </thead>
-            <tbody>  
-                <tr *ngFor="let c of classes;let i = index">
-                        <td>{{ i+1 }}</td>
-                        <td>{{ c.name }}</td>
-                        <td>{{ c.building.name }}</td>
-                        <button (click)="dettagli(c.id)" class="btn btn-info">Dettagli</button>
-                    </tr>
-            </tbody>
-        </table>
-    </div>
-    
-                                                            
-   
+            <ng-container *ngIf="!valid">
+            <div class="row">
+            <ng-container *ngFor="let b of buildings; let i = index">
+                                    <div class="card_main_container">
+                                            <div class="example-2 card_main">
+                                                <div class="wrapper">
+                                                        <img src="http://localhost:8080/SpringApp/images/{{b.name}}.png" alt="Avatar" height="200" width="330">
+                                                    <div class="data">
+                                                        <div class="content">
+                                                            <h1 class="title"><a href="#">{{ b.name }}</a></h1>
+                                                            <p class="text">{{ b.address }}</p>
+                                                            <a href="#" class="button">Ottieni informazioni</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                  </ng-container>
 
-</body>
+                  <div class="card_main_container">
+                            <div class="wrapper">
+                                    <img src="http://localhost:8080/SpringApp/images/plus.png" alt="Avatar" style="display: block; margin-left: auto; margin-right: auto; padding-top: 50pt; width: 50%;">
+                           
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+                      
+                <ng-container *ngIf="valid">
+                        <input type="image" src="http://localhost:8080/SpringApp/images/return.png" (click)="returnCards()">
+                <table *ngIf="classes" id="elencoProdotti" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+                        <thead>
+                            <tr>
+                                <th class="never">#</th>
+                                <th style="text-align:center">Nome</th>
+                                <th style="text-align:center">Edificio</th>
+                                <th style="text-align:center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+                            <tr *ngFor="let c of classes;let i = index">
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ c.name }}</td>
+                                    <td>{{ c.building.name }}</td>
+                                    <button (click)="dettagli(c.id)" class="btn btn-info">Dettagli</button>
+                                </tr>
+                        </tbody>
+                    </table>
+                </ng-container>
+      </div>

@@ -120,13 +120,15 @@ export class ClassroomDetailDialogComponent implements OnInit {
       if (this.selectedBuilding == undefined) {
         this.classroomService.saveClassroom({id, name, seats, lat:this.classroom.lat, lng:this.classroom.lng, building:this.classroom.building, tool:this.selectedTool} as Class).subscribe(classroom=>{
           console.log(classroom);
+          this.activeModal.close(classroom);
         });
       } else {
         this.classroomService.saveClassroom({id, name, seats, lat:this.classroom.lat, lng:this.classroom.lng, building:this.selectedBuilding, tool:this.selectedTool} as Class).subscribe(classroom=>{
           console.log(classroom);
+          this.activeModal.close(classroom);
         });
       }
-      this.activeModal.close('Modal Closed');
+      
     }
     
   }

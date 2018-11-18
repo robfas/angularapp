@@ -50,12 +50,20 @@ export class ClassroomComponent implements OnInit {
       }
   }
 
+  returnCards(){
+    this.valid=false;
+  }
+
   dettagli(idClassroom: number) {
     const modalRef = this.modalService.open(ClassroomDetailDialogComponent);
     modalRef.componentInstance.idClassroom = idClassroom;
     
     modalRef.result.then((result) => {
-      console.log(result);
+      for (let c in this.classes) {
+        if(this.classes[c].id == result.id) {
+          this.classes[c] = result;
+        }
+      }
     }).catch((error) => {
       console.log(error);
     });
