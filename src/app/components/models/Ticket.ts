@@ -1,15 +1,17 @@
 import { Class } from '../models/Class';
-import { Status } from '../models/Status';
+import { TicketStatus } from '../models/TicketStatus';
 import { Teacher } from '../models/Teacher';
+import { Employee } from '../models/Employee';
+import { TicketMessage } from './TicketMessage';
 
 export interface Ticket {
     id: number;
     title?: string;
-    status?: Status;
+    ticketStatus?: TicketStatus;
     teacher?: Teacher;
+    employee?: Employee;
     classroom?: Class;
     text?: string;
     date?: Date;
-   // messages?: TicketMessage[];
-   // note?: string;
+    ticketmessages?: TicketMessage[];
 }

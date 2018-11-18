@@ -3,7 +3,7 @@
       <table  class="table table-bordered dt-responsive" cellspacing="0" width="100%">
           <thead>
             <tr bgcolor="#cccccc">
-              <th scope="col">Id</th>
+              <th scope="col">N°</th>
               <th scope="col">Data</th>
               <th scope="col">Titolo</th>
               <th scope="col">Aula</th>
@@ -13,44 +13,41 @@
             </tr>
           </thead>
           <tbody>
-            <tr bgcolor="#cccccc">
+            <tr bgcolor="#FFFFFF">
               <td> {{ ticket?.id }} </td>
               <td> {{ ticket?.date | date : shortDate  }} </td> 
               <td> {{ ticket?.title }} </td>
               <td> {{ ticket?.classroom.name }} </td>
               <td> {{ ticket?.teacher.surname }} </td> 
               <td> {{ ticket?.teacher.name }} </td> 
-              <td> {{ ticket?.status.description }} </td> 
+              <td> {{ ticket?.ticketStatus.description }} </td> 
               
             </tr>	
           </tbody>
         </table>
-        <p class="font-weight-bold">Contenuto Segnalazione</p>
         <div class="card card-body mb-3 bg-transparent">
-            <p>
-              {{ ticket?.text }}
-            </p>
+        <div *ngFor="let m of ticket?.ticketmessages">
+        <div class="container">
+          <p class="font-weight-bold">Messaggio da: {{ ticket.teacher.surname }} {{ ticket.teacher.name }} </p>
+          <p>{{ m.text }}</p>
+          <span class="time-right"> {{ ticket?.date | date : shortDate  }}</span>
         </div>
-
         
-        <form>  
-        <p class="font-weight-bold">Rispondi</p>
-        <div class="card card-body mb-3 bg-transparent">
-            <textarea class="form-control input-lg" rows="3" #text></textarea> 
+        <div class="container darker">
+            <p class="font-weight-bold">Messaggio da: {{ user.firstName }} {{ user.lastName }} </p>
+            <textarea class="form-control input-lg" style="border-color: rgb(181, 238, 190) " rows="2" #text></textarea> 
+            <p> </p>
+            <button type="button" class="btn btn-success float-right">Invia</button>
         </div>
-
+        </div>
+      </div>
+     
+      <form>
         <p class="font-weight-bold">Aggiorna Stato</p>
-        <div class="card card-body mb-3 bg-transparent">
-          
-
-                  <select class="custom-select mr-sm-2" name="status" #status>
-                      <option value=0>Seleziona stato</option>
-                      <option *ngFor="let s of stati" [value]="s.idstatus">{{ s.description }}</option>
-                </select>
-              
-        </div>
-       
-  
-  <button (click)="updateTicket(ticket?.id, ticket?.title, ticket?.teacher, ticket?.classroom, ticket?.classroom.building, text.value, status.value, ticket?.date)" class="btn btn-success float-right" >Aggiorna</button>
-</form>
+           <select class="custom-select mr-sm-2" name="status" #status>
+              <option value=0>Seleziona stato</option>
+              <option *ngFor="let s of stati" [value]="s.idstatus">{{ s.description }}</option>
+            </select>
+      <button (click)="updateTicket(ticket?.id, ticket?.title, ticket?.teacher, user, ticket?.classroom, ticket?.classroom.building, status.value, ticket?.date)" class="btn btn-success float-right" >Aggiorna</button>
+    </form>
 </div>
