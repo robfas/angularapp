@@ -14,7 +14,9 @@
   /* Control the left side */
   .left {
     left: 0;
-    background-color: rgba(225, 247, 207, 0.74);
+	background-image: url("http://localhost:8080/SpringApp/images/divider.png");
+	background-repeat: no-repeat;
+	background-position-x: 5cm;
   }
   
   /* Control the right side */

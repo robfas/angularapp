@@ -2,13 +2,13 @@
 
 <div class="split left">
                 <form style="margin-top:100px; margin-left:10px;" action="">
-                        <select id="buildings" name="build" #build>
+                        <select class="custom-select mr-sm-2" id="buildings" name="build" #build>
                         
-                        <option value=0>--- Seleziona un edificio ---</option>
+                        <option value=0>Seleziona un edificio</option>
                         <option *ngFor="let b of buildings" name="box" [value]="b.id">{{ b.name }}</option>
                         </select>
                         <br>
-                    <input type="text" name="name" class="textbox" placeholder="Nome aula" #name>
+                    <input class="form-control input-md" type="text" name="name" class="textbox" placeholder="Nome aula" #name>
                     <br>
                     <button (click)="searchClassroom(name.value, build.value)">Cerca</button>
                     </form>
