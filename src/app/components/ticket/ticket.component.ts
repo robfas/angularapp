@@ -31,8 +31,8 @@ export class TicketComponent implements OnInit {
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
       this.user={
-        firstName: JSON.parse(localStorage.getItem('currentUser')).name,
-        lastName: JSON.parse(localStorage.getItem('currentUser')).surname
+        name: JSON.parse(localStorage.getItem('currentUser')).name,
+        surname: JSON.parse(localStorage.getItem('currentUser')).surname
       }};
     this.nav.showNavStaff();
     const id = +this.route.snapshot.paramMap.get('id');
