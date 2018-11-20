@@ -9,10 +9,10 @@ import { ClassroomDetailDialogComponent } from '../classroom-detail-dialog/class
 
 @Component({
   selector: 'app-classroom',
-  templateUrl: './classroom.component.html',
-  styleUrls: ['./classroom.component.css']
+  templateUrl: './department.component.html',
+  styleUrls: ['./department.component.css']
 })
-export class ClassroomComponent implements OnInit {
+export class DepartmentComponent implements OnInit {
   buildings: Building[];
   classes: Class[];
   valid: boolean;

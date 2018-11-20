@@ -1,7 +1,10 @@
+import { Class } from '../models/Class';
+
 export interface Building {
     id: number;
 	name: string;
 	address?: string;
-	latitude?: number;
-	longitude?: number;
+	lat?: number;
+	lng?: number;
+	classrooms?: Class[];
 }

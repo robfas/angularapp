@@ -8,9 +8,10 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
 import { StudentComponent } from './components/student/student.component';
 import { StaffComponent } from './components/staff/staff.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
-import { ClassroomComponent } from './components/classroom/classroom.component';
+import { DepartmentComponent } from './components/department/department.component';
 import { TicketComponent } from './components/ticket/ticket.component';
 import { CourseComponent } from './components/course/course.component';
+import { BuildingComponent } from './components/building/building.component';
 
 
 const routes: Routes =[
@@ -20,9 +21,10 @@ const routes: Routes =[
   {path: 'student', component: StudentComponent},
   {path: 'staff', component: StaffComponent},
   {path: 'teacher', component: TeacherComponent},
-  {path: 'staff/classroom', component: ClassroomComponent},
+  {path: 'staff/department', component: DepartmentComponent},
   {path: 'posts/:id', component: PostDetailComponent},
   {path: 'staff/ticket/:id', component: TicketComponent},
+  {path: 'staff/department/building/:id', component: BuildingComponent},
   {path: 'staff/newcourse', component: CourseComponent},
   {path: '**', component: NotFoundComponent}
 ];

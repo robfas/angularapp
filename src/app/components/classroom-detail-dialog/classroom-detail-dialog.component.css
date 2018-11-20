@@ -44,13 +44,11 @@ ngb-modal-backdrop {
         background-color: #fff;
         font-family: Roboto;
       }
-<<<<<<< HEAD
     
   
         .modal-open {
           pointer-events: auto !important;
         }
-=======
 
       .pac-container {
         z-index: 9999 !important;
@@ -59,7 +57,6 @@ ngb-modal-backdrop {
       .modal {
         z-index:999 !important;
       }
->>>>>>> f03bf69ac55f3b42b5c958f431fb1cddfa8768bf
 
       .pac-controls {
         display: inline-block;
