@@ -119,6 +119,7 @@ dettagli(idClassroom: number) {
       if(this.building.classrooms[c].id == result.id) {
         this.building.classrooms[c] = result;
       }
+
     }
   }).catch((error) => {
     console.log(error);
@@ -130,11 +131,11 @@ aggClasse() {
   modalRef.componentInstance.building = this.building;
   
   modalRef.result.then((result) => {
-    for (let c in this.building.classrooms) {
-      if(this.building.classrooms[c].id == result.id) {
-        this.building.classrooms[c] = result;
-      }
-    }
+    this.buildingService.getBuildingDetail(this.building.id).subscribe(building=>{
+      this.building=building;
+      this.latitude = this.building.lat;
+      this.longitude = this.building.lng;
+    });
   }).catch((error) => {
     console.log(error);
   });

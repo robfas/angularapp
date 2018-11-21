@@ -74,8 +74,9 @@ export class AddClassroomDialogComponent implements OnInit {
           }
           
           //set latitude, longitude and zoom
-          this.classroom.lat = place.geometry.location.lat();
-          this.classroom.lng = place.geometry.location.lng();
+          this.currentlat = place.geometry.location.lat();
+          this.currentlng = place.geometry.location.lng();
+          this.edit = true;
         });
       });
       autocomplete.setComponentRestrictions
@@ -88,29 +89,14 @@ export class AddClassroomDialogComponent implements OnInit {
     this.activeModal.close('Modal Closed');
   }
 
-  setEditable() {
-    if(this.edit == false) {
-      this.edit = true;
-    } else {
-      this.edit = false;
-    }
-  }
-
   save(name, seats) {
     if(name == "" || seats == "") {
       this.valid =  false;
     } else {
-      if(this.currentlng == undefined && this.currentlat == undefined) {
-        console.log({name, seats, lat:this.latitude, lng:this.longitude, building:this.building, tool:this.selectedTool} as Class)
-      
-      } else {
-        console.log({name, seats, lat:this.currentlat, lng:this.currentlng, building:this.building, tool:this.selectedTool} as Class)
-      
-      }
-        /*this.classroomService.saveClassroom({name, seats, lat:this.classroom.lat, lng:this.classroom.lng, building:this.building, tool:this.selectedTool} as Class).subscribe(classroom=>{
-          console.log(classroom);
+      console.log({name, seats, lat:this.currentlat, lng:this.currentlng, building:this.building, tool:this.selectedTool} as Class)
+      this.classroomService.saveClassroom({name, seats, lat:this.currentlat, lng:this.currentlng, building:this.building, tool:this.selectedTool} as Class).subscribe(classroom=>{
           this.activeModal.close(classroom);
-        });*/
+        });
       
     }
     
@@ -138,11 +124,13 @@ export class AddClassroomDialogComponent implements OnInit {
     console.log($event.coords.lng);
     this.currentlat = $event.coords.lat;
     this.currentlng = $event.coords.lng;
+    this.edit = true;
   }
 
   reset() {
     this.currentlat = this.latitude;
     this.currentlng = this.longitude;
+    this.edit = false;
   }
 
 }
