@@ -47,14 +47,16 @@
                         <th scope="col">Nome</th>
                         <th scope="col">Posti</th>
                         <th scope="col"> </th>
+                        <th scope="col"> </th>
                     </tr>
                 </thead>
                 <tbody>  
                     <tr bgcolor="#FFFFFF" *ngFor="let c of building?.classrooms;let i = index">
-                        <td style="vertical-align:middle;"> {{ i+1 }} </td>
+                        <td  style="vertical-align:middle;" width="5%"> {{ i+1 }} </td>
                         <td style="vertical-align:middle;"> {{ c.name  }} </td> 
                         <td style="vertical-align:middle;"> {{ c.seats  }} </td> 
-                        <td width="10%"> <button (click)="dettagli(c.id)" class="btn btn-info">Dettagli</button> </td>
+                        <td align="middle" width="5%"> <button (click)="dettagli(c.id)" class="btn btn-info">Dettagli</button></td>
+                        <td align="middle" width="5%"><button (click)="delete(c.id)" class="btn btn-danger">Elimina</button> </td>
                     </tr>
                 </tbody>
             </table>

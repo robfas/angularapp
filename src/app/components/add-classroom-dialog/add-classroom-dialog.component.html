@@ -17,7 +17,7 @@
                                 <agm-marker [markerDraggable]="true" [latitude]="currentlat" [longitude]="currentlng" (dragEnd)="markerDragEnd($event)"></agm-marker>
                             </agm-map>
                             <div style="line-height:50%;"><br></div>
-                            <div align="right"><button (click)="reset()" class="btn btn-info">Reimposta posizione</button></div>
+                            <div *ngIf="edit" align="right"><button (click)="reset()" class="btn btn-info">Reimposta posizione</button></div>
                             <div *ngIf="!valid"><p><font color="red"><br>I campi contrassegnati con l'asterisco sono obbligatori.</font></p></div>
                     <form>		
                         <div class="form-group">
