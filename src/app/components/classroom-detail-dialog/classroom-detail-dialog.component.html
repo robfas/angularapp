@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<div id="myModal_def" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
-=======
 <div id="myModal_def" style="z-index: 900;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
->>>>>>> f03bf69ac55f3b42b5c958f431fb1cddfa8768bf
     <div class="modal-dialog">
         <div class="modal-content">
                 <div style="line-height:50%;"><br></div>
@@ -15,44 +11,6 @@
                 </div>
             <div class="modal-body" style="padding:0">                                    
                 <div class="col-lg-12">
-<<<<<<< HEAD
-                        <div class="form-group">
-                                <input id="inputsearch" placeholder="Cerca" autocorrect="off" autocapitalize="off" spellcheck="off" type="text/javascript" #search  [formControl]="searchControl">
-                                    
-                            </div>
-                                    <agm-map [latitude]="classroom?.latitude" [longitude]="classroom?.longitude" [zoom]="18" [mapTypeId]="'hybrid'">
-    
-                                <agm-marker [markerDraggable]="true" [latitude]="classroom?.latitude" [longitude]="classroom?.longitude" (dragEnd)="markerDragEnd($event)"></agm-marker>
-                                    </agm-map>
-                                    <button (click)="reset()">Reimposta posizione</button>
-                    <form>		
-                        <div class="form-group">
-                            <label for="name" class="control-label">Nome aula</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="name" id="name" value="{{classroom?.name}}" placeholder="Inserisci il nome dell'aula" [disabled]="edit" #name>
-                                <span class="input-group-addon danger"><span class="glyphicon glyphicon-asterisk"></span></span>
-                            </div>
-                        </div>                                                    
-                        <br/>         
-                        <div class="form-group">
-                            <label for="building" class="control-label">Edificio</label>
-                            <div class="input-group">
-                                <select class="form-control" name="building" id="building" [disabled]="edit" style="width: 100%"  [(ngModel)]="selectedBuilding" #building>
-                                    <option *ngFor="let b of buildings" [ngValue]="b" [selected]="b.id == classroom?.building.id">
-                                        {{b.name}}
-                                    </option>                                                                                                                                                                     
-                              </select>
-                              <span class="input-group-addon danger"><span class="glyphicon glyphicon-asterisk"></span></span>
-                            </div>
-                        </div>                                                                                             
-                        <br/>
-                        <div class="form-group">
-                            <label for="address" class="control-label">Indirizzo </label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="address" id="address" value="{{classroom?.building.address}}" placeholder="Inserisci l'indirizzo" [disabled]="edit" #address>
-                                <span class="input-group-addon danger"><span class="glyphicon glyphicon-asterisk"></span></span>
-                            </div>
-=======
                         <div style="line-height:50%;"><br></div>
                                 <input class="form-control" placeholder="Cerca" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search [formControl]="searchControl">
                                 <div style="line-height:50%;"><br></div>
@@ -80,7 +38,6 @@
                                 </option>                                                                                                                                                                     
                             </select>
                             <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
->>>>>>> f03bf69ac55f3b42b5c958f431fb1cddfa8768bf
                         </div>
                     </div>
                     <div style="line-height:50%;"><br></div>

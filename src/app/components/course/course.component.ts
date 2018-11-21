@@ -24,13 +24,13 @@ export class CourseComponent implements OnInit {
   }
 
 
-  save(name, description, years){
+  save(name, description, academicyear, years){
 
-    if (!name || !description || (years==undefined) ){
+    if (!name || !description || !description || (years==undefined) ){
       alert('Inserisci dati!');
     }else{
 
-    this.courseService.saveCourse({name, description, years} as Course).subscribe(course => {
+    this.courseService.saveCourse({name, description, academicyear, years} as Course).subscribe(course => {
       console.log(course);
     });
 

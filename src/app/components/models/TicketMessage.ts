@@ -3,7 +3,7 @@ import { User } from "./User";
 export interface TicketMessage{
     idticketmessage: number;
 	idticket: number;
-    user_ssn: String;
+    user: User;
     text: string;
-    date: Date;
+    date?: Date;
 }

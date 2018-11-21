@@ -30,19 +30,23 @@
         <div class="container">
           <p class="font-weight-bold">Messaggio da: {{ ticket.teacher.surname }} {{ ticket.teacher.name }} </p>
           <p>{{ m.text }}</p>
-          <span class="time-right"> {{ ticket?.date | date : shortDate  }}</span>
+          <span class="time-right"> {{ ticket?.date | date : medium  }}</span>
         </div>
-        
-        <div class="container darker">
-            <p class="font-weight-bold">Messaggio da: {{ user.firstName }} {{ user.lastName }} </p>
-            <textarea class="form-control input-lg" style="border-color: rgb(181, 238, 190) " rows="2" #text></textarea> 
+
+        <div *ngIf="buttonVisible">
+          <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal">Prendi in carico</button>       
+        </div>
+
+        <div *ngIf="textareaVisible" class="container darker">
+            <p class="font-weight-bold">Messaggio da: {{ user.name }} {{ user.surname }} </p>
+            <textarea class="form-control input-lg" style="border-color: rgb(181, 238, 190) " rows="2" #textmessage></textarea> 
             <p> </p>
-            <button type="button" class="btn btn-success float-right">Invia</button>
+            <button type="button" class="btn btn-success float-right" (click)="saveMessage(textmessage.value)">Invia</button>
         </div>
         </div>
       </div>
      
-      <form>
+      <form *ngIf="textareaVisible">
         <p class="font-weight-bold">Aggiorna Stato</p>
            <select class="custom-select mr-sm-2" name="status" #status>
               <option value=0>Seleziona stato</option>
@@ -50,4 +54,27 @@
             </select>
       <button (click)="updateTicket(ticket?.id, ticket?.title, ticket?.teacher, user, ticket?.classroom, ticket?.classroom.building, status.value, ticket?.date)" class="btn btn-success float-right" >Aggiorna</button>
     </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Conferma</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Vuoi prendere la segnalazione in carico?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="showTextArea()">Sì</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+

@@ -13,7 +13,8 @@ export class TicketService {
   getById: string = 'http://localhost:8080/SpringApp/ticket/getById';
   saveUrl: string = 'http://localhost:8080/SpringApp/ticket/save';
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {}
 
   getTickets(): Observable<Ticket[]>{
     return this.http.get<Ticket[]>(this.getAllUrl);
@@ -26,4 +27,7 @@ export class TicketService {
   saveTicket(ticket: Ticket): Observable<Ticket>{
     return this.http.post<Ticket>(this.saveUrl, ticket, {headers});
   }
+
+
+
 }

@@ -11,7 +11,6 @@ export interface Ticket {
     teacher?: Teacher;
     employee?: Employee;
     classroom?: Class;
-    text?: string;
     date?: Date;
     ticketmessages?: TicketMessage[];
 }

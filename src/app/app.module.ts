@@ -23,11 +23,6 @@ import { TeacherComponent } from './components/teacher/teacher.component';
 import { ClassroomComponent} from './components/classroom/classroom.component';
 import { BuildingComponent } from './components/building/building.component';
 import { TicketComponent } from './components/ticket/ticket.component';
-<<<<<<< HEAD
-import { ClassroomDetailComponent } from './components/classroom-detail/classroom-detail.component';
-import { ClassroomEditComponent } from './components/classroom-edit/classroom-edit.component';
-=======
->>>>>>> f03bf69ac55f3b42b5c958f431fb1cddfa8768bf
 import { ClassroomDetailDialogComponent } from './components/classroom-detail-dialog/classroom-detail-dialog.component';
 import { CourseComponent } from './components/course/course.component';
 
@@ -48,15 +43,8 @@ import { CourseComponent } from './components/course/course.component';
     ClassroomComponent,
     BuildingComponent,
     TicketComponent,
-<<<<<<< HEAD
-    ClassroomDetailComponent,
-    ClassroomEditComponent,
-    ClassroomDetailDialogComponent,
-    CourseComponent,
-=======
     ClassroomDetailDialogComponent,
     CourseComponent
->>>>>>> f03bf69ac55f3b42b5c958f431fb1cddfa8768bf
 
    
   ],

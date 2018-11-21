@@ -11,6 +11,8 @@ import { Class } from '../models/Class';
 import { TicketMessageService } from '../../services/ticketMessage.service';
 import { TicketMessage } from '../models/TicketMessage';
 import { User } from '../models/User';
+import { isEmpty } from 'rxjs/operators';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-ticket',
@@ -22,28 +24,39 @@ export class TicketComponent implements OnInit {
   stati: TicketStatus[];
   teacher: Teacher;
   classroom: Class;
+  text: string;
   state: TicketStatus = <TicketStatus>{};
   messages: TicketMessage[]; 
   user: User;
+  textareaVisible: boolean;
+  buttonVisible: boolean;
 
-  constructor(public nav: NavbarService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) { }
+  constructor(public nav: NavbarService, public ticketMessageService: TicketMessageService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) {this.buttonVisible, this.textareaVisible}
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
       this.user={
-        firstName: JSON.parse(localStorage.getItem('currentUser')).name,
-        lastName: JSON.parse(localStorage.getItem('currentUser')).surname
+        iduser: JSON.parse(localStorage.getItem('currentUser')).iduser,
+        name: JSON.parse(localStorage.getItem('currentUser')).name,
+        surname: JSON.parse(localStorage.getItem('currentUser')).surname
       }};
     this.nav.showNavStaff();
     const id = +this.route.snapshot.paramMap.get('id');
       this.ticketService.getTicketById(id).subscribe(ticket => {
         this.ticket = ticket;
-        console.log(ticket);
+        if(this.ticket.employee.idemployee === null || this.ticket.employee.idemployee === undefined ){
+          console.log(ticket.employee);
+          this.showButton();
+          console.log(this.buttonVisible);
+      }
+        else this.showTextArea();
       });
       this.ticketStatusService.getTicketStatus().subscribe(stati => {
         this.stati = stati;
         console.log(stati);
       });
+
+  
       
     }
 
@@ -63,4 +76,38 @@ export class TicketComponent implements OnInit {
 
 
   }
+  showButton(){
+    this.textareaVisible = false; this.buttonVisible = true;
+  }
+
+  showTextArea(){
+    this.buttonVisible = false; this.textareaVisible = true;
+    console.log(this.user.iduser);
+    this.ticket.employee.idemployee = this.user.iduser;
+    this.ticket.employee.name = this.user.name;
+    this.ticket.employee.surname = this.user.surname;         
+    console.log(this.ticket);
+    console.log(this.ticket.ticketmessages);
+
+    if(this.ticket.employee.idemployee===null || this.ticket.employee.idemployee === undefined){
+    this.ticketService.saveTicket({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, ticketmessages: this.ticket.ticketmessages, date: this.ticket.date} as Ticket).subscribe(ticket => {
+      console.log(ticket);
+      console.log(this.ticket.ticketmessages);
+    });
+    }
+  }
+
+  saveMessage(textmessage){
+    if(textmessage === undefined || !textmessage){
+      alert('Inserisci messaggio!');
+    }
+    else{
+      console.log(textmessage);
+      console.log(this.ticket.id,this.user,textmessage,this.ticket.date);
+      this.ticketMessageService.saveMessage({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, date: this.ticket.date} as Ticket, {idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(ticket => {
+        console.log(ticket);
+      });
+    }
+  }
+
 }

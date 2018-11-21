@@ -154,11 +154,4 @@ export class ClassroomDetailDialogComponent implements OnInit {
     this.classroom.lng = this.longitude;
   }
 
-<<<<<<< HEAD
-  switch(check: String) {
-    console.log(check);
-  }
-  
-=======
->>>>>>> f03bf69ac55f3b42b5c958f431fb1cddfa8768bf
 }

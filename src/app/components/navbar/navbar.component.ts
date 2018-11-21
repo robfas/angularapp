@@ -32,13 +32,15 @@ export class NavbarComponent implements OnInit {
                   if (data.type == "teacher") {
                     this.user={
                       name: data.name,
-                      surname: data.surname
+                      surname: data.surname,
+                      iduser: data.iduser
                     }
                     this.router.navigate(['/teacher']);
                   } else if(data.type  == "employee") {
                     this.user={
                       name: data.name,
-                      surname: data.surname
+                      surname: data.surname,
+                      iduser: data.iduser
                     }
                     this.router.navigate(['/staff']);
                   } else {
