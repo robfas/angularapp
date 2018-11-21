@@ -1,0 +1,71 @@
+<title>Gestisci Dipartimento</title>
+
+<div class="split left">
+    <form style="margin-top:100px; margin-left:10px;" action="">
+        <input class="form-control input-md" type="text" name="name" class="textbox" placeholder="Nome aula" #name>
+        <p></p>
+        <select class="custom-select mr-sm-2" id="buildings" name="build" #build>
+            
+            <option value=0>Seleziona un edificio</option>
+            <option *ngFor="let b of buildings" name="box" [value]="b.id">{{ b.name }}</option>
+            </select>
+            <p></p>
+        <button (click)="searchClassroom(name.value, build.value)" class="btn">Cerca</button>
+    </form>      
+</div>
+
+<div class="split right">
+    <div *ngIf="valid && (!classes || classes.length == 0)">
+        <p>Non ci sono classi corrispondenti ai criteri di ricerca.</p>
+    </div>
+    <ng-container *ngIf="!valid || (valid && classes?.length == 0)">
+    <div class="row">
+    <ng-container *ngFor="let b of buildings; let i = index">
+        <div class="card_main_container">
+                <div class="example-2 card_main">
+                    <div class="wrapper">
+                            <img src="http://localhost:8080/SpringApp/images/{{b.name}}.png" alt="Avatar" height="200" width="330">
+                        <div class="data">
+                            <div class="content">
+                                <h1 class="title"><a href="#">{{ b.name }}</a></h1>
+                                <p class="text">{{ b.address }}</p>
+                                <a href="staff/department/building/{{b.id}}" class="button">Ottieni informazioni</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </ng-container>
+
+    <div class="card_main_container">
+        <div class="wrapper">
+            <img src="http://localhost:8080/SpringApp/images/plus.png" alt="Avatar" style="display: block; margin-left: auto; margin-right: auto; padding-top: 50pt; width: 50%;">
+        </div>
+    </div>
+    </div>
+    </ng-container>
+                
+    <ng-container *ngIf="valid && classes && classes.length != 0">
+        <input type="image" src="http://localhost:8080/SpringApp/images/return.png" (click)="returnCards()">
+        <table id="elencoProdotti" class="table table-bordered dt-responsive" cellspacing="0" style="width:97%;table-layout:fixed">                                       
+            <thead>
+                <tr bgcolor="#cccccc">
+                    <th scope="col">N°</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Posti</th>
+                    <th scope="col">Edificio</th>
+                    <th scope="col"> </th>
+                </tr>
+            </thead>
+            <tbody>  
+                <tr bgcolor="#FFFFFF" *ngFor="let c of classes;let i = index">
+                    <td style="vertical-align:middle;"> {{ i+1 }} </td>
+                    <td style="vertical-align:middle;"> {{ c.name  }} </td> 
+                    <td style="vertical-align:middle;"> {{ c.seats  }} </td> 
+                    <td style="vertical-align:middle;"> {{ c.building.name }} </td>
+                    <td width="10%"> <button (click)="dettagli(c.id)" class="btn btn-info">Dettagli</button> </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+</div>

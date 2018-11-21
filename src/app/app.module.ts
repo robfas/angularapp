@@ -20,11 +20,12 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { StaffComponent } from './components/staff/staff.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
-import { ClassroomComponent} from './components/classroom/classroom.component';
 import { BuildingComponent } from './components/building/building.component';
 import { TicketComponent } from './components/ticket/ticket.component';
 import { ClassroomDetailDialogComponent } from './components/classroom-detail-dialog/classroom-detail-dialog.component';
 import { CourseComponent } from './components/course/course.component';
+import { DepartmentComponent } from './components/department/department.component';
+import { AddClassroomDialogComponent } from './components/add-classroom-dialog/add-classroom-dialog.component';
 
 
 @NgModule({
@@ -40,11 +41,12 @@ import { CourseComponent } from './components/course/course.component';
     PostDetailComponent,
     StaffComponent,
     TeacherComponent,
-    ClassroomComponent,
     BuildingComponent,
     TicketComponent,
     ClassroomDetailDialogComponent,
-    CourseComponent
+    CourseComponent,
+    DepartmentComponent,
+    AddClassroomDialogComponent,
 
    
   ],
@@ -66,7 +68,8 @@ import { CourseComponent } from './components/course/course.component';
   providers: [DataService, PostService],
   bootstrap: [AppComponent],
   entryComponents: [
-    ClassroomDetailDialogComponent
+    ClassroomDetailDialogComponent,
+    AddClassroomDialogComponent
   ]
 })
 export class AppModule { }

@@ -44,6 +44,11 @@ ngb-modal-backdrop {
         background-color: #fff;
         font-family: Roboto;
       }
+    
+  
+        .modal-open {
+          pointer-events: auto !important;
+        }
 
       .pac-container {
         z-index: 9999 !important;

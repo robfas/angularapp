@@ -1,0 +1,74 @@
+
+<div id="myModal_def" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
+    <div id="myModal_def" style="z-index: 900;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <div style="line-height:50%;"><br></div>
+                <div class="modal-header" style="padding:0; margin-left: 13px;  margin-right: 13px;">                                                        
+                    <h3 id="titolo_modal" style="text-align: center;"> Inserisci aula nell'edificio {{building?.name}}</h3>
+                    </div>
+                <div class="modal-body" style="padding:0">                                    
+                    <div class="col-lg-12">
+                            <div style="line-height:50%;"><br></div>
+                                    <input class="form-control" placeholder="Cerca" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search [formControl]="searchControl">
+                                    <div style="line-height:50%;"><br></div>
+                                    <agm-map [latitude]="currentlat" [longitude]="currentlng" [zoom]="18" [mapTypeId]="'hybrid'">
+                                <agm-marker [markerDraggable]="true" [latitude]="currentlat" [longitude]="currentlng" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                            </agm-map>
+                            <div style="line-height:50%;"><br></div>
+                            <div align="right"><button (click)="reset()" class="btn btn-info">Reimposta posizione</button></div>
+                            <div *ngIf="!valid"><p><font color="red"><br>I campi contrassegnati con l'asterisco sono obbligatori.</font></p></div>
+                    <form>		
+                        <div class="form-group">
+                            <label for="name" class="control-label">Nome aula</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Inserisci il nome dell'aula" #name>
+                                <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
+                            </div>
+                        </div>          
+                        <div style="line-height:50%;"><br></div>
+                        <div class="form-group">
+                            <label for="seats" class="control-label">Posti disponibili</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="seats" id="seats" placeholder="Inserisci il numero di posti disponibili" min="1" #seats>
+                                <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
+                            </div>
+                        </div>
+                        <div style="line-height:50%;"><br></div>
+                        <div class="form-group">
+                            <div><label for="tool" class="control-label">Strumenti didattici</label></div>
+                            <div>
+                                <div class="input-group">
+                                    <div class="checkbox checkbox-circle">
+                                        <ng-container  *ngFor="let i of tool">
+                                                <form class="form-inline">
+                                                    <div class="form-group">
+                                                        <input class="form-control" name="quantity" id="tool[i].id.value" (input)="instrumentChange($event.target.value, i)" type="number" min="0" placeholder="Quantità" style="width:110px">  
+
+                                                        <label>&ensp;{{i.name}}</label>
+                                                    </div>
+                                                    </form>
+                                                    <div style="line-height:30%;"><br></div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                
+    
+                            </div>
+                        </div>  
+                    </form>
+                    
+                </div>                                                                                                          
+            </div>
+            <div class="modal-footer">
+                <div align="right" id="div_footer" class="col-md-12">                        
+                    <button (click)="closeModal()" id="close_modal" class="btn btn-danger" style="height:40px;width:70px">Chiudi</button>
+                </div>
+                <div align="left">                        
+                        <button style="float: right;" id="save_modal" (click)="save(name.value, seats.value)" class="btn btn-success" style="height:40px;width:70px">Salva</button>                            
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>

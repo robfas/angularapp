@@ -1,3 +1,71 @@
-<p>
-  building works!
-</p>
+<div style="line-height:500%;"><br></div>
+<div style="padding:0; margin-left: 13px;  margin-right: 13px;">
+    <label><h3>Dettagli edificio {{building?.name}}</h3></label>                                                            
+  <label class="switch" style="float: right;">
+    <input (click)="setEditable()" type="checkbox">
+    <span class="slider round"></span>
+  </label>
+</div>
+
+<div style="padding:0; margin-left: 13px;  margin-right: 13px;">
+  <input class="form-control" placeholder="Cerca" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search [formControl]="searchControl">
+</div>
+<div style="line-height:50%;"><br></div>
+<div style="padding:0; margin-left: 13px;  margin-right: 13px;">
+  <agm-map [latitude]="building?.lat" [longitude]="building?.lng" [zoom]="18" [mapTypeId]="'hybrid'">
+      <agm-marker [markerDraggable]="edit" [latitude]="building?.lat" [longitude]="building?.lng" (dragEnd)="markerDragEnd($event)"></agm-marker>
+  </agm-map>
+  <div style="line-height:50%;"><br></div>
+  <div align="right"><button (click)="reset()" class="btn btn-info" [hidden]="!edit">Reimposta posizione</button></div>
+  <div *ngIf="!valid"><p><font color="red"><br>I campi contrassegnati con l'asterisco sono obbligatori.</font></p></div>
+</div>
+<div style="line-height:100%;"><br></div>
+<div style="padding:0; margin-left: 13px;  margin-right: 13px;">
+    <form>		
+        <div class="form-group">
+            <label for="name" class="control-label">Nome edificio</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="name" id="name" value="{{building?.name}}" placeholder="Inserisci il nome dell'edificio" [disabled]="!edit" #name>
+                <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
+            </div>
+        </div>  
+        <div style="line-height:50%;"><br></div>
+        <div class="form-group">
+            <label for="address" class="control-label">Indirizzo</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="address" id="address" value="{{building?.address}}" placeholder="Inserisci l'indirizzo dell'edificio" [disabled]="!edit" #address>
+                <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
+            </div>
+        </div>  
+        <div style="line-height:50%;"><br></div>
+        <ng-container *ngIf="building?.classrooms && building?.classrooms.length != 0">
+            <label for="name" class="control-label">Classi</label>
+            <table id="elencoProdotti" class="table table-bordered dt-responsive" cellspacing="0" style="width:100%;table-layout:fixed">                                       
+                <thead>
+                    <tr bgcolor="#cccccc">
+                        <th scope="col">N°</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Posti</th>
+                        <th scope="col"> </th>
+                    </tr>
+                </thead>
+                <tbody>  
+                    <tr bgcolor="#FFFFFF" *ngFor="let c of building?.classrooms;let i = index">
+                        <td style="vertical-align:middle;"> {{ i+1 }} </td>
+                        <td style="vertical-align:middle;"> {{ c.name  }} </td> 
+                        <td style="vertical-align:middle;"> {{ c.seats  }} </td> 
+                        <td width="10%"> <button (click)="dettagli(c.id)" class="btn btn-info">Dettagli</button> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
+            <button (click)="aggClasse()" class="btn btn-warning" style="float: right;" >Aggiungi classe</button>
+              </div>
+          </ng-container>
+    </form>
+</div>
+<div style="line-height:300%;"><br></div>
+<div *ngIf="edit" style="padding:0; margin-left: 13px;  margin-right: 13px;">
+  <button (click)="save(name.value, address.value)" class="btn btn-success" style="height:40px;width:70px">Salva</button>                            
+  <div style="line-height:100%;"><br></div>
+</div>
