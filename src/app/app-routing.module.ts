@@ -12,6 +12,7 @@ import { DepartmentComponent } from './components/department/department.componen
 import { TicketComponent } from './components/ticket/ticket.component';
 import { CourseComponent } from './components/course/course.component';
 import { BuildingComponent } from './components/building/building.component';
+import { AddBuildingComponent } from './components/add-building/add-building.component';
 
 
 const routes: Routes =[
@@ -25,6 +26,7 @@ const routes: Routes =[
   {path: 'posts/:id', component: PostDetailComponent},
   {path: 'staff/ticket/:id', component: TicketComponent},
   {path: 'staff/department/building/:id', component: BuildingComponent},
+  {path: 'staff/department/add/building', component: AddBuildingComponent},
   {path: 'staff/newcourse', component: CourseComponent},
   {path: '**', component: NotFoundComponent}
 ];

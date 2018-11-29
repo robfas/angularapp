@@ -1,9 +1,6 @@
 agm-map {
   height: 300px;
 }
-ngb-modal-backdrop {
-  z-index:998;
-}
 
   /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -46,17 +43,11 @@ ngb-modal-backdrop {
       }
     
   
-        .modal-open {
-          pointer-events: auto !important;
-        }
 
       .pac-container {
         z-index: 9999 !important;
       }
 
-      .modal {
-        z-index:999 !important;
-      }
 
       .pac-controls {
         display: inline-block;
@@ -153,4 +144,3 @@ ngb-modal-backdrop {
   .slider.round:before {
     border-radius: 50%;
   }
-

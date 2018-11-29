@@ -25,8 +25,7 @@ import { TicketComponent } from './components/ticket/ticket.component';
 import { ClassroomDetailDialogComponent } from './components/classroom-detail-dialog/classroom-detail-dialog.component';
 import { CourseComponent } from './components/course/course.component';
 import { DepartmentComponent } from './components/department/department.component';
-import { AddClassroomDialogComponent } from './components/add-classroom-dialog/add-classroom-dialog.component';
-
+import { AddBuildingComponent } from './components/add-building/add-building.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,7 @@ import { AddClassroomDialogComponent } from './components/add-classroom-dialog/a
     ClassroomDetailDialogComponent,
     CourseComponent,
     DepartmentComponent,
-    AddClassroomDialogComponent,
+    AddBuildingComponent,
 
    
   ],
@@ -68,8 +67,7 @@ import { AddClassroomDialogComponent } from './components/add-classroom-dialog/a
   providers: [DataService, PostService],
   bootstrap: [AppComponent],
   entryComponents: [
-    ClassroomDetailDialogComponent,
-    AddClassroomDialogComponent
+    ClassroomDetailDialogComponent
   ]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ElementRef, NgModule, NgZone, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BuildingService } from '../../services/building.service';
 import { NavbarService } from '../../services/navbar.service';
@@ -10,33 +10,30 @@ import { Class } from '../models/Class';
 import { ClassroomService } from '../../services/classroom.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { ClassroomDetailDialogComponent } from '../classroom-detail-dialog/classroom-detail-dialog.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { } from 'googlemaps'
 
-declare var require: (filename: string) => any;
-
 @Component({
-  selector: 'app-building',
-  templateUrl: './building.component.html',
-  styleUrls: ['./building.component.css']
+  selector: 'app-add-building',
+  templateUrl: './add-building.component.html',
+  styleUrls: ['./add-building.component.css']
 })
-export class BuildingComponent implements OnInit {
+export class AddBuildingComponent implements OnInit {
   user: User;
-  building: Building;
-  edit: boolean = false;
   valid: boolean = true;
+  fileValid: boolean = true;
+  building: Building;
   public latitude: number;
   public longitude: number;
   toDelete: number;
   newClass: Class;
   selectedFile: File;
-  fileValid: boolean = true;
-  
 
   public searchControl: FormControl;
   @ViewChild("search") public searchElementRef: ElementRef;
 
-  constructor(public mapsAPILoader: MapsAPILoader, public ngZone: NgZone, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, private route: ActivatedRoute, private modalService: NgbModal) { }
+  constructor(private router:Router,public mapsAPILoader: MapsAPILoader, public ngZone: NgZone, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, private route: ActivatedRoute, private modalService: NgbModal) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
@@ -45,12 +42,13 @@ export class BuildingComponent implements OnInit {
         surname: JSON.parse(localStorage.getItem('currentUser')).surname
       }};
     this.nav.showNavStaff();
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.buildingService.getBuildingDetail(id).subscribe(building=>{
-      this.building=building;
-      this.latitude = this.building.lat;
-      this.longitude = this.building.lng;
-    });
+    this.building = {
+      id: undefined,
+      name: undefined,
+      classrooms: [],
+      lat: 40.349159,
+      lng: 18.172073
+    }
   
 
   //create search FormControl
@@ -84,24 +82,11 @@ export class BuildingComponent implements OnInit {
   });
 }
 
-setEditable() {
-  if(this.edit == false) {
-    this.edit = true;
-  } else {
-    this.edit = false;
-  }
-}
-
 markerDragEnd($event) {
   console.log($event.coords.lat);
   console.log($event.coords.lng);
   this.building.lat = $event.coords.lat;
   this.building.lng = $event.coords.lng;
-}
-
-reset() {
-  this.building.lat = this.latitude;
-  this.building.lng = this.longitude;
 }
 
 save(name, address) {
@@ -119,19 +104,25 @@ save(name, address) {
       console.log(building)
       this.building = building
       if(this.selectedFile !=  undefined) {
-      this.buildingService.saveImage(this.selectedFile, this.building.id).subscribe((result) => {
-        console.log(result)
-      });
-    }
-      });
-
-      /*this.buildingService.getBuildingDetail(this.building.id).subscribe(building=>{
-        this.building=building;
-        this.latitude = this.building.lat;
-        this.longitude = this.building.lng;
-      });*/
-  }
+        this.buildingService.saveImage(this.selectedFile, this.building.id).subscribe((result) => {
+          console.log(result)
+        });
+      }
+    });
   
+
+    this.sleep(1800).then(() => {
+      window.location.replace('/staff/department');
+  })
+      
+  }
+
+  
+  
+}
+
+sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 dettagli(classroom: Class) {
@@ -157,13 +148,27 @@ dettagli(classroom: Class) {
   });
 }
 
+//aggClasse() {
+  /*const modalRef = this.modalService.open(AddClassroomDialogComponent);
+  modalRef.componentInstance.building = this.building;
+  
+  modalRef.result.then((result) => {
+    this.buildingService.getBuildingDetail(this.building.id).subscribe(building=>{
+      this.building=building;
+      this.latitude = this.building.lat;
+      this.longitude = this.building.lng;
+    });
+  }).catch((error) => {
+    console.log(error);
+  });*/
+//}
+
 aggClasse() {
   const modalRef = this.modalService.open(ClassroomDetailDialogComponent);
   this.newClass = {
     id: undefined,
-    building: this.building,
-    lat: this.building.lat,
-    lng: this.building.lng
+    lat: 40.349159,
+    lng: 18.172073
   }
   modalRef.componentInstance.classroom = this.newClass;
   
@@ -185,33 +190,8 @@ onFileChanged(event) {
     event.target.value = '';
     this.fileValid = false;
   }
+  
+  
 }
-
-/*aggClasse() {
-  const modalRef = this.modalService.open(AddClassroomDialogComponent);
-  modalRef.componentInstance.building = this.building;
-  
-  modalRef.result.then((result) => {
-    this.building.classrooms.push(result);
-    
-  }).catch((error) => {
-    console.log(error);
-  });
-}*/
-
-/*aggClasse() {
-  const modalRef = this.modalService.open(AddClassroomDialogComponent);
-  modalRef.componentInstance.building = this.building;
-  
-  modalRef.result.then((result) => {
-    this.buildingService.getBuildingDetail(this.building.id).subscribe(building=>{
-      this.building=building;
-      this.latitude = this.building.lat;
-      this.longitude = this.building.lng;
-    });
-  }).catch((error) => {
-    console.log(error);
-  });
-}*/
 
 }

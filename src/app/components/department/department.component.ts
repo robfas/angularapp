@@ -29,7 +29,7 @@ export class DepartmentComponent implements OnInit {
     this.valid = false;
   }
 
-  searchClassroom(searchClassroom, idBuilding){
+  /*searchClassroom(searchClassroom, idBuilding){
     this.valid = true;
       if (idBuilding == 0 && searchClassroom == "") {
         this.classroomService.getAllClassrooms().subscribe(classes => {
@@ -48,16 +48,15 @@ export class DepartmentComponent implements OnInit {
           this.classes = classes;
         });
       }
-  }
+  }*/
 
   returnCards(){
     this.valid=false;
   }
 
-  dettagli(idClassroom: number) {
+  /*dettagli(idClassroom: number) {
     const modalRef = this.modalService.open(ClassroomDetailDialogComponent);
     modalRef.componentInstance.idClassroom = idClassroom;
-    
     modalRef.result.then((result) => {
       for (let c in this.classes) {
         if(this.classes[c].id == result.id) {
@@ -67,7 +66,7 @@ export class DepartmentComponent implements OnInit {
     }).catch((error) => {
       console.log(error);
     });
-  }
+  }*/
 
 }
 

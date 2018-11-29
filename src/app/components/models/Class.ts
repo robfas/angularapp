@@ -3,8 +3,8 @@ import { Tool } from '../models/Tool';
 
 export interface Class {
     id: number,
-    name: string,
-    seats: number,
+    name?: string,
+    seats?: number,
     lat?: number,
     lng?: number,
     building?: Building,
