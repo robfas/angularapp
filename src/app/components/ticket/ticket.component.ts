@@ -27,11 +27,14 @@ export class TicketComponent implements OnInit {
   text: string;
   state: TicketStatus = <TicketStatus>{};
   messages: TicketMessage[]; 
+  message: TicketMessage;
   user: User;
   textareaVisible: boolean;
   buttonVisible: boolean;
+  statusVisible: boolean;
+  isTeacher: boolean;
 
-  constructor(public nav: NavbarService, public ticketMessageService: TicketMessageService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) {this.buttonVisible, this.textareaVisible}
+  constructor(public nav: NavbarService, public ticketMessageService: TicketMessageService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) {this.buttonVisible, this.textareaVisible, this.isTeacher, this.statusVisible}
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
@@ -55,39 +58,42 @@ export class TicketComponent implements OnInit {
         this.stati = stati;
         console.log(stati);
       });
-
-  
+      
+    
+     
+      
       
     }
 
-    updateTicket(id, title, teacher, user, classroom, building, idstatus, date){
+    updateTicket(idstatus){
       if (!idstatus || (idstatus==undefined) ){
         alert('Insert post!');
       }else{
-        this.state.idticketStatus = parseInt(idstatus);
-
-        console.log(id, title, teacher, user, classroom, building, this.state, date);
-
-      this.ticketService.saveTicket({id, title, teacher, user, classroom, building, status:this.state, date} as Ticket).subscribe(ticket => {
-        console.log(ticket);
-      });
+        console.log(this.ticket);
+        console.log(idstatus);
+        this.state.idstatus = parseInt(idstatus);
+        this.ticketService.saveTicket({id: this.ticket.id, title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.state, date: this.ticket.date, ticketmessages:this.ticket.ticketmessages} as Ticket).subscribe(ticket => {
+          window.location.reload();
+        });
 
     }
-
-
   }
+  
   showButton(){
-    this.textareaVisible = false; this.buttonVisible = true;
+    this.textareaVisible = false; this.buttonVisible = true, this.statusVisible = false;
   }
 
   showTextArea(){
+    this.statusVisible = true;
+    if((this.ticket.ticketmessages.length)%2 === 0){
+      console.log("qui");
+      this.textareaVisible = false;
+    }
+    else{
     this.buttonVisible = false; this.textareaVisible = true;
-    console.log(this.user.iduser);
     this.ticket.employee.idemployee = this.user.iduser;
     this.ticket.employee.name = this.user.name;
-    this.ticket.employee.surname = this.user.surname;         
-    console.log(this.ticket);
-    console.log(this.ticket.ticketmessages);
+    this.ticket.employee.surname = this.user.surname;
 
     if(this.ticket.employee.idemployee===null || this.ticket.employee.idemployee === undefined){
     this.ticketService.saveTicket({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, ticketmessages: this.ticket.ticketmessages, date: this.ticket.date} as Ticket).subscribe(ticket => {
@@ -96,17 +102,17 @@ export class TicketComponent implements OnInit {
     });
     }
   }
+  }
 
   saveMessage(textmessage){
     if(textmessage === undefined || !textmessage){
       alert('Inserisci messaggio!');
     }
-    else{
-      console.log(textmessage);
-      console.log(this.ticket.id,this.user,textmessage,this.ticket.date);
-      this.ticketMessageService.saveMessage({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, date: this.ticket.date} as Ticket, {idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(ticket => {
-        console.log(ticket);
+    else{      
+      this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(message => {
+        console.log(message);
       });
+      window.location.reload();
     }
   }
 

@@ -12,7 +12,7 @@
 }
 
 /* Chat containers */
-.container {
+.light {
     border: 2px solid #72727269;
     background-color: #cfedf780;
     border-radius: 5px;
@@ -22,7 +22,12 @@
 
 /* Darker chat container */
 .darker {
+    margin-left: 100px;
+    border: 2px solid #72727269;
     float: right;
+    border-radius: 5px;
     border-color: rgba(138, 138, 138, 0.473);
     background-color: rgba(185, 238, 194, 0.712);
+    padding: 10px;
+    margin: 10px 0;
 }

@@ -11,7 +11,7 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 })
 export class TicketMessageService {
   getAllByIdUrl: string = 'http://localhost:8080/SpringApp/ticket/getMessages';
-  saveMessageUrl: string = 'http://localhost:8080/SpringApp/ticket/savestaff';
+  saveMessageUrl: string = 'http://localhost:8080/SpringApp/ticket/savemessage';
 
   constructor(private http: HttpClient) { }
 
@@ -20,7 +20,7 @@ export class TicketMessageService {
     return this.http.get<TicketMessage[]>(this.getAllByIdUrl + '/' + id);
   }
 
-  saveMessage(ticket: Ticket, ticketMessage: TicketMessage):Observable<Ticket>{
-    return this.http.post<Ticket>(this.saveMessageUrl, ticket, {headers});
+  saveMessage(ticketMessage: TicketMessage):Observable<TicketMessage>{
+    return this.http.post<TicketMessage>(this.saveMessageUrl, ticketMessage, {headers});
   }
 }

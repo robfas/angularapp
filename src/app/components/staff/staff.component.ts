@@ -22,7 +22,7 @@ export class StaffComponent implements OnInit {
     this.staffService.showTable();
    
     this.ticketService.getTickets().subscribe(tickets => {
-      this.tickets = tickets.filter(tickets=>tickets.ticketStatus.idticketStatus !== 4);
+      this.tickets = tickets.filter(tickets=>tickets.ticketStatus.idstatus < 3);
       console.log(this.tickets);
     });
   }
@@ -30,7 +30,7 @@ export class StaffComponent implements OnInit {
   showArchived(){
    this.staffService.showArchived();
    this.ticketService.getTickets().subscribe(tickets => {
-    this.filteredtickets = tickets.filter(tickets=>tickets.ticketStatus.idticketStatus === 4);
+    this.filteredtickets = tickets.filter(tickets=>tickets.ticketStatus.idstatus > 2);
   });
   }
 
