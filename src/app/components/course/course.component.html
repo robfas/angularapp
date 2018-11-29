@@ -3,51 +3,39 @@
   <h3>Inserisci Dati Corso</h3>
     <form>
         <div class="form-group row">
+            <label for="laurea" class="col-sm-2 col-form-label">Laurea</label>
+            <div class="col-sm-10">
+              <select class="custom-select mr-sm-2" name="course" #idcourseType>
+                <option value=0>Seleziona Categoria Di Corso di Laurea</option>
+                <option *ngFor="let c of courseTypes; let i = index" [value]="c.idcourseType">{{ c.description }}</option>
+              </select>
+            </div>
+        </div>
+        <div class="form-group row">
           <label for="nome" class="col-sm-2 col-form-label">Nome Corso</label>
           <div class="col-sm-10">
-            <input type="nome" class="form-control" id="nome" placeholder="Nome Corso" #nome>
+            <select class="custom-select mr-sm-2" name="nome" #nome>
+              <option value=0>Seleziona Tipo di Corso di Laurea</option>
+              <option *ngFor="let d of degreeCourseTypes; let d = index" [value]="d.idtypeDegreeCourse">{{ d.name }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
           <label for="descrizione" class="col-sm-2 col-form-label">Descrizione</label>
           <div class="col-sm-10">
-            <input type="descrizione" class="form-control" id="descrizione" placeholder="Descrizione" #descrizione>
+              <textarea class="form-control" id="descrizione" placeholder="Descrizione" rows="3" #descrizione></textarea> 
           </div>
         </div>
         <div class="form-group row">
-          <label for="academicyear" class="col-sm-2 col-form-label">A. A.</label>
+          <label for="academicyear" class="col-sm-2 col-form-label">Anno Accademico</label>
           <div class="col-sm-10">
-            <input type="academicyear" class="form-control" id="academicyear" placeholder="Anno Accademico" #academicyear>
+            <input type="year" id="year" class="form-control" value={{year}} #academicyear>
           </div>
         </div>
-        <fieldset class="form-group">
-          <div class="row">
-            <legend class="col-form-label col-sm-2 pt-0">Laurea</legend>
-            <div class="col-sm-10">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="3" checked  #years>
-                <label class="form-check-label" for="gridRadios1">
-                  Triennale
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="2" #years>
-                <label class="form-check-label" for="gridRadios2">
-                  Magistrale
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="5" #years>
-                <label class="form-check-label" for="gridRadios3">
-                  Magistrale a ciclo unico
-                </label>
-              </div>
-            </div>
-          </div>
-        </fieldset>
+      
         <div class="form-group row">
           <div class="col-sm-12">
-            <button type="button" class="btn btn-success float-right" (click)="save(nome.value, descrizione.value, academicyear.value, years.value)">Avanti</button>
+            <button type="button" class="btn btn-success float-right" (click)="save(nome.value, academicyear.value, idcourseType.value)">Avanti</button>
           </div>
         </div>
       </form>

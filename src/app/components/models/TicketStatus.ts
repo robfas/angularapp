@@ -1,4 +1,4 @@
 export interface TicketStatus {
-    idticketStatus: number;
+    idstatus: number;
     description?: string;
 }

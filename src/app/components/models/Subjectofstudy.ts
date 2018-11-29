@@ -1,10 +1,10 @@
 import { Teacher } from '../models/Teacher';
-import { Course } from '../models/Course';
+import { DegreeCourse } from '../models/DegreeCourse';
 
 export interface Subjectofstudy {
     id: number;
 	name: string;
 	description: string;
-	course: Course;
+	degreecourse: DegreeCourse;
 	teacher: Teacher;
 }

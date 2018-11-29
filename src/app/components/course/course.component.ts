@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarService } from '../../services/navbar.service';
-import { Course } from '../models/course';
+import { DegreeCourse } from '../models/DegreeCourse';
 import { CourseService } from '../../services/course.service';
 import { Subjectofstudy } from '../models/subjectofstudy';
 import { SubjectofstudyService } from '../../services/subjectofstudy.service';
+import { TypeDegreeCourse } from '../models/TypeDegreeCourse';
+import { CourseType } from '../models/CourseType';
 
 @Component({
   selector: 'app-course',
@@ -11,30 +13,47 @@ import { SubjectofstudyService } from '../../services/subjectofstudy.service';
   styleUrls: ['./course.component.css']
 })
 export class CourseComponent implements OnInit {
-  course: Course;
+  course: DegreeCourse;
+  degreeCourseType: TypeDegreeCourse;
+  degreeCourseTypes: TypeDegreeCourse[];
+  courseType: CourseType;
+  courseTypes: CourseType[];
   nextPage: boolean = false;
   subjectofstudies: Subjectofstudy[];
+  year: string;
+  cfu: number;
 
   constructor(public nav: NavbarService, public courseService: CourseService, public subjectofstudyService: SubjectofstudyService) { }
 
   ngOnInit() {
     this.nav.showNavStaff();
-    console.log(this.nextPage);
-
+    this.year = String(new Date().getFullYear());
+    this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
+      this.courseTypes = courseTypes; 
+      console.log(this.courseTypes);
+    });
+    this.courseService.getAllTypes().subscribe(degreeCourseTypes=>{
+      this.degreeCourseTypes = degreeCourseTypes;
+      console.log(this.degreeCourseTypes);
+    });
+    
   }
 
 
-  save(name, description, academicyear, years){
+  save(name, academicYear, idcourseType){
 
-    if (!name || !description || !description || (years==undefined) ){
-      alert('Inserisci dati!');
+    if (!name || !academicYear || (idcourseType==undefined) ){
+      alert('Inserisci Dati Corso!');
     }else{
-
-    this.courseService.saveCourse({name, description, academicyear, years} as Course).subscribe(course => {
-      console.log(course);
+      console.log(idcourseType);
+    this.courseService.getCourseType(idcourseType).subscribe(courseType =>{
+      this.courseType = courseType;
+      console.log(courseType);
+    /*  this.courseService.saveCourse({name, academicYear, cfu: courseType.cfu , course} as DegreeCourse).subscribe(course => {
+        console.log(course);
+        this.nextPage = true;
+      });*/
     });
-
-    this.nextPage = true;
   }
   
   

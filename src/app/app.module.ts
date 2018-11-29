@@ -26,6 +26,8 @@ import { ClassroomDetailDialogComponent } from './components/classroom-detail-di
 import { CourseComponent } from './components/course/course.component';
 import { DepartmentComponent } from './components/department/department.component';
 import { AddBuildingComponent } from './components/add-building/add-building.component';
+import { CourseTypeComponent } from './components/course-type/course-type.component';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { AddBuildingComponent } from './components/add-building/add-building.com
     CourseComponent,
     DepartmentComponent,
     AddBuildingComponent,
+    CourseTypeComponent,
 
    
   ],
