@@ -27,6 +27,8 @@ import { CourseComponent } from './components/course/course.component';
 import { DepartmentComponent } from './components/department/department.component';
 import { AddClassroomDialogComponent } from './components/add-classroom-dialog/add-classroom-dialog.component';
 import { CourseTypeComponent } from './components/course-type/course-type.component';
+import { SubjectComponent } from './components/subject/subject.component';
+import { TicketsComponent } from './components/tickets/tickets.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { CourseTypeComponent } from './components/course-type/course-type.compon
     DepartmentComponent,
     AddClassroomDialogComponent,
     CourseTypeComponent,
+    SubjectComponent,
+    TicketsComponent,
 
    
   ],

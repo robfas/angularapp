@@ -13,6 +13,8 @@ import { TicketComponent } from './components/ticket/ticket.component';
 import { CourseComponent } from './components/course/course.component';
 import { BuildingComponent } from './components/building/building.component';
 import { CourseTypeComponent } from './components/course-type/course-type.component';
+import { SubjectComponent } from './components/subject/subject.component';
+import { TicketsComponent } from './components/tickets/tickets.component';
 
 
 const routes: Routes =[
@@ -28,6 +30,8 @@ const routes: Routes =[
   {path: 'staff/department/building/:id', component: BuildingComponent},
   {path: 'staff/newcourse', component: CourseComponent},
   {path: 'staff/newcoursetype', component: CourseTypeComponent},
+  {path: 'staff/newsubject', component: SubjectComponent},
+  {path: 'staff/tickets', component: TicketsComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

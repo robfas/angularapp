@@ -1,0 +1,53 @@
+<div class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+    <div class="card card-body mb-3 bg-transparent">
+    <h3>Inserisci Insegnamento</h3>
+    <br>
+    <form>
+        <div class="form-group row">
+            <label for="tipo" class="col-sm-2 col-form-label">Tipo di Insegnamento</label>
+            <div class="col-sm-10">
+            <select class="custom-select mr-sm-2" name="tipo" #idtypeSubject>
+                <option value=0>Seleziona Tipo di Insegnamento</option>
+                <option *ngFor="let t of typeSubjects; let t = index" [value]="t.idtypeSubject">{{ t.name }}</option>
+              </select>
+          </div>
+        </div>
+
+      <div class="form-group row">
+        <label for="Descrizione" class="col-sm-2 col-form-label">Descrizione</label>
+        <div class="col-sm-10">
+          <input type="descrizione" class="form-control" id="descrizione" placeholder="Descrizione" #subjdescr>
+        </div>
+      </div>
+
+      <div class="form-group row">
+          <label for="cfu" class="col-sm-2 col-form-label">Cfu</label>
+          <div class="col-sm-10">
+            <input type="cfu" class="form-control" id="cfu" placeholder="Cfu" #subjcfu>
+          </div>
+        </div>
+  
+
+      <div class="form-group row">
+        <label for="cognometeach" class="col-sm-2 col-form-label">Cognome Docente</label>
+        <div class="col-sm-10">
+          <input type="cognome" class="form-control" id="cognome" placeholder="Cognome Docente" #teachsurname>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="nometeach" class="col-sm-2 col-form-label">Nome Docente</label>
+        <div class="col-sm-10">
+          <input type="nome" class="form-control" id="nome" placeholder="Nome Docente" #teachname>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <button type="button" class="btn btn-success float-right" (click)="saveSubject(idtypeSubject.value, subjdescr.value, subjcfu.value, teachname.value, teachsurname.value)">Avanti</button>
+        </div>
+      </div>
+
+    </form>
+    </div>
+  </div>

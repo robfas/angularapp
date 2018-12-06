@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Subjectofstudy } from '../components/models/subjectofstudy';
+import { Subject } from '../components/models/subject';
+import { TypeSubject } from '../components/models/TypeSubject';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -9,16 +10,21 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class SubjectofstudyService {
-  getAllUrl = 'http://localhost:8080/SpringApp/subjectofstudy/getAll';
-  saveUrl = 'http://localhost:8080/SpringApp/subjectofstudy/save';
+  getAllUrl = 'http://localhost:8080/SpringApp/subject/getAll';
+  saveUrl = 'http://localhost:8080/SpringApp/subject/save';
+  getAllSubjectTypesUrl = 'http://localhost:8080/SpringApp/subject/getAllSubjectTypes';
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Subjectofstudy[]>{
-    return this.http.get<Subjectofstudy[]>(this.getAllUrl);
+  getAll(): Observable<Subject[]>{
+    return this.http.get<Subject[]>(this.getAllUrl);
   }
 
-  saveSubject(subjectofstudy: Subjectofstudy): Observable<Subjectofstudy>{
-    return this.http.post<Subjectofstudy>(this.saveUrl, subjectofstudy, {headers});
+  saveSubject(subject: Subject): Observable<Subject>{
+    return this.http.post<Subject>(this.saveUrl, subject, {headers});
+  }
+
+  getAllSubjectTypes(): Observable<TypeSubject[]>{
+    return this.http.get<TypeSubject[]>(this.getAllSubjectTypesUrl);
   }
 }

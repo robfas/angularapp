@@ -1,76 +1,89 @@
 
-<div class="jumbotron ">
-        <div class="img"></div>
+<div class="jumbotron">
+    <div class="img"></div>
  
     <h1 class="display-3">Staff Area</h1>
     <p>Gestisci i corsi di laurea, le segnalazioni e il calendario didattico.</p>
-  </div>
-
-
-<div *ngIf="staffService.tableVisible" class="col md-12">
-    <h3>Segnalazioni</h3>
-    <button type="button" class="btn btn-dark mt-2 float-right" (click)="showArchived()">
-        Archiviate
-    </button>
-  <table id="elencotickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
-      <thead>
-          <tr bgcolor="#cccccc">
-              <th style="text-align:center"class="never">Id</th>
-              <th style="text-align:center">Data apertura</th>
-              <th style="text-align:center">Titolo</th>
-              <th style="text-align:center">Aula</th>
-              <th style="text-align:center">Cognome Docente</th>
-              <th style="text-align:center">Nome Docente</th>
-              <th style="text-align:center">Stato</th>
-          </tr>
-      </thead>
-      <tbody>                                                                                         
-        <tr *ngFor="let t of tickets;let i = index;"> 
-          <td style="text-align:center"> {{ t.id }} </td>
-          <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
-          <td style="text-align:center"> {{ t.title }} </td>
-          <td style="text-align:center"> {{ t.classroom.name }} </td>
-          <td style="text-align:center"> {{ t.teacher.surname }} </td> 
-          <td style="text-align:center"> {{ t.teacher.name }} </td> 
-          <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
-          <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
-        </tr>
-      </tbody>
-  </table>
+</div>
+<div class="card card-body mb-3 bg-transparent" style="border: transparent">
+<div class="card card-body mb-3 bg-transparent">  
+    <h3>Area personale</h3>
+    <br>
+    <div class="row">
+            <div class="col-sm">
+              <img class="rounded-circle" src="http://localhost:8080/SpringApp/images/user.png" alt="Generic placeholder image" width="150" height="150">
+            </div>
+            <div class="col-sm">
+            <div class="row">
+              <h3>{{user.name}} {{user.surname}} <br></h3>
+            </div>
+            <div class="row">
+              <p><b>Indirizzo: </b>{{user.residence}}</p>
+            </div>
+              <div class="row">
+              <p><b>Cell: </b>{{user.phone}}</p>
+            </div>
+        </div>
+        <div class="col-sm">
+                <div class="row">
+                        <h3><br></h3>
+                      </div>
+                      <div class="row">
+                        <p><b>Email: </b>{{user.email}}</p>
+                      </div>
+                        <div class="row">
+                        <p><b>Data di nascita: </b>{{user.dateBirth | date : shortDate}}</p>
+                      </div>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <div class="col-sm-14">
+    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#datamodal">
+        Modifica Dati Personali
+      </button>
+    </div>
+</div>
 </div>
 
-
-<div *ngIf="staffService.tableArchivedVisible" class="col md-12">
-        <h3>Segnalazioni</h3>
-        <button type="button" class="btn btn-dark mt-2 float-right" (click)="ngOnInit()">
-            Indietro
-        </button>
-  <table id="elencoarchivedtickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
-        <thead>
-                <tr bgcolor="#cccccc">
-                    <th style="text-align:center" class="never">Id</th>
-                    <th style="text-align:center">Data apertura</th>
-                    <th style="text-align:center">Titolo</th>
-                    <th style="text-align:center">Aula</th>
-                    <th style="text-align:center">Cognome Docente</th>
-                    <th style="text-align:center">Nome Docente</th>
-                    <th style="text-align:center">Stato</th>
-                </tr>
-            </thead>
-            <tbody>                                                                                         
-                    <tr *ngFor="let t of filteredtickets"> 
-                      <td style="text-align:center"> {{ t.id }} </td>
-                      <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
-                      <td style="text-align:center"> {{ t.title }} </td>
-                      <td style="text-align:center"> {{ t.classroom.name }} </td>
-                      <td style="text-align:center"> {{ t.teacher.surname }} </td> 
-                      <td style="text-align:center"> {{ t.teacher.name }} </td> 
-                      <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
-                      <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
-                    </tr>
-                  </tbody>
-    </table>
-    </div>
-
-
-
+<!-- Modal -->
+<div class="modal fade" id="datamodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modifica Dati</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <form>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="nome">Nome</label>
+                                <input type="text" class="form-control" id="name" value="{{ user.name }}" readonly>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="cognome">Cognome</label>
+                                <input type="text" class="form-control" id="surname" value="{{ user.surname }}" readonly>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputAddress">Indirizzo</label>
+                              <input type="text" class="form-control" id="inputAddress" value="{{ user.residence }}">
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="inputPhone">Phone</label>
+                                <input type="text" class="form-control" id="phone"  value="{{ user.phone }}">
+                              </div>
+                            </div>
+                           
+                          </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+              <button type="button" class="btn btn-success">Salva</button>
+            </div>
+          </div>
+        </div>
+      </div>
