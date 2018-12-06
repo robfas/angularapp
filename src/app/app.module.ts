@@ -25,7 +25,7 @@ import { TicketComponent } from './components/ticket/ticket.component';
 import { ClassroomDetailDialogComponent } from './components/classroom-detail-dialog/classroom-detail-dialog.component';
 import { CourseComponent } from './components/course/course.component';
 import { DepartmentComponent } from './components/department/department.component';
-import { AddClassroomDialogComponent } from './components/add-classroom-dialog/add-classroom-dialog.component';
+import { AddBuildingComponent } from './components/add-building/add-building.component';
 import { CourseTypeComponent } from './components/course-type/course-type.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
@@ -49,7 +49,7 @@ import { TicketsComponent } from './components/tickets/tickets.component';
     ClassroomDetailDialogComponent,
     CourseComponent,
     DepartmentComponent,
-    AddClassroomDialogComponent,
+    AddBuildingComponent,
     CourseTypeComponent,
     SubjectComponent,
     TicketsComponent,
@@ -74,8 +74,7 @@ import { TicketsComponent } from './components/tickets/tickets.component';
   providers: [DataService, PostService],
   bootstrap: [AppComponent],
   entryComponents: [
-    ClassroomDetailDialogComponent,
-    AddClassroomDialogComponent
+    ClassroomDetailDialogComponent
   ]
 })
 export class AppModule { }

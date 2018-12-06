@@ -7,7 +7,7 @@
                 <div style="line-height:50%;"><br></div>
             <div class="modal-header" style="padding:0; margin-left: 13px;  margin-right: 13px;">                                                        
                 <h3 id="titolo_modal" style="text-align: center;"> Dettagli Aula {{classroom?.name}}</h3>                                                              
-                <label class="switch">
+                <label *ngIf="!new" class="switch">
                     <input (click)="setEditable()" type="checkbox">
                     <span class="slider round"></span>
                     </label>
@@ -32,18 +32,21 @@
                         </div>
                     </div>                                                    
                     <div style="line-height:50%;"><br></div>        
-                    <div class="form-group">
+                    <div *ngIf="classroom.building != undefined" class="form-group">
+                            <div *ngIf="classroom.building.id != undefined">
                         <label for="building" class="control-label">Edificio</label>
                         <div class="input-group">
-                            <select class="form-control" name="building" id="building" [disabled]="!edit" style="width: 100%"  [(ngModel)]="selectedBuilding" #building>
-                                <option *ngFor="let b of buildings" [ngValue]="b" [selected]="b.id == classroom?.building.id">
-                                    {{b.name}}
-                                </option>                                                                                                                                                                     
-                            </select>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="name" id="name" value="{{classroom?.building.name}}" [disabled]="true" #building>
+                                <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
+                            </div>
                             <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
                         </div>
+                        <div style="line-height:50%;"><br></div>
                     </div>
-                    <div style="line-height:50%;"><br></div>
+                        
+                    </div>
+                    
                     <div class="form-group">
                         <label for="seats" class="control-label">Posti disponibili</label>
                         <div class="input-group">
@@ -54,7 +57,7 @@
                     <div style="line-height:50%;"><br></div>
                     <div class="form-group">
                         <div *ngIf="tool.size > 0"><label for="tool" class="control-label">Strumenti didattici</label></div>
-                        <div *ngIf="edit">
+                        <div *ngIf="edit || new">
                             <div class="input-group">
                                 <div class="checkbox checkbox-circle">
                                     <ng-container  *ngFor="let i of tool">

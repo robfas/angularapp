@@ -12,6 +12,7 @@ import { DepartmentComponent } from './components/department/department.componen
 import { TicketComponent } from './components/ticket/ticket.component';
 import { CourseComponent } from './components/course/course.component';
 import { BuildingComponent } from './components/building/building.component';
+import { AddBuildingComponent } from './components/add-building/add-building.component';
 import { CourseTypeComponent } from './components/course-type/course-type.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
@@ -28,6 +29,7 @@ const routes: Routes =[
   {path: 'posts/:id', component: PostDetailComponent},
   {path: 'staff/ticket/:id', component: TicketComponent},
   {path: 'staff/department/building/:id', component: BuildingComponent},
+  {path: 'staff/department/add/building', component: AddBuildingComponent},
   {path: 'staff/newcourse', component: CourseComponent},
   {path: 'staff/newcoursetype', component: CourseTypeComponent},
   {path: 'staff/newsubject', component: SubjectComponent},

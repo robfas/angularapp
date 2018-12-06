@@ -12,6 +12,7 @@ export class BuildingService {
   getAllUrl: string = 'http://localhost:8080/SpringApp/building/getAll';
   getByIdUrl: string = 'http://localhost:8080/SpringApp/building/getById';
   buildingSaveUrl: string = 'http://localhost:8080/SpringApp/building/save';
+  imageUrl: string = 'http://localhost:8080/SpringApp/file/upload/building';
 
   constructor(private http: HttpClient) { }
 
@@ -26,4 +27,11 @@ export class BuildingService {
   saveBuilding(building: Building): Observable<Building>{
     return this.http.post<Building>(this.buildingSaveUrl, building, {headers});
   }
+
+  saveImage(selectedFile: File, idBuilding: number): Observable<{}> {
+    const uploadData = new FormData();
+    uploadData.append('file', selectedFile, idBuilding.toString()+ ".jpg");
+    return this.http.post(this.imageUrl, uploadData);
+  }
+  
 }

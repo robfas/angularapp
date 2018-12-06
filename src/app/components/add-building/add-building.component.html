@@ -2,10 +2,6 @@
 <div style="line-height:500%;"><br></div>
 <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
     <label><h3>Dettagli edificio {{building?.name}}</h3></label>                                                            
-  <label class="switch" style="float: right;">
-    <input (click)="setEditable()" type="checkbox">
-    <span class="slider round"></span>
-  </label>
 </div>
 
 <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
@@ -13,20 +9,17 @@
 </div>
 <div style="line-height:50%;"><br></div>
 <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
-  <agm-map [latitude]="building?.lat" [longitude]="building?.lng" [zoom]="18" [mapTypeId]="'hybrid'">
-      <agm-marker [markerDraggable]="edit" [latitude]="building?.lat" [longitude]="building?.lng" (dragEnd)="markerDragEnd($event)"></agm-marker>
+  <agm-map [latitude]="building?.lat" [longitude]="building?.lng" [zoom]="12" [mapTypeId]="'hybrid'">
+      <agm-marker [markerDraggable]="true" [latitude]="building?.lat" [longitude]="building?.lng" (dragEnd)="markerDragEnd($event)"></agm-marker>
   </agm-map>
-  <div style="line-height:50%;"><br></div>
-  <div align="right"><button (click)="reset()" class="btn btn-info" [hidden]="!edit">Reimposta posizione</button></div>
-  <div *ngIf="!valid"><p><font color="red"><br>I campi contrassegnati con l'asterisco sono obbligatori.</font></p></div>
-</div>
+ </div>
 <div style="line-height:100%;"><br></div>
 <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
     <form>		
         <div class="form-group">
             <label for="name" class="control-label">Nome edificio</label>
             <div class="input-group">
-                <input type="text" class="form-control" name="name" id="name" value="{{building?.name}}" placeholder="Inserisci il nome dell'edificio" [disabled]="!edit" #name>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Inserisci il nome dell'edificio" #name>
                 <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
             </div>
         </div>  
@@ -34,51 +27,48 @@
         <div class="form-group">
             <label for="address" class="control-label">Indirizzo</label>
             <div class="input-group">
-                <input type="text" class="form-control" name="address" id="address" value="{{building?.address}}" placeholder="Inserisci l'indirizzo dell'edificio" [disabled]="!edit" #address>
+                <input type="text" class="form-control" name="address" id="address" placeholder="Inserisci l'indirizzo dell'edificio" #address>
                 <span *ngIf="!valid" style="background-color: lightcoral" class="input-group-addon danger">*<span class="glyphicon glyphicon-asterisk"></span></span>
             </div>
         </div>  
-        <div *ngIf="!edit">
+        <div style="line-height:100%;"><br></div>
         <input type="file" (change)="onFileChanged($event)">
         <div *ngIf="!fileValid">
         <div style="line-height:50%;"></div>
         <label style="color:red;">Sono consentiti solo file con estensione .jpg</label>
         </div>
-        </div>
         <div style="line-height:50%;"><br></div>
         <ng-container *ngIf="building?.classrooms && building?.classrooms.length != 0">
             <label for="name" class="control-label">Classi</label>
-            <table id="elencoClassi" class="table table-bordered dt-responsive" cellspacing="0" style="width:100%;table-layout:fixed">                                       
+            <table id="elencoProdotti" class="table table-bordered dt-responsive" cellspacing="0" style="width:100%;table-layout:fixed">                                       
                 <thead>
                     <tr bgcolor="#cccccc">
-                        <th scope="col" width="5%">N°</th>
+                        <th scope="col">N°</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">Edificio</th>
                         <th scope="col">Posti</th>
-                        <th scope="col" width="10%"> </th>
+                        <th scope="col"> </th>
                     </tr>
                 </thead>
                 <tbody>  
                     <tr bgcolor="#FFFFFF" *ngFor="let c of building?.classrooms;let i = index">
                         <td  style="vertical-align:middle;" width="5%"> {{ i+1 }} </td>
                         <td style="vertical-align:middle;"> {{ c.name  }} </td> 
-                        <td style="vertical-align:middle;"> {{ c.building.name  }} </td> 
                         <td style="vertical-align:middle;"> {{ c.seats  }} </td> 
-                        <td align="middle" > <button (click)="dettagli(c)" class="btn btn-info" [disabled]="!edit">Modifica</button></td>
+                        <td align="middle" width="10%"> <button (click)="dettagli(c)" class="btn btn-info">Dettagli</button></td>
                         </tr>
                 </tbody>
             </table>
           </ng-container>
-          <div style="padding:0;  margin-right: 13px;">
-                <button (click)="aggClasse()" class="btn btn-warning" style="float: left;" [disabled]="!edit">Aggiungi classe</button>
-                  </div>
+          <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
+              <button (click)="aggClasse()" class="btn btn-warning" style="float: right;" >Aggiungi classe</button>
+                </div>
     </form>
 </div>
 <div style="line-height:300%;"><br></div>
 <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
         <span style="display: inline;">     
                 <div style="float: left;">
-            <button *ngIf="edit" (click)="save(name.value, address.value)" data-toggle="modal" data-target="#modal" class="btn btn-success" style="height:40px;width:70px">Salva</button>                            
+            <button (click)="save(name.value, address.value)" data-toggle="modal" data-target="#modal" class="btn btn-success" style="height:40px;width:70px">Salva</button>                            
             </div><div style="float: right;">
                     <a href="/staff/department">
                             <button class="btn btn-danger" style="height:40px;width:70px">
@@ -89,9 +79,8 @@
         </span>
 </div>
 
-
     <!-- Modal -->
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+    <div *ngIf="valid" class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -103,9 +92,6 @@
                 <div class="modal-body">
                   Aggiornamento avvenuto con successo!
                 </div>
-                <div class="modal-footer">
-                        <a href="staff/department/" class="button">Torna all'elenco</a>
-                  </div>
               </div>
             </div>
           </div>
