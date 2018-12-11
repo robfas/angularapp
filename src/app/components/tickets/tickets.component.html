@@ -1,0 +1,71 @@
+<div *ngIf="staffService.tableVisible" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+  <div class="card card-body mb-3 bg-transparent">
+  <h3>Segnalazioni</h3>
+  <div class="col-sm-14">
+  <button type="button" class="btn btn-dark float-right" (click)="showArchived()">
+      Archiviate
+  </button>
+</div>
+<table id="elencotickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+    <thead>
+        <tr bgcolor="#cccccc">
+            <th style="text-align:center"class="never">Id</th>
+            <th style="text-align:center">Data apertura</th>
+            <th style="text-align:center">Titolo</th>
+            <th style="text-align:center">Aula</th>
+            <th style="text-align:center">Cognome Docente</th>
+            <th style="text-align:center">Nome Docente</th>
+            <th style="text-align:center">Stato</th>
+        </tr>
+    </thead>
+    <tbody>                                                                                         
+      <tr *ngFor="let t of tickets;let i = index;"> 
+        <td style="text-align:center"> {{ t.id }} </td>
+        <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
+        <td style="text-align:center"> {{ t.title }} </td>
+        <td style="text-align:center"> {{ t.classroom.name }} </td>
+        <td style="text-align:center"> {{ t.teacher.surname }} </td> 
+        <td style="text-align:center"> {{ t.teacher.name }} </td> 
+        <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
+        <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+      </tr>
+    </tbody>
+</table>
+</div>
+</div>
+
+<div *ngIf="staffService.tableArchivedVisible" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+    <div class="card card-body mb-3 bg-transparent">  
+    <h3>Segnalazioni</h3>
+    <div class="col-sm-14">
+      <button type="button" class="btn btn-dark float-right" style="float: right;" (click)="ngOnInit()">
+          Indietro
+      </button>
+    </div>
+<table id="elencoarchivedtickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+      <thead>
+              <tr bgcolor="#cccccc">
+                  <th style="text-align:center" class="never">Id</th>
+                  <th style="text-align:center">Data apertura</th>
+                  <th style="text-align:center">Titolo</th>
+                  <th style="text-align:center">Aula</th>
+                  <th style="text-align:center">Cognome Docente</th>
+                  <th style="text-align:center">Nome Docente</th>
+                  <th style="text-align:center">Stato</th>
+              </tr>
+          </thead>
+          <tbody>                                                                                         
+                  <tr *ngFor="let t of filteredtickets"> 
+                    <td style="text-align:center"> {{ t.id }} </td>
+                    <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
+                    <td style="text-align:center"> {{ t.title }} </td>
+                    <td style="text-align:center"> {{ t.classroom.name }} </td>
+                    <td style="text-align:center"> {{ t.teacher.surname }} </td> 
+                    <td style="text-align:center"> {{ t.teacher.name }} </td> 
+                    <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
+                    <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+                  </tr>
+                </tbody>
+  </table>
+  </div>
+</div>

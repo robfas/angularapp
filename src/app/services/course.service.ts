@@ -17,6 +17,7 @@ export class CourseService {
   getTypesByIdUrl: string = 'http://localhost:8080/SpringApp/course/getTypesById';
   getAllCourseTypesUrl: string = 'http://localhost:8080/SpringApp/course/getAllCourseTypes';
   getCourseTypeUrl: string = 'http://localhost:8080/SpringApp/course/getCourseType';
+  getAllUrl: string = 'http://localhost:8080/SpringApp/course/getAll'
 
   constructor(private http: HttpClient) { }
 
@@ -39,5 +40,9 @@ export class CourseService {
 
   getCourseType(id: number):Observable<CourseType>{
     return this.http.get<CourseType>(this.getCourseTypeUrl + '/' + id);
+  }
+
+  getAll(): Observable<DegreeCourse[]>{
+    return this.http.get<DegreeCourse[]>(this.getAllUrl);
   }
 }

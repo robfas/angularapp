@@ -36,6 +36,9 @@ import { AddBuildingComponent } from './components/add-building/add-building.com
 import { CourseTypeComponent } from './components/course-type/course-type.component';
 import { SchoolCalendarComponent } from './components/school-calendar/school-calendar.component';
 import { SchoolCalendar2Component } from './components/school-calendar2/school-calendar2.component';
+import { SubjectComponent } from './components/subject/subject.component';
+import { TicketsComponent } from './components/tickets/tickets.component';
+import { CoursesComponent } from './components/courses/courses.component';
 
 
 @NgModule({
@@ -60,6 +63,9 @@ import { SchoolCalendar2Component } from './components/school-calendar2/school-c
     CourseTypeComponent,
     SchoolCalendarComponent,
     SchoolCalendar2Component,
+    SubjectComponent,
+    TicketsComponent,
+    CoursesComponent,
 
    
   ],

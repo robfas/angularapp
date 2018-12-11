@@ -5,6 +5,9 @@ import { LoginService } from '../../services/login.service';
 import { first } from 'rxjs/operators';
 import{User} from '../models/User';
 import { NavbarService } from '../../services/navbar.service';
+import { CourseService } from '../../services/course.service';
+import { DegreeCourse } from '../models/DegreeCourse';
+import { CourseType } from '../models/CourseType';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +16,10 @@ import { NavbarService } from '../../services/navbar.service';
 })
 export class NavbarComponent implements OnInit {
   user: User;
-  constructor(public nav: NavbarService, private loginService: LoginService, private router: Router) { }
+  courses: DegreeCourse[];
+  courseTypes: CourseType[];
+
+  constructor(public nav: NavbarService, private loginService: LoginService, private router: Router, public courseService: CourseService) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
@@ -22,6 +28,10 @@ export class NavbarComponent implements OnInit {
         surname: JSON.parse(localStorage.getItem('currentUser')).surname
       }
     }
+    this.courseService.getAllCourseTypes().subscribe(courseTypes=>{
+      this.courseTypes=courseTypes;
+      console.log(courseTypes)
+    })
   }
 
   signInUser(email,password) {
@@ -57,5 +67,4 @@ export class NavbarComponent implements OnInit {
     this.nav.showHome();
     this.router.navigate(['/']);
   }
-
 }

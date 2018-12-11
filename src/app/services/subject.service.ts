@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SubjectStudy } from '../components/models/subjectstudy';
+import { TypeSubject } from '../components/models/TypeSubject';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -12,6 +13,7 @@ export class SubjectService {
   getAllUrl = 'http://localhost:8080/SpringApp/subject/getAll';
   saveUrl = 'http://localhost:8080/SpringApp/subject/save';
   getByIdCourseUrl = 'http://localhost:8080/SpringApp/subject/getByIdCourse';
+  getAllSubjectTypesUrl = 'http://localhost:8080/SpringApp/subject/getAllSubjectTypes';
 
   constructor(private http: HttpClient) { }
 
@@ -25,5 +27,9 @@ export class SubjectService {
 
   getByIdCourse(id: number): Observable<SubjectStudy[]>{
     return this.http.get<SubjectStudy[]>(this.getByIdCourseUrl + '/' + id);
+  }
+
+  getAllSubjectTypes(): Observable<TypeSubject[]>{
+    return this.http.get<TypeSubject[]>(this.getAllSubjectTypesUrl);
   }
 }

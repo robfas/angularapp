@@ -4,6 +4,7 @@ import { TicketService } from '../../services/ticket.service';
 import { Ticket } from '../models/Ticket';
 import { ActivatedRoute } from '@angular/router';
 import { StaffService } from '../../services/staff.service';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-staff',
@@ -13,25 +14,24 @@ import { StaffService } from '../../services/staff.service';
 export class StaffComponent implements OnInit {
   tickets: Ticket[];
   filteredtickets: Ticket[];
-  
+  user: User;
 
   constructor(public nav: NavbarService, public ticketService: TicketService, private route: ActivatedRoute, public staffService: StaffService) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
-    this.staffService.showTable();
-   
-    this.ticketService.getTickets().subscribe(tickets => {
-      this.tickets = tickets.filter(tickets=>tickets.ticketStatus.idstatus < 3);
-      console.log(this.tickets);
-    });
-  }
+    if(localStorage.getItem('currentUser')) {
+      this.user={
+        iduser: JSON.parse(localStorage.getItem('currentUser')).iduser,
+        name: JSON.parse(localStorage.getItem('currentUser')).name,
+        surname: JSON.parse(localStorage.getItem('currentUser')).surname,
+        residence: JSON.parse(localStorage.getItem('currentUser')).residence,
+        phone: JSON.parse(localStorage.getItem('currentUser')).phone,
+        email: JSON.parse(localStorage.getItem('currentUser')).email,
+        dateBirth: JSON.parse(localStorage.getItem('currentUser')).dateBirth,
+      }};
 
-  showArchived(){
-   this.staffService.showArchived();
-   this.ticketService.getTickets().subscribe(tickets => {
-    this.filteredtickets = tickets.filter(tickets=>tickets.ticketStatus.idstatus > 2);
-  });
+    this.nav.showNavStaff();
+
   }
 
 }
