@@ -14,6 +14,8 @@ import { CourseComponent } from './components/course/course.component';
 import { BuildingComponent } from './components/building/building.component';
 import { AddBuildingComponent } from './components/add-building/add-building.component';
 import { CourseTypeComponent } from './components/course-type/course-type.component';
+import { SchoolCalendarComponent } from './components/school-calendar/school-calendar.component';
+import { SchoolCalendar2Component } from './components/school-calendar2/school-calendar2.component';
 
 
 const routes: Routes =[
@@ -30,6 +32,8 @@ const routes: Routes =[
   {path: 'staff/department/add/building', component: AddBuildingComponent},
   {path: 'staff/newcourse', component: CourseComponent},
   {path: 'staff/newcoursetype', component: CourseTypeComponent},
+  {path: 'staff/scheduler', component: SchoolCalendarComponent},
+  {path: 'staff/scheduler2/:id', component: SchoolCalendar2Component},
   {path: '**', component: NotFoundComponent}
 ];
 

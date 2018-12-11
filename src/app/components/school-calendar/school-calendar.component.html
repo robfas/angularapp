@@ -1,0 +1,61 @@
+<head>
+  <title>DevExtreme Demo</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.2.3/css/dx.common.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.2.3/css/dx.light.css" />
+
+</head>
+
+
+<div style="line-height:500%;"><br></div>
+<div class="card card-body mb-3 bg-transparent" style="width:95%; margin:0px auto;">
+<dx-scheduler
+    [dataSource]="appointmentsData"
+    [views]='["week"]'
+    currentView="week"
+    firstDayOfWeek="1"
+    [showAllDayPanel]='false'
+    [currentDate]="currentDate"
+    [startDayHour]="8"
+    [endDayHour]="19"
+    [height]="1250"
+    (onAppointmentAdded)="onAppointmentAdded($event)"
+    (onAppointmentUpdated)="onAppointmentUpdated($event)"
+    (onAppointmentDeleted)="onAppointmentDeleted($event)"
+    (onAppointmentFormCreated)="onCellClick($event)">
+    <dxi-resource
+        fieldExpr="roomId"
+        label="Room"
+        [allowMultiple]="false"
+        [dataSource]="rooms"
+        [useColorAsDefault]="selectedResource === 'Room'">
+    </dxi-resource>
+    <dxi-resource
+        fieldExpr="priorityId"
+        label="Priority"
+        [allowMultiple]="true"
+        [dataSource]="priorities"
+        [useColorAsDefault]="selectedResource === 'Priority'">
+    </dxi-resource>
+    <dxi-resource
+        fieldExpr="ownerId"
+        label="Owner"
+        [allowMultiple]="true"
+        [dataSource]="owners"
+        [useColorAsDefault]="selectedResource === 'Owner'">
+    </dxi-resource>
+</dx-scheduler>
+
+<div class="options">
+    <div class="caption">Use colors of:</div>
+    <div class="option">
+        <dx-radio-group
+            [items]="resourcesList"
+            [(value)]="selectedResource"
+            layout="horizontal">
+        </dx-radio-group>
+    </div>
+</div>
+</div>

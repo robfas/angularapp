@@ -2,7 +2,7 @@ import { Class } from '../models/Class';
 
 export interface Building {
     id: number;
-	name: string;
+	name?: string;
 	address?: string;
 	lat?: number;
 	lng?: number;

@@ -1,0 +1,217 @@
+<link href="https://unpkg.com/bootstrap-css-only@4.1.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet">
+<link href="https://unpkg.com/angular-calendar@0.26.4/css/angular-calendar.css" rel="stylesheet">
+<link href="https://unpkg.com/flatpickr@4.5.2/dist/flatpickr.css" rel="stylesheet">
+
+
+<div style="line-height:500%;"><br></div>
+<div class="card card-body mb-3 bg-transparent" style="width:95%; margin:0px auto;">
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Modifica aula</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Edificio:
+      <select class="form-control" name="building" (change)="onChangeBuild($event, building.value)" #building>
+        <option value="">Edificio</option>
+      <option *ngFor="let b of buildings; let index = index" [value]="index" [selected]="b.id == modalData?.event?.room?.building?.id">{{b.name}}</option>
+    </select>
+    Aula:
+    <select class="form-control" name="classroom" (change)="onChangeClass($event, classroom.value)" #classroom>
+        <option value="">Aula</option>
+        <option *ngFor="let c of classes; let index = index" [value]="index" [selected]="c.id == modalData?.event?.room?.id">{{c.name}}</option>
+      </select>
+  </div>
+  <div *ngIf="!valid">
+      <p><font color="red">&nbsp;Tutti i campi sono necessari!</font></p>
+  </div>
+</div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline-success" (click)="save(modalData?.event)">Salva</button>
+      <button type="button" class="btn btn-outline-danger" (click)="close()">Chiudi</button>
+  </div>
+</ng-template>
+
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>Calendario studenti</h3>
+  </div>
+</div>
+
+<br>
+<div [ngSwitch]="view">
+  <mwl-calendar-week-view
+    *ngSwitchCase="CalendarView.Week"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    [dayStartHour] = "8"
+    [dayEndHour] = "19"
+    [daysInWeek] = "6"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-week-view>
+</div>
+
+<br>
+
+<h3>
+  Aggiungi insegnamenti
+  <div class="clearfix"></div>
+</h3>
+
+<table class="table table-bordered" style="width: 50%">
+
+    <thead>
+      <tr>
+        <th>Insegnamento</th>
+        <th> </th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <tr *ngFor="let s of mySubjects">
+        <td>
+          <label>{{s.name}}</label>
+        </td>
+        <td>
+          <button
+            class="btn btn-warning"
+            (click)="addEvent2(s)">
+            Aggiungi
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  
+  </table>
+
+  <div *ngIf="events.length >0">
+  <h3>
+      Riepilogo
+      <div class="clearfix"></div>
+    </h3>
+    
+    <table class="table table-bordered">
+    
+      <thead>
+        <tr>
+          <th>Insegnamento</th>
+          <th>Edificio</th>
+          <th>Aula</th>
+          <th>Giorno</th>
+          <th>Ora inizio</th>
+          <th>Ora fine</th>
+          <th>Rimuovi</th>
+          <th></th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <tr *ngFor="let event of events; let index = index">
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="event.subject.name"
+              (keyup)="refresh.next()"
+              disabled="true">
+          </td>
+          <td>
+            <input *ngIf="event.room != null"
+              type="text"
+              class="form-control"
+              [(ngModel)]="event.room.building.name"
+              (keyup)="refresh.next()"
+              disabled="true">
+          <input *ngIf="event.room == null"
+              type="text"
+              class="form-control"
+              placeholder="Nessuno"
+              (keyup)="refresh.next()"
+              disabled="true">
+          </td>
+          <td>
+            <input *ngIf="event.room != null"
+              type="text"
+              class="form-control"
+              [(ngModel)]="event.room.name"
+              (keyup)="refresh.next()"
+              disabled="true">
+          <input *ngIf="event.room == null"
+              type="text"
+              class="form-control"
+              placeholder="Nessuna"
+              (keyup)="refresh.next()"
+              disabled="true">
+          </td>
+          <td>
+              <input
+              class="form-control"
+              type="text"
+              mwlFlatpickr
+              [(ngModel)]="event.start"
+              (ngModelChange)="refresh.next()"
+              [altInput]="true"
+              [convertModelValue]="true"
+              [enableTime]="true"
+              dateFormat="Y-m-dTH:i"
+              altFormat="l"
+              placeholder="Not set"
+              disabled="true">
+          </td>
+          <td>
+            <input
+              class="form-control"
+              type="text"
+              mwlFlatpickr
+              [(ngModel)]="event.start"
+              (ngModelChange)="refresh.next()"
+              [altInput]="true"
+              [convertModelValue]="true"
+              [enableTime]="true"
+              dateFormat="Y-m-dTH:i"
+              altFormat="H:i"
+              placeholder="Not set"
+              disabled="true">
+          </td>
+          <td>
+            <input
+              class="form-control"
+              type="text"
+              mwlFlatpickr
+              [(ngModel)]="event.end"
+              (ngModelChange)="refresh.next()"
+              [altInput]="true"
+              [convertModelValue]="true"
+              [enableTime]="true"
+              dateFormat="Y-m-dTH:i"
+              altFormat="H:i"
+              placeholder="Not set"
+              disabled="true">
+          </td>
+          <td>
+            <button
+              class="btn btn-danger"
+              (click)="events.splice(index, 1); refresh.next()">
+              Rimuovi
+            </button>
+          </td>
+          <td>
+              
+          </td>
+        </tr>
+      </tbody>
+    
+    </table>
+  </div>
+</div>

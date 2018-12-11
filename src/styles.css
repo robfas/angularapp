@@ -2,3 +2,21 @@
 .pac-container {
     z-index: 9999 !important;
   }
+
+  .dx-scheduler-navigator {
+    display: none !important
+}
+
+.dx-popup-normal {
+  display: none !important
+}
+
+.dx-scheduler-appointment-popup{
+  display: none !important
+} 
+
+.cal-event, .cal-header {
+  white-space: normal !important;
+  color: black !important;
+  font-size: 15px !important;
+}

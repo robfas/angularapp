@@ -1,0 +1,26 @@
+::ng-deep .options {
+    padding: 20px;
+    background-color: rgba(191, 191, 191, 0.15);
+    margin-top: 20px;
+}
+
+::ng-deep .caption {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+::ng-deep .option {
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.dx-scheduler-navigator-caption {
+    display: none !important
+}
+
+.dx-scheduler-header-panel-cell .dx-scheduler-cell-sizes-horizontal .dx-scheduler-first-group-cell span{
+    display:none;
+ }
+ .dx-scheduler-header-panel-cell .dx-scheduler-cell-sizes-horizontal .dx-scheduler-first-group-cell:after {
+    content: "ueeeeeeeeee"
+}

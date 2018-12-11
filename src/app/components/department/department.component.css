@@ -17,7 +17,8 @@ img {
 }
 
 .container {
-    padding: 2px 8px;
+	margin: auto;
+	padding-left: 2cm;
 }
 
 .center {
@@ -52,8 +53,8 @@ h1 {
 
 .row {
 	max-width: 4900px;
-	margin: 2cm auto 0;
-	padding-left: 2cm
+	margin: 1cm auto 0;
+	padding-left: 0cm
 }
 
 .main_row {
@@ -174,7 +175,7 @@ h1 {
 .card_main {
 	text-align: left;
 	display: block;
-    padding: 0 1.7rem;
+    padding: 0 1rem;
     padding-bottom: 50px;
 	width: 100%;
 }

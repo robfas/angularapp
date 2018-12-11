@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarService } from '../../services/navbar.service';
 import { DegreeCourse } from '../models/DegreeCourse';
 import { CourseService } from '../../services/course.service';
-import { Subjectofstudy } from '../models/subjectofstudy';
-import { SubjectofstudyService } from '../../services/subjectofstudy.service';
+import { SubjectStudy } from '../models/subjectstudy';
+import { SubjectService } from '../../services/subject.service';
 import { TypeDegreeCourse } from '../models/TypeDegreeCourse';
 import { CourseType } from '../models/CourseType';
 
@@ -19,11 +19,11 @@ export class CourseComponent implements OnInit {
   courseType: CourseType;
   courseTypes: CourseType[];
   nextPage: boolean = false;
-  subjectofstudies: Subjectofstudy[];
+  subjectofstudies: SubjectStudy[];
   year: string;
   cfu: number;
 
-  constructor(public nav: NavbarService, public courseService: CourseService, public subjectofstudyService: SubjectofstudyService) { }
+  constructor(public nav: NavbarService, public courseService: CourseService, public subjectService: SubjectService) { }
 
   ngOnInit() {
     this.nav.showNavStaff();

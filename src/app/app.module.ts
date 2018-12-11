@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
@@ -11,6 +12,12 @@ import { PostsComponent } from './components/posts/posts.component';
 import { PostService } from './services/post.service';
 import {CommonModule} from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { DxSchedulerModule, DxCheckBoxModule, DxSelectBoxModule, DxRadioGroupModule } from 'devextreme-angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 import { UsersSEComponent } from './components/users-se/users-se.component';
@@ -27,6 +34,8 @@ import { CourseComponent } from './components/course/course.component';
 import { DepartmentComponent } from './components/department/department.component';
 import { AddBuildingComponent } from './components/add-building/add-building.component';
 import { CourseTypeComponent } from './components/course-type/course-type.component';
+import { SchoolCalendarComponent } from './components/school-calendar/school-calendar.component';
+import { SchoolCalendar2Component } from './components/school-calendar2/school-calendar2.component';
 
 
 @NgModule({
@@ -49,6 +58,8 @@ import { CourseTypeComponent } from './components/course-type/course-type.compon
     DepartmentComponent,
     AddBuildingComponent,
     CourseTypeComponent,
+    SchoolCalendarComponent,
+    SchoolCalendar2Component,
 
    
   ],
@@ -58,14 +69,24 @@ import { CourseTypeComponent } from './components/course-type/course-type.compon
     CommonModule,
     HttpClientModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDeqBKjtOUNXR_H33V1oWKYSWWjsGA3J-E',
       language: 'it',
       libraries: ['geometry', 'places']
     }),
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
     FormsModule,
     ReactiveFormsModule,
+    DxSchedulerModule,
+    DxCheckBoxModule,
+    DxRadioGroupModule
   ],
   providers: [DataService, PostService],
   bootstrap: [AppComponent],
@@ -74,3 +95,5 @@ import { CourseTypeComponent } from './components/course-type/course-type.compon
   ]
 })
 export class AppModule { }
+
+  //platformBrowserDynamic().bootstrapModule(AppModule)
