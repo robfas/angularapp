@@ -16,7 +16,6 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { DxSchedulerModule, DxCheckBoxModule, DxSelectBoxModule, DxRadioGroupModule } from 'devextreme-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -34,7 +33,6 @@ import { CourseComponent } from './components/course/course.component';
 import { DepartmentComponent } from './components/department/department.component';
 import { AddBuildingComponent } from './components/add-building/add-building.component';
 import { CourseTypeComponent } from './components/course-type/course-type.component';
-import { SchoolCalendarComponent } from './components/school-calendar/school-calendar.component';
 import { SchoolCalendar2Component } from './components/school-calendar2/school-calendar2.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
@@ -61,7 +59,6 @@ import { CoursesComponent } from './components/courses/courses.component';
     DepartmentComponent,
     AddBuildingComponent,
     CourseTypeComponent,
-    SchoolCalendarComponent,
     SchoolCalendar2Component,
     SubjectComponent,
     TicketsComponent,
@@ -89,10 +86,7 @@ import { CoursesComponent } from './components/courses/courses.component';
       useFactory: adapterFactory
     }),
     FormsModule,
-    ReactiveFormsModule,
-    DxSchedulerModule,
-    DxCheckBoxModule,
-    DxRadioGroupModule
+    ReactiveFormsModule
   ],
   providers: [DataService, PostService],
   bootstrap: [AppComponent],
