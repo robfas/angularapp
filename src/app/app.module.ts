@@ -29,6 +29,7 @@ import { AddBuildingComponent } from './components/add-building/add-building.com
 import { CourseTypeComponent } from './components/course-type/course-type.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
+import { CoursesComponent } from './components/courses/courses.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { TicketsComponent } from './components/tickets/tickets.component';
     CourseTypeComponent,
     SubjectComponent,
     TicketsComponent,
+    CoursesComponent,
 
    
   ],

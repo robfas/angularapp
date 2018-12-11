@@ -26,25 +26,20 @@
             <input type="cfu" class="form-control" id="cfu" placeholder="Cfu" #subjcfu>
           </div>
         </div>
-  
 
       <div class="form-group row">
-        <label for="cognometeach" class="col-sm-2 col-form-label">Cognome Docente</label>
+        <label for="teach" class="col-sm-2 col-form-label">Docente</label>
         <div class="col-sm-10">
-          <input type="cognome" class="form-control" id="cognome" placeholder="Cognome Docente" #teachsurname>
-        </div>
+        <select class="custom-select mr-sm-2" name="cognome"  #idteacher>
+            <option value=0>Seleziona Docente</option>
+            <option *ngFor="let d of teachers; let d = index" [value]="d.idteacher">{{ d.surname }} {{ d.name }}</option>
+          </select>
       </div>
-
-      <div class="form-group row">
-        <label for="nometeach" class="col-sm-2 col-form-label">Nome Docente</label>
-        <div class="col-sm-10">
-          <input type="nome" class="form-control" id="nome" placeholder="Nome Docente" #teachname>
-        </div>
-      </div>
+    </div>
 
       <div class="form-group row">
         <div class="col-sm-12">
-          <button type="button" class="btn btn-success float-right" (click)="saveSubject(idtypeSubject.value, subjdescr.value, subjcfu.value, teachname.value, teachsurname.value)">Avanti</button>
+          <button type="button" class="btn btn-success float-right" (click)="saveSubject(idtypeSubject.value, subjdescr.value, subjcfu.value, idteacher.value)">Avanti</button>
         </div>
       </div>
 

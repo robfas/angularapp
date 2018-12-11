@@ -16,6 +16,7 @@ import { AddBuildingComponent } from './components/add-building/add-building.com
 import { CourseTypeComponent } from './components/course-type/course-type.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
+import { CoursesComponent } from './components/courses/courses.component';
 
 
 const routes: Routes =[
@@ -34,6 +35,7 @@ const routes: Routes =[
   {path: 'staff/newcoursetype', component: CourseTypeComponent},
   {path: 'staff/newsubject', component: SubjectComponent},
   {path: 'staff/tickets', component: TicketsComponent},
+  {path: 'staff/corsi/:id', component: CoursesComponent},
   {path: '**', component: NotFoundComponent}
 ];
 
