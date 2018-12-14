@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Class} from '../components/models/Class';
+import { TypeLesson } from '../components/models/TypeLesson';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -15,6 +16,7 @@ export class ClassroomService {
   getByNameUrl: string = 'http://localhost:8080/SpringApp/classroom/getByName/';
   getByIdUrl: string = 'http://localhost:8080/SpringApp/classroom/getById/';
   classroomSaveUrl: string = 'http://localhost:8080/SpringApp/classroom/save';
+  availableClassroomInBuildingUrl: string = 'http://localhost:8080/SpringApp/classroom/getAvailableByIdBuilding/';
 
   constructor(private http: HttpClient) { }
 
@@ -40,5 +42,9 @@ export class ClassroomService {
 
   saveClassroom(classroom: Class): Observable<Class>{
     return this.http.post<Class>(this.classroomSaveUrl, classroom, {headers});
+  }
+
+  getAvailableClassrooms(idBuilding: number, typeLesson: TypeLesson): Observable<Class[]>{
+    return this.http.post<Class[]>(this.availableClassroomInBuildingUrl + idBuilding, typeLesson, {headers});
   }
 }

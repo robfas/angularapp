@@ -16,7 +16,7 @@
   <div class="modal-body">
     <div>
       Edificio:
-      <select class="form-control" name="building" (change)="onChangeBuild($event, building.value)" #building>
+      <select class="form-control" name="building" (change)="onChangeBuild($event, building.value, modalData?.event)" #building>
         <option value="">Edificio</option>
       <option *ngFor="let b of buildings; let index = index" [value]="index" [selected]="b.id == modalData?.event?.room?.building?.id">{{b.name}}</option>
     </select>
