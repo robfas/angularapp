@@ -36,6 +36,7 @@ import { Class } from '../models/Class';
 import { CalendarDateFormatter, DateFormatterParams,  DAYS_OF_WEEK } from 'angular-calendar';
 import { DatePipe } from '@angular/common';
 import { BuildingService } from '../../services/building.service';
+import { AcademicYearService } from '../../services/academic-year.service';
 import { Building } from '../models/Building';
 import { TypeLesson } from '../models/TypeLesson';
 import { Scheduler } from '../models/scheduler';
@@ -103,8 +104,13 @@ export class CalendarComponent implements OnInit {
   classroom: Class;
   selectedClassroom: Class;
   valid: Boolean = true;
+  selectedIdcourseType: number;
+  selectedIdtypeDegreeCourse: number;
+  selectedIdCourse: number;
+  selectedTerm: number;
+  aa: AcademicYear[];
 
-  constructor(private modal: NgbModal, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
+  constructor(private modal: NgbModal, public aaService: AcademicYearService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
 
   ngOnInit() {
     this.nav.showNavStaff();
@@ -129,18 +135,27 @@ export class CalendarComponent implements OnInit {
 onChangeTypeCourse($event, idtypeDegreeCourse) {
     this.courseService.getAllCourseByType(idtypeDegreeCourse).subscribe(courses=>{
     this.courses = courses;
+    
     for(let c of this.courses) {
-      c.name = c.name + " " + c.academicYear.years;
+      c.name = c.name + " " + c.academicYear.year + "/" + (c.academicYear.year+1);
     }
   });
   this.terms = null
 }
 
 onChangeCourse($event, idDegreeCourse) {
-  this.termService.getTermByAcademicYearId(idDegreeCourse).subscribe(terms=>{
-  this.terms = terms;
-});
+console.log('yep')
+this.aaService.getAllYearsOfCourse(idDegreeCourse).subscribe(aa =>{
+  this.aa=aa
+  console.log(this.aa)
+  });
 }
+
+onChangeYear($event, idYear) {
+  this.termService.getTermByAcademicYearId(idYear).subscribe(terms =>{
+    this.terms = terms;
+    });
+  }
 
 onChange2(s) {
   const index: number = this.selectedSubjects.indexOf(s)
@@ -154,9 +169,13 @@ onChange2(s) {
 }
 
 showScheduler(idcourseType, idtypeDegreeCourse, course, term){
-  if (term == undefined || course == undefined|| idcourseType==undefined || idtypeDegreeCourse == undefined || idtypeDegreeCourse == 0){
+  if (term == undefined || course == undefined|| idcourseType==undefined || idtypeDegreeCourse == undefined){
     alert('Completa tutti i campi!');
   }else{
+    this.selectedTerm = term;
+    this.selectedIdCourse = course;
+    this.selectedIdcourseType = idcourseType;
+    this.selectedIdtypeDegreeCourse = idtypeDegreeCourse;
     this.subjectService.getByIdCourse(course).subscribe(subjects =>{
       this.subjects = subjects;
       for(let s in this.subjects) {
@@ -325,13 +344,14 @@ showScheduler(idcourseType, idtypeDegreeCourse, course, term){
         this.refresh.next();
       });*/
       const datePipe = new DatePipe('en-US');
-      const typeLesson: TypeLesson = {id: 1};
-      const s: Scheduler = {id: 1};
+      const s: Scheduler = {};
      const aa: AcademicYear = {idacademicYear: 1};
      const d: Day = {idDay: 1};
       const ter: Term = {idterm: 1};
       ter.academicYear=aa
       s.term=ter
+
+      console.log(this.buildings[index].id, {id: 1, scheduler: s, start: event.start, end: event.end, day: d} as TypeLesson)
 
       this.classroomService.getAvailableClassrooms(this.buildings[index].id, {id: 1, scheduler: s, start: event.start, end: event.end, day: d} as TypeLesson).subscribe(classes => {
         this.classes = classes;
@@ -381,14 +401,19 @@ showScheduler(idcourseType, idtypeDegreeCourse, course, term){
   }
 
   saveScheduler() {
-    if (this.events ==  []) {
+    console.log(this.events)
+    if (this.events.length ==  0) {
+      console.log("err")
       this.error=true;
     } else {
       for(let e in this.events) {
         if (this.events[e].room == undefined) {
           this.error = true;
+          console.log("err")
           break;
-        } 
+        } else if(Number(e) == this.events.length-1) {
+          this.error = false;
+        }
       }
       if(this.error == false) {
         console.log("ok")
