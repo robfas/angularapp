@@ -23,9 +23,10 @@
         <div class="form-group row">
           <label for="academicyear" class="col-sm-2 col-form-label">Anno Accademico</label>
           <div class="col-sm-10">
-            <input type="year" id="year" class="form-control input-sm" value={{year}} #academicyear>
+            <input type="year" id="year" class="form-control input-sm" value={{year}}-{{acadyear}} #academicyear>
           </div>
         </div>
+
       
         <div class="form-group row">
           <div class="col-sm-12">
@@ -40,19 +41,34 @@
         <h5> Cfu da assegnare rimanenti: {{ remainingcfus }} </h5>
         <br>
         <form>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <div *ngFor="let s of subjects; let s = index" class="form-check" style="margin-left: 15px">
-                        <input class="form-check-input" type="checkbox" id="s.id" (change)="onChange2(s)">
+            <div *ngFor="let s of typeSubjects; let s = index" class="form-group row">
+                <div class="col-sm-4">
+                    <div class="form-check" style="margin-left: 15px">
+                        
                         <label class="form-check-label">
-                            <b>{{ s.name }}</b> - Cfu: {{ s.cfu }} - Docente: {{ s.teacherDTO.surname }}
+                            <b>{{ s.name }}</b>
+                            
                         </label>
                       </div>
-              </div>
+                    </div>
+                <div class="col-sm-4">
+                   
+                    <select class="custom-select mr-sm-2" name="teacher" #teacher>
+                        <option value=0>Seleziona Docente da assegnare</option>
+                        <option *ngFor="let t of teachers; let t = index" [value]="t.idteacher">{{ t.surname }} {{ t.name }}</option>
+                      </select>
+                
+                </div>
+                <div class="col-sm-2">
+                    <input type="number" id="cfu" class="form-control input-sm" placeholder="Cfu" #cfu (change)="onChange2(s, cfu.value)" >
+                  </div>
+                  <div class="col-sm-2">
+                    <button type="button" class="btn btn-outline-success my-2 my-sm-0 float-right" (click)="saveSubject(s, teacher.value, cfu.value, academicyear.value)">Aggiungi</button>
+                  </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-12">
-                  <button type="button" class="btn btn-success float-right" (click)="save(idcourseType.value, idtypeDegreeCourse.value, academicyear.value)">Salva</button>
+                  <button type="button" class="btn btn-success float-right" (click)="save(idcourseType.value, idtypeDegreeCourse.value, academicyear.value)">Salva Corso</button>
                 </div>
               </div>
           </form>

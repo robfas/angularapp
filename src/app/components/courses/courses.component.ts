@@ -19,7 +19,7 @@ export class CoursesComponent implements OnInit {
     this.nav.showNavStaff();
     this.courseService.getAll().subscribe(courses=>{
       this.courses = courses.filter(courses=>courses.typeDegreeCourse.courseType.idcourseType === id)
-      console.log(id,this.courses);
+      console.log(id,courses[0].typeDegreeCourse.courseType.idcourseType);
     });
   }
 

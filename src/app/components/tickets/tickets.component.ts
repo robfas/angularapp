@@ -21,6 +21,7 @@ export class TicketsComponent implements OnInit {
     this.staffService.showTable();
    
     this.ticketService.getTickets().subscribe(tickets => {
+      //DA CAMBIAREEE
       this.tickets = tickets.filter(tickets=>tickets.ticketStatus.idstatus < 3);
       console.log(this.tickets);
     });
