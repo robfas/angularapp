@@ -36,6 +36,7 @@ import { Class } from '../models/Class';
 import { CalendarDateFormatter, DateFormatterParams,  DAYS_OF_WEEK } from 'angular-calendar';
 import { DatePipe } from '@angular/common';
 import { BuildingService } from '../../services/building.service';
+import { AcademicYearService } from '../../services/academic-year.service';
 import { Building } from '../models/Building';
 import { TypeLesson } from '../models/TypeLesson';
 import { Scheduler } from '../models/scheduler';
@@ -107,8 +108,9 @@ export class CalendarComponent implements OnInit {
   selectedIdtypeDegreeCourse: number;
   selectedIdCourse: number;
   selectedTerm: number;
+  aa: AcademicYear[];
 
-  constructor(private modal: NgbModal, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
+  constructor(private modal: NgbModal, public aaService: AcademicYearService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
 
   ngOnInit() {
     this.nav.showNavStaff();
@@ -142,10 +144,18 @@ onChangeTypeCourse($event, idtypeDegreeCourse) {
 }
 
 onChangeCourse($event, idDegreeCourse) {
-  this.termService.getTermByAcademicYearId(idDegreeCourse).subscribe(terms=>{
-  this.terms = terms;
-});
+console.log('yep')
+this.aaService.getAllYearsOfCourse(idDegreeCourse).subscribe(aa =>{
+  this.aa=aa
+  console.log(this.aa)
+  });
 }
+
+onChangeYear($event, idYear) {
+  this.termService.getTermByAcademicYearId(idYear).subscribe(terms =>{
+    this.terms = terms;
+    });
+  }
 
 onChange2(s) {
   const index: number = this.selectedSubjects.indexOf(s)
