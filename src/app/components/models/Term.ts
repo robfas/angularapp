@@ -1,9 +1,9 @@
 import { AcademicYear } from "./AcademicYear";
 
-export class Term {
+export interface Term{
     idterm: number;
-    number?: number;
-    start?: Date;
-    end?: Date;
-    academicYear?: AcademicYear;
+    academicYear: AcademicYear;
+    number: number;
+    start: Date;
+    end: Date;
 }

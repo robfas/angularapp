@@ -7,7 +7,10 @@ import { SubjectService } from '../../services/subject.service';
 import { TypeDegreeCourse } from '../models/TypeDegreeCourse';
 import { CourseType } from '../models/CourseType';
 import { TypeSubject } from '../models/TypeSubject';
-import $ from 'jquery'
+import { AcademicYear } from '../models/AcademicYear';
+import { Term } from '../models/Term';
+import { Teacher } from '../models/Teacher';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-course',
@@ -25,22 +28,35 @@ export class CourseComponent implements OnInit {
   showSubjects: boolean = false;
   subjects: SubjectStudy[];
   typeSubjects: TypeSubject[];
+  actualyear: string;
   year: string;
+  acadyear: string;
   cfu: number;
   remainingcfus: number;
   selectedSubjects: SubjectStudy[] = [];
+  academicYear: AcademicYear;
+  terms: Term[];
+  term: Term;
+  teachers: Teacher[];
+  selectedTeacher: Teacher[];
 
-  constructor(public nav: NavbarService, public courseService: CourseService, public subjectService: SubjectService) { }
+  constructor(public nav: NavbarService, public courseService: CourseService, public userService: UserService, public subjectService: SubjectService) { }
 
   ngOnInit() {
     this.nav.showNavStaff();
-    this.year = String(new Date().getFullYear());
+    this.actualyear = String(new Date().getFullYear());
+    this.year = String(parseInt(this.actualyear)+1);
+    this.acadyear = String(parseInt(this.actualyear)+2);
     this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
       this.courseTypes = courseTypes; 
       console.log(this.courseTypes);
     });
-    this.subjectService.getAll().subscribe(subjects =>{
-      this.subjects = subjects;
+    this.subjectService.getAllSubjectTypes().subscribe(typeSubjects =>{
+      this.typeSubjects = typeSubjects;
+      console.log(this.typeSubjects);
+    });
+    this.userService.getAllTeachers().subscribe(teachers =>{
+      this.teachers = teachers;
     });
   }
 
@@ -50,6 +66,15 @@ export class CourseComponent implements OnInit {
     }else{
       this.courseService.getCourseType(idcourseType).subscribe(courseType =>{
         this.courseType = courseType;
+
+      this.courseService.getTypesById(idtypeDegreeCourse).subscribe(degreeCourseType=>{
+        this.degreeCourseType = degreeCourseType;
+      
+      this.courseService.saveCourse({cfu: courseType.cfu, typeDegreeCourse: degreeCourseType, academicYear: this.academicYear} as DegreeCourse).subscribe(course => {
+          console.log(course);
+        });
+      });
+     
         console.log(courseType.cfu);
         this.showSubjects = true;
         this.remainingcfus = courseType.cfu;
@@ -65,30 +90,46 @@ export class CourseComponent implements OnInit {
     });
 }
 
-onChange2(s) {
+onChange2(s, cfu) {
+  console.log(s);
   const index: number = this.selectedSubjects.indexOf(s)
   if(index !== -1) {
     this.selectedSubjects.splice(index, 1);
-    this.remainingcfus = this.remainingcfus + s.cfu;
+    this.remainingcfus = this.remainingcfus + cfu;
   } else {
     this.selectedSubjects.push(s);
-    this.remainingcfus = this.remainingcfus - s.cfu;
+    this.remainingcfus = this.remainingcfus - cfu;
   }
   console.log(this.selectedSubjects)
 }
 
-save(idcourseType,idtypeDegreeCourse,academicYear,selectedSubjects){
+save(idcourseType,idtypeDegreeCourse,academicyear,selectedSubjects,teacher){
   if (this.remainingcfus !== 0){
-    alert('Devi raggiungere un minimo di cfu!');
+    alert('Il numero di cfu rimanenti deve essere pari a 0!');
   }else{
-  console.log(idcourseType, idtypeDegreeCourse, academicYear, this.selectedSubjects);
+  console.log(idcourseType, idtypeDegreeCourse, academicyear,this.selectedSubjects);
   this.courseService.getTypesById(idtypeDegreeCourse).subscribe(degreeCourseType=>{
     this.degreeCourseType = degreeCourseType;
   
-  this.courseService.saveCourse({cfu: this.courseType.cfu, typeDegreeCourse: degreeCourseType, academicYear, subjects: this.selectedSubjects} as DegreeCourse).subscribe(course => {
+  this.courseService.saveCourse({cfu: this.courseType.cfu, typeDegreeCourse: degreeCourseType, academicYear: this.academicYear, subjects: this.selectedSubjects} as DegreeCourse).subscribe(course => {
       console.log(course);
     });
   });
+  }
+}
+
+saveSubject(s, teacher, cfu, academicyear){
+  console.log(s);
+  if (s==undefined || teacher== undefined || cfu == undefined || academicyear == undefined){
+    alert('Insersci tutti i valori!');
+  }else{
+    console.log(s);
+    this.selectedTeacher = this.teachers.filter(teachers=>teachers.idteacher === parseInt(teacher));
+    this.subjectService.saveSubject({name: s.name, teacherDTO: this.selectedTeacher[0], cfu: cfu, typeSubjectDTO: s} as SubjectStudy).subscribe(subject => {
+      console.log(subject);
+    });
+  
+
   }
 }
 
