@@ -1,4 +1,17 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { NavbarService } from '../../services/navbar.service';
+import { DegreeCourse } from '../models/DegreeCourse';
+import { CourseService } from '../../services/course.service';
+import { SubjectStudy } from '../models/subjectstudy';
+import { SubjectService } from '../../services/subject.service';
+import { TypeDegreeCourse } from '../models/TypeDegreeCourse';
+import { CourseType } from '../models/CourseType';
+import { TypeSubject } from '../models/TypeSubject';
+import { TermService } from '../../services/term.service';
+import { Term } from '../models/term';
+import { SchoolCalendar2Component } from '../school-calendar2/school-calendar2.component';
+
+import { ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
 import {
   startOfDay,
   endOfDay,
@@ -17,27 +30,9 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView
 } from 'angular-calendar';
-import { NavbarService } from '../../services/navbar.service';
-import { SubjectService } from '../../services/subject.service';
 import { ActivatedRoute } from '@angular/router';
-import { SubjectStudy } from '../models/subjectstudy';
 import { ClassroomService } from '../../services/classroom.service';
 import { Class } from '../models/Class';
-
-/*const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
-};*/
 import { CalendarDateFormatter, DateFormatterParams,  DAYS_OF_WEEK } from 'angular-calendar';
 import { DatePipe } from '@angular/common';
 import { BuildingService } from '../../services/building.service';
@@ -46,7 +41,6 @@ import { TypeLesson } from '../models/TypeLesson';
 import { Scheduler } from '../models/scheduler';
 import { AcademicYear } from '../models/AcademicYear';
 import { Day } from '../models/day';
-import { Term } from '../models/term';
 
 export class CustomDateFormatter extends CalendarDateFormatter {
   // you can override any of the methods defined in the parent class
@@ -74,10 +68,9 @@ interface MySubject extends SubjectStudy {
 }
 
 @Component({
-  selector: 'app-school-calendar2',
-  //changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './school-calendar2.component.html',
-  styleUrls: ['./school-calendar2.component.css'],
+  selector: 'app-calendar',
+  templateUrl: './calendar.component.html',
+  styleUrls: ['./calendar.component.css'],
   providers: [
     {
       provide: CalendarDateFormatter,
@@ -85,9 +78,24 @@ interface MySubject extends SubjectStudy {
     }
   ]
 })
-export class SchoolCalendar2Component implements OnInit {
-
+export class CalendarComponent implements OnInit {
+  course: DegreeCourse;
+  courses: DegreeCourse[];
+  terms: Term[];
+  degreeCourseType: TypeDegreeCourse;
+  degreeCourseTypes: TypeDegreeCourse[];
+  courseType: CourseType;
+  courseTypes: CourseType[];
+  error: boolean = false;
+  subjectofstudies: SubjectStudy[];
+  showSubjects: boolean = false;
+  schedule: boolean = false;
   subjects: SubjectStudy[];
+  typeSubjects: TypeSubject[];
+  year: string;
+  cfu: number;
+  remainingcfus: number;
+  selectedSubjects: SubjectStudy[] = [];
   mySubjects: MySubject[] = [];
   sub: MySubject;
   buildings: Building[];
@@ -96,13 +104,60 @@ export class SchoolCalendar2Component implements OnInit {
   selectedClassroom: Class;
   valid: Boolean = true;
 
-  constructor(private modal: NgbModal, public nav: NavbarService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService) {}
-
+  constructor(private modal: NgbModal, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
 
   ngOnInit() {
-    const id = +this.route.snapshot.paramMap.get('id');
     this.nav.showNavStaff();
-    this.subjectService.getByIdCourse(id).subscribe(subjects =>{
+    this.year = String(new Date().getFullYear());
+    this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
+      this.courseTypes = courseTypes; 
+    });
+    this.subjectService.getAll().subscribe(subjects =>{
+      this.subjects = subjects;
+    });
+  }
+
+  onChange($event, idcourseType) {
+      this.courseService.getAllTypes().subscribe(degreeCourseTypes=>{
+      this.degreeCourseTypes = degreeCourseTypes.filter(degreeCourseTypes=>degreeCourseTypes.courseType.idcourseType === parseInt(idcourseType));
+      console.log(this.degreeCourseTypes);
+    });
+    this.courses = null
+    this.terms = null
+}
+
+onChangeTypeCourse($event, idtypeDegreeCourse) {
+    this.courseService.getAllCourseByType(idtypeDegreeCourse).subscribe(courses=>{
+    this.courses = courses;
+    for(let c of this.courses) {
+      c.name = c.name + " " + c.academicYear.years;
+    }
+  });
+  this.terms = null
+}
+
+onChangeCourse($event, idDegreeCourse) {
+  this.termService.getTermByAcademicYearId(idDegreeCourse).subscribe(terms=>{
+  this.terms = terms;
+});
+}
+
+onChange2(s) {
+  const index: number = this.selectedSubjects.indexOf(s)
+  if(index !== -1) {
+    this.selectedSubjects.splice(index, 1);
+    this.remainingcfus = this.remainingcfus + s.cfu;
+  } else {
+    this.selectedSubjects.push(s);
+    this.remainingcfus = this.remainingcfus - s.cfu;
+  }
+}
+
+showScheduler(idcourseType, idtypeDegreeCourse, course, term){
+  if (term == undefined || course == undefined|| idcourseType==undefined || idtypeDegreeCourse == undefined || idtypeDegreeCourse == 0){
+    alert('Completa tutti i campi!');
+  }else{
+    this.subjectService.getByIdCourse(course).subscribe(subjects =>{
       this.subjects = subjects;
       for(let s in this.subjects) {
         const colore: any = this.getRandomColor()
@@ -116,12 +171,13 @@ export class SchoolCalendar2Component implements OnInit {
         });
       }
       this.refresh.next();
-      console.log(this.mySubjects)
     });
     this.buildingService.getBuildings().subscribe(buildings => {
       this.buildings = buildings;
       this.refresh.next();
     });
+    this.schedule = true;
+  }
   }
 
   getRandomColor() {
@@ -317,6 +373,27 @@ export class SchoolCalendar2Component implements OnInit {
     }
     this.refresh.next();
   }
+
+  back() {
+    this.schedule = false;
+    this.mySubjects = [];
+    this.events = [];
+  }
+
+  saveScheduler() {
+    if (this.events ==  []) {
+      this.error=true;
+    } else {
+      for(let e of this.events) {
+        if (e.room == undefined) {
+          this.error = true;
+          break;
+        }
+      }
+      if(this.error == false) {
+        console.log("ok")
+      }
+    }
+
+  }
 }
-
-

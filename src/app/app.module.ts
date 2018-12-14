@@ -37,6 +37,7 @@ import { SchoolCalendar2Component } from './components/school-calendar2/school-c
 import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { CoursesComponent } from './components/courses/courses.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { CoursesComponent } from './components/courses/courses.component';
     SubjectComponent,
     TicketsComponent,
     CoursesComponent,
+    CalendarComponent,
 
    
   ],

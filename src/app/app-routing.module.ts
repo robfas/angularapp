@@ -18,6 +18,7 @@ import { SchoolCalendar2Component } from './components/school-calendar2/school-c
 import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { CoursesComponent } from './components/courses/courses.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 
 const routes: Routes =[
@@ -35,6 +36,7 @@ const routes: Routes =[
   {path: 'staff/newcourse', component: CourseComponent},
   {path: 'staff/newcoursetype', component: CourseTypeComponent},
   {path: 'staff/scheduler2/:id', component: SchoolCalendar2Component},
+  {path: 'staff/calendar', component: CalendarComponent},
   {path: 'staff/newsubject', component: SubjectComponent},
   {path: 'staff/tickets', component: TicketsComponent},
   {path: 'staff/corsi/:id', component: CoursesComponent},
