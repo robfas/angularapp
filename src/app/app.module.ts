@@ -38,6 +38,7 @@ import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { AcademicYearComponent } from './components/academic-year/academic-year.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     TicketsComponent,
     CoursesComponent,
     CalendarComponent,
+    AcademicYearComponent,
 
    
   ],
