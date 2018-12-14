@@ -103,6 +103,10 @@ export class CalendarComponent implements OnInit {
   classroom: Class;
   selectedClassroom: Class;
   valid: Boolean = true;
+  selectedIdcourseType: number;
+  selectedIdtypeDegreeCourse: number;
+  selectedIdCourse: number;
+  selectedTerm: number;
 
   constructor(private modal: NgbModal, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
 
@@ -129,8 +133,9 @@ export class CalendarComponent implements OnInit {
 onChangeTypeCourse($event, idtypeDegreeCourse) {
     this.courseService.getAllCourseByType(idtypeDegreeCourse).subscribe(courses=>{
     this.courses = courses;
+    
     for(let c of this.courses) {
-      c.name = c.name + " " + c.academicYear.years;
+      c.name = c.name + " " + c.academicYear.year + "/" + (c.academicYear.year+1);
     }
   });
   this.terms = null
@@ -154,9 +159,13 @@ onChange2(s) {
 }
 
 showScheduler(idcourseType, idtypeDegreeCourse, course, term){
-  if (term == undefined || course == undefined|| idcourseType==undefined || idtypeDegreeCourse == undefined || idtypeDegreeCourse == 0){
+  if (term == undefined || course == undefined|| idcourseType==undefined || idtypeDegreeCourse == undefined){
     alert('Completa tutti i campi!');
   }else{
+    this.selectedTerm = term;
+    this.selectedIdCourse = course;
+    this.selectedIdcourseType = idcourseType;
+    this.selectedIdtypeDegreeCourse = idtypeDegreeCourse;
     this.subjectService.getByIdCourse(course).subscribe(subjects =>{
       this.subjects = subjects;
       for(let s in this.subjects) {
@@ -325,13 +334,14 @@ showScheduler(idcourseType, idtypeDegreeCourse, course, term){
         this.refresh.next();
       });*/
       const datePipe = new DatePipe('en-US');
-      const typeLesson: TypeLesson = {id: 1};
-      const s: Scheduler = {id: 1};
+      const s: Scheduler = {};
      const aa: AcademicYear = {idacademicYear: 1};
      const d: Day = {idDay: 1};
       const ter: Term = {idterm: 1};
       ter.academicYear=aa
       s.term=ter
+
+      console.log(this.buildings[index].id, {id: 1, scheduler: s, start: event.start, end: event.end, day: d} as TypeLesson)
 
       this.classroomService.getAvailableClassrooms(this.buildings[index].id, {id: 1, scheduler: s, start: event.start, end: event.end, day: d} as TypeLesson).subscribe(classes => {
         this.classes = classes;
@@ -381,14 +391,19 @@ showScheduler(idcourseType, idtypeDegreeCourse, course, term){
   }
 
   saveScheduler() {
-    if (this.events ==  []) {
+    console.log(this.events)
+    if (this.events.length ==  0) {
+      console.log("err")
       this.error=true;
     } else {
       for(let e in this.events) {
         if (this.events[e].room == undefined) {
           this.error = true;
+          console.log("err")
           break;
-        } 
+        } else if(Number(e) == this.events.length-1) {
+          this.error = false;
+        }
       }
       if(this.error == false) {
         console.log("ok")

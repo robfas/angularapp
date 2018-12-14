@@ -35,6 +35,15 @@
         </div>
         </div>
         <div class="form-group row">
+            <label for="term" class="col-sm-2 col-form-label">Seleziona l'Anno Accademico</label>
+            <div class="col-sm-10">
+            <select class="custom-select mr-sm-2" name="aa" #aa>
+              <option value=0>Seleziona l'Anno Accademico</option>
+              <option *ngFor="let a of aa; let a = index" [value]="a.idacademicYear">{{ a.year }}/{{ a.year + 1 }}</option>
+            </select>
+          </div>
+          </div>
+        <div class="form-group row">
           <label for="term" class="col-sm-2 col-form-label">Seleziona il periodo</label>
           <div class="col-sm-10">
           <select class="custom-select mr-sm-2" name="term" #term>
@@ -136,7 +145,7 @@
             </td>
             <td>
               <button
-                class="btn btn-warning"
+                class="btn btn-outline-success my-2 my-sm-0"
                 (click)="addEvent2(s)">
                 Aggiungi
               </button>

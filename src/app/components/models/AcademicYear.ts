@@ -1,4 +1,4 @@
 export class AcademicYear {
     idacademicYear: number;
-    years?: string;
+    year?: number;
 }
