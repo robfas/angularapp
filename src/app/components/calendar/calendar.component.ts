@@ -384,11 +384,11 @@ showScheduler(idcourseType, idtypeDegreeCourse, course, term){
     if (this.events ==  []) {
       this.error=true;
     } else {
-      for(let e of this.events) {
-        if (e.room == undefined) {
+      for(let e in this.events) {
+        if (this.events[e].room == undefined) {
           this.error = true;
           break;
-        }
+        } 
       }
       if(this.error == false) {
         console.log("ok")
