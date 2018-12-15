@@ -14,7 +14,7 @@
         <tr *ngFor="let a of academicyears; let a = index" > 
          
           <td style="text-align:center"> {{a.year}}/{{a.year+1}} </td>
-          <td style="text-align:center"><a routerLink="/term">{{a.terms.number}}</a></td>
+          <td style="text-align:center">{{a.terms.number}}</td>
         </tr>
       </tbody>
   </table>
@@ -62,3 +62,4 @@
     </div>
   </div>
 </div>
+

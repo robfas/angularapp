@@ -94,13 +94,13 @@ export class TicketComponent implements OnInit {
     this.ticket.employee.idemployee = this.user.iduser;
     this.ticket.employee.name = this.user.name;
     this.ticket.employee.surname = this.user.surname;
-
-    if(this.ticket.employee.idemployee===null || this.ticket.employee.idemployee === undefined){
+      console.log(this.ticket.employee)
+    
     this.ticketService.saveTicket({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, ticketmessages: this.ticket.ticketmessages, date: this.ticket.date} as Ticket).subscribe(ticket => {
       console.log(ticket);
       console.log(this.ticket.ticketmessages);
     });
-    }
+    
   }
   }
 

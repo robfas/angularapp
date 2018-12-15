@@ -31,7 +31,7 @@ const routes: Routes =[
   {path: 'teacher', component: TeacherComponent},
   {path: 'staff/department', component: DepartmentComponent},
   {path: 'posts/:id', component: PostDetailComponent},
-  {path: 'staff/ticket/:id', component: TicketComponent},
+  {path: 'staff/tickets/ticket/:id', component: TicketComponent},
   {path: 'staff/department/building/:id', component: BuildingComponent},
   {path: 'staff/department/add/building', component: AddBuildingComponent},
   {path: 'staff/newcourse', component: CourseComponent},
