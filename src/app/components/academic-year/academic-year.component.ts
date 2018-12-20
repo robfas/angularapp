@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AcademicYearService } from '../../services/academic-year.service';
 import { AcademicYear } from '../models/AcademicYear';
 import { NavbarService } from '../../services/navbar.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TermComponent } from '../term/term.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-academic-year',
@@ -13,7 +16,7 @@ export class AcademicYearComponent implements OnInit {
   year: number;
   years: number;
 
-  constructor(public nav: NavbarService,public academicYearService: AcademicYearService) { }
+  constructor(public nav: NavbarService,private router: Router,public academicYearService: AcademicYearService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.nav.showNavStaff();
@@ -34,4 +37,7 @@ saveYear(year){
    window.location.reload();
 }
 
+dettagli(academicYear: AcademicYear){
+  this.router.navigate(['/staff/terms/' + academicYear.idacademicYear]);
+}
 }

@@ -23,10 +23,12 @@
         <div class="form-group row">
           <label for="academicyear" class="col-sm-2 col-form-label">Anno Accademico</label>
           <div class="col-sm-10">
-            <input type="year" id="year" class="form-control input-sm" value={{year}}-{{acadyear}} #academicyear>
-          </div>
+          <select class="custom-select mr-sm-2" name="year" #academicyear>
+            <option value=0>Seleziona Anno Accademico</option>
+            <option *ngFor="let a of academicyears; let a = index" [value]="a.idacademicYear">{{ a.year }}/{{ a.year + 1 }}</option>
+          </select>
         </div>
-
+      </div>
       
         <div class="form-group row">
           <div class="col-sm-12">
@@ -42,29 +44,40 @@
         <br>
         <form>
             <div *ngFor="let s of typeSubjects; let s = index" class="form-group row">
-                <div class="col-sm-4">
-                    <div class="form-check" style="margin-left: 15px">
-                        
+                <div class="col-sm-3">
+                   
                         <label class="form-check-label">
                             <b>{{ s.name }}</b>
                             
                         </label>
                       </div>
-                    </div>
-                <div class="col-sm-4">
+                  
+                <div class="col-sm-2">
                    
                     <select class="custom-select mr-sm-2" name="teacher" #teacher>
-                        <option value=0>Seleziona Docente da assegnare</option>
+                        <option value=0>Seleziona Docente</option>
                         <option *ngFor="let t of teachers; let t = index" [value]="t.idteacher">{{ t.surname }} {{ t.name }}</option>
                       </select>
                 
                 </div>
                 <div class="col-sm-2">
-                    <input type="number" id="cfu" class="form-control input-sm" placeholder="Cfu" #cfu (change)="onChange2(s, cfu.value)" >
+                   
+                  <select class="custom-select mr-sm-2" name="term" #term>
+                      <option value=0>Seleziona Periodo</option>
+                      <option *ngFor="let p of terms; let i = index" [value]="p.idterm" #term>{{i+1}}</option>
+                    </select>
+              
+              </div>
+                <div class="col-sm-2">
+                    <input type="number" id="cfu" class="form-control" placeholder="Cfu" #cfu>
                   </div>
-                  <div class="col-sm-2">
-                    <button type="button" class="btn btn-outline-success my-2 my-sm-0 float-right" (click)="saveSubject(s, teacher.value, cfu.value, academicyear.value)">Aggiungi</button>
+                  <div class="col-sm-1.5">
+                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" (click)="add(s, cfu.value, teacher.value, term.value)">Aggiungi</button>
                   </div>
+                    <div class="col-sm-1.5">
+                    <button type="button" class="btn btn-outline-danger my-2 my-sm-0 float-right" (click)="remove(s, cfu.value)" >Rimuovi</button>
+                  </div>
+                
             </div>
             <div class="form-group row">
                 <div class="col-sm-12">

@@ -4,8 +4,8 @@ import { TypeSubject } from '../models/TypeSubject';
 import { Term } from './Term';
 
 export interface SubjectStudy {
-    id: number;
-	name: string;
+    id?: number;
+	name?: string;
 	description?: string;
 	degreecourseDTO?: DegreeCourse;
 	teacherDTO?: Teacher;

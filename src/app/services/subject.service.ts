@@ -12,6 +12,7 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 export class SubjectService {
   getAllUrl = 'http://localhost:8080/SpringApp/subject/getAll';
   saveUrl = 'http://localhost:8080/SpringApp/subject/save';
+  saveAllUrl = 'http://localhost:8080/SpringApp/subject/saveAll';
   getByIdCourseUrl = 'http://localhost:8080/SpringApp/subject/getByIdCourse';
   getAllSubjectTypesUrl = 'http://localhost:8080/SpringApp/subject/getAllSubjectTypes';
   getAllByTeacherUrl = 'http://localhost:8080/SpringApp/subject/getByIdTeacher';
@@ -24,6 +25,10 @@ export class SubjectService {
 
   saveSubject(subject: SubjectStudy): Observable<SubjectStudy>{
     return this.http.post<SubjectStudy>(this.saveUrl, subject, {headers});
+  }
+
+  saveAllSubject(subjects: SubjectStudy[]): Observable<SubjectStudy[]>{
+    return this.http.post<SubjectStudy[]>(this.saveAllUrl, subjects, {headers});
   }
 
   getByIdCourse(id: number): Observable<SubjectStudy[]>{
