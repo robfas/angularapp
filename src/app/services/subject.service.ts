@@ -16,6 +16,7 @@ export class SubjectService {
   getByIdCourseUrl = 'http://localhost:8080/SpringApp/subject/getByIdCourse';
   getAllSubjectTypesUrl = 'http://localhost:8080/SpringApp/subject/getAllSubjectTypes';
   getAllByTeacherUrl = 'http://localhost:8080/SpringApp/subject/getByIdTeacher';
+  saveTypeUrl = 'http://localhost:8080/SpringApp/subject/saveTypeSubject';
 
   constructor(private http: HttpClient) { }
 
@@ -42,4 +43,9 @@ export class SubjectService {
   getAllByTeacher(id: number):Observable<SubjectStudy[]>{
     return this.http.get<SubjectStudy[]>(this.getAllByTeacherUrl);
   }
+
+  saveTypeSubject(typeSubject: TypeSubject): Observable<TypeSubject>{
+    return this.http.post<TypeSubject>(this.saveTypeUrl, typeSubject, {headers});
+  }
+
 }

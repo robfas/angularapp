@@ -17,6 +17,7 @@ export class AcademicYearService {
   getAllYearsOfCourseUrl: string = 'http://localhost:8080/SpringApp/academicyear/getAllYearsOfCourse';
   getTermsByAcademicyearUrl: string = 'http://localhost:8080/SpringApp/academicyear/getTermsByAaId';
   saveTermUrl: string = 'http://localhost:8080/SpringApp/academicyear/saveTerm';
+  saveAllTermUrl: string = 'http://localhost:8080/SpringApp/academicyear/saveAllTerm';
 
   constructor(private http: HttpClient) { }
 
@@ -39,5 +40,9 @@ export class AcademicYearService {
 
   saveTerm(term: Term): Observable<Term>{
     return this.http.post<Term>(this.saveTermUrl, term, {headers});
+  }
+
+  saveAllTerm(terms: Term[]): Observable<Term[]>{
+    return this.http.post<Term[]>(this.saveAllTermUrl, terms, {headers});
   }
 }

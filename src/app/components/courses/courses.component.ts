@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarService } from '../../services/navbar.service';
 import { CourseService } from '../../services/course.service';
 import { DegreeCourse } from '../models/DegreeCourse';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -11,15 +11,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CoursesComponent implements OnInit {
   courses: DegreeCourse[];
+  firstlevel: DegreeCourse[];
 
-  constructor(public nav: NavbarService, public courseService: CourseService, private route: ActivatedRoute) { }
+  constructor(public nav: NavbarService, public courseService: CourseService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.nav.showNavStaff();
     this.courseService.getAll().subscribe(courses=>{
-      this.courses = courses.filter(courses=>courses.typeDegreeCourse.courseType.idcourseType === id)
-      console.log(id,courses[0].typeDegreeCourse.courseType.idcourseType);
+      this.firstlevel = courses.filter(courses=>courses.typeDegreeCourse.courseType.idcourseType === id)
+      console.log(id, this.firstlevel[0].typeDegreeCourse.courseType.idcourseType);
+      
+      
     });
   }
 

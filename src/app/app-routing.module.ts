@@ -21,6 +21,7 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { AcademicYearComponent } from './components/academic-year/academic-year.component';
 import { TermComponent } from './components/term/term.component';
+import { SubjectTypeComponent } from './components/subject-type/subject-type.component';
 
 
 const routes: Routes =[
@@ -40,6 +41,7 @@ const routes: Routes =[
   {path: 'staff/scheduler2/:id', component: SchoolCalendar2Component},
   {path: 'staff/calendar', component: CalendarComponent},
   {path: 'staff/newsubject', component: SubjectComponent},
+  {path: 'staff/newsubjecttype', component: SubjectTypeComponent},
   {path: 'staff/tickets', component: TicketsComponent},
   {path: 'staff/corsi/:id', component: CoursesComponent},
   {path: 'staff/academicYears', component: AcademicYearComponent},

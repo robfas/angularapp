@@ -32,9 +32,9 @@ onchange(year){
 
 saveYear(year){
   this.academicYearService.saveAcademicYear({year: parseInt(year)} as AcademicYear).subscribe(academicYear => {
+    this.academicyears.push(academicYear);
     console.log(academicYear);
   });
-   window.location.reload();
 }
 
 dettagli(academicYear: AcademicYear){

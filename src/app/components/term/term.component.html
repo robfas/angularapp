@@ -20,6 +20,27 @@
           </tr>
         </tbody>
     </table>
+    <br>
+    <h3>Corsi Attivi per l'Anno Accademico {{academicyears[0].year}}/{{academicyears[0].year + 1}}</h3>
+    <table id="courses" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+        <thead>
+            <tr bgcolor="#cccccc">
+              
+                <th style="text-align:center">Nome</th>
+                <th style="text-align:center">Numero Iscritti</th>
+                
+  
+            </tr>
+          </thead>
+          <tbody>                                                                                         
+            <tr *ngFor="let c of coursesofthisyear; let c = index" > 
+             
+              <td style="text-align:center"> {{ c.name }} </td>
+              <td style="text-align:center"> {{ c  }} </td>
+           
+            </tr>
+          </tbody>
+      </table>
   </div>
   <div *ngIf="!showterms" class="card card-body mb-3 bg-transparent">
       <h3>Periodi Anno Accademico {{academicyears[0].year}}/{{academicyears[0].year + 1}}:</h3>
@@ -47,37 +68,34 @@
         </div>
         <div class="modal-body">
                 <form>
-                          <div class="form-row">
-                            <label for="nome">Inserisci Numero Periodi</label>
-                          </div>
-                            <div class="form-group">
-                              <input type="number" class="form-control" id="termnumber"  #number (change)="add(number.value)">
-                            </div>
-                           
-                            <br>
+                          
                             <div *ngFor="let n of numbers">
                             <div class="form-row">
                                 <label for="nome">Data inizio e fine</label>
                                 </div>
                                 <div class="form-row">
                                 <div class="form-group col-md-5">
-                                    <input type="date" class="form-control"id="startdate" #startdate>
+                                    <input type="date" class="form-control"id="startdate" #startdate (change)="updatestart(startdate.value,enddate.value)">
                                   </div>
                             <div class="form-group col-md-5">
-                              <input type="date" class="form-control"id="enddate" #enddate>
+                              <input type="date" class="form-control"id="enddate" #enddate (change)="updateend(startdate.value, enddate.value)">
                             </div>
+
+                            <div class="col-md-2">
+                              <button type="button" class="btn btn-outline-danger my-2 my-sm-0" (click)="removerow(startdate.value, enddate.value)">Rimuovi</button>
+                            </div>
+
                           </div>
-                          
-                          <div class="form-row">
-                          
-                          <button type="button" class="btn btn-success" (click)="saveterms(startdate.value, enddate.value)">Crea Periodo</button>
-                          </div>
+                         </div>
+                        <br>
+                        <div class="form-row">
+                          <button type="button" class="btn btn-outline-success my-2 my-sm-0 float-right" (click)="addrow()">Aggiungi</button>
                         </div>
                           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="remove()">Chiudi</button>
-          <button type="button" class="btn btn-success"  data-dismiss="modal" (click)="update()">Salva</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+          <button type="button" class="btn btn-success"  data-dismiss="modal" (click)="save()">Salva</button>
         </div>
          
     

@@ -43,6 +43,7 @@ export class TicketComponent implements OnInit {
         name: JSON.parse(localStorage.getItem('currentUser')).name,
         surname: JSON.parse(localStorage.getItem('currentUser')).surname
       }};
+      //if(this.user.type == 'employee')
     this.nav.showNavStaff();
     const id = +this.route.snapshot.paramMap.get('id');
       this.ticketService.getTicketById(id).subscribe(ticket => {
@@ -86,7 +87,6 @@ export class TicketComponent implements OnInit {
   showTextArea(){
     this.statusVisible = true;
     if((this.ticket.ticketmessages.length)%2 === 0){
-      console.log("qui");
       this.textareaVisible = false;
     }
     else{

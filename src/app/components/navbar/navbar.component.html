@@ -41,7 +41,6 @@
          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Corsi di Laurea</a>
               <div  class="dropdown-menu" >
-                <a *ngFor="let t of courseTypes;let t = index;" class="dropdown-item" [routerLink]="['/staff/corsi', t.idcourseType]" [skipLocationChange]="true">{{t.description}}</a>
                
                 <a class="dropdown-item" href="/staff/newcourse">Inserisci Nuovo Corso</a>
                 <a class="dropdown-item" href="/staff/newcoursetype">Inserisci Nuovo Tipo di Corso</a>

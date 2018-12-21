@@ -12,6 +12,7 @@ import { Term } from '../models/Term';
 import { Teacher } from '../models/Teacher';
 import { UserService } from '../../services/user.service';
 import { AcademicYearService } from '../../services/academic-year.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course',
@@ -48,7 +49,7 @@ export class CourseComponent implements OnInit {
   mysubject: SubjectStudy;
   mysubjects: SubjectStudy[] = [];
 
-  constructor(public nav: NavbarService, public courseService: CourseService, public academicYearService: AcademicYearService, public userService: UserService, public subjectService: SubjectService) { }
+  constructor(public nav: NavbarService, private router: Router, public courseService: CourseService, public academicYearService: AcademicYearService, public userService: UserService, public subjectService: SubjectService) { }
 
   ngOnInit() {
     this.nav.showNavStaff();
@@ -175,7 +176,8 @@ save(idcourseType,idtypeDegreeCourse,academicyear,mysubjects){
 
   this.courseService.saveCourse({cfu: this.courseType.cfu, typeDegreeCourse: this.degreeCourseType, academicYear: this.aa[0], subjects: this.mysubjects} as DegreeCourse).subscribe(course => {
     console.log(course);
-
+    alert('Corso salvato con successo!');
+    this.router.navigate(['staff']);
  /* this.subjectService.saveAllSubject(this.mysubjects).subscribe(subjects => {
       console.log(subjects);
     });
@@ -188,21 +190,7 @@ save(idcourseType,idtypeDegreeCourse,academicyear,mysubjects){
         });*/
     });
   });
-  }
-}
-
-saveSubject(s, teacher, cfu, academicyear){
-  console.log(s);
-  if (s==undefined || teacher== undefined || cfu == undefined || academicyear == undefined){
-    alert('Insersci tutti i valori!');
-  }else{
-    console.log(s);
-    this.selectedTeacher = this.teachers.filter(teachers=>teachers.idteacher === parseInt(teacher));
-    this.subjectService.saveSubject({name: s.name, teacherDTO: this.selectedTeacher[0], cfu: cfu, typeSubjectDTO: s} as SubjectStudy).subscribe(subject => {
-      console.log(subject);
-    });
   
-
   }
 }
 
