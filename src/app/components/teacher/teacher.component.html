@@ -1,48 +1,88 @@
 <div class="jumbotron">
-  <div class="container1">
-    <h1 class="display-3">Area Docenti</h1>
-    <p></p>
+  <div class="img"></div>
+
+  <h1 class="display-3">Area Docente</h1>
+  <p>Gestisci gli insegnamenti e le tue segnalazioni.</p>
+</div>
+<div class="card card-body mb-3 bg-transparent" style="border: transparent">
+<div class="card card-body mb-3 bg-transparent">  
+  <h3>Area personale</h3>
+  <br>
+  <div class="row">
+          <div class="col-sm">
+            <img class="rounded-circle" src="http://localhost:8080/SpringApp/images/user.png" alt="Generic placeholder image" width="150" height="150">
+          </div>
+          <div class="col-sm">
+          <div class="row">
+            <h3>{{user.name}} {{user.surname}} <br></h3>
+          </div>
+          <div class="row">
+            <p><b>Indirizzo: </b>{{user.residence}}</p>
+          </div>
+            <div class="row">
+            <p><b>Cell: </b>{{user.phone}}</p>
+          </div>
+      </div>
+      <div class="col-sm">
+              <div class="row">
+                      <h3><br></h3>
+                    </div>
+                    <div class="row">
+                      <p><b>Email: </b>{{user.email}}</p>
+                    </div>
+                      <div class="row">
+                      <p><b>Data di nascita: </b>{{user.dateBirth | date : shortDate}}</p>
+                    </div>
+      </div>
+  </div>
+  <!-- Button trigger modal -->
+  <div class="col-sm-14">
+  <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#datamodal">
+      Modifica Dati Personali
+    </button>
   </div>
 </div>
+</div>
 
-<h5>Segnalazioni recenti</h5>
-
-<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="3000">
- 
-    <div class="carousel-item active">
-        <div class="row">
-        <div class="col-sm-3">
-            <img src="http://via.placeholder.com/200x200" class="rounded-circle img-fluid"/>
+<!-- Modal -->
+<div class="modal fade" id="datamodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modifica Dati</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-      <div class="col-sm-9">
-        <h3>Titolo segnalazione</h3>
-        <small>Testo segnalazione</small>
-        <small class="smallest mute"> - Nome</small>
+          <div class="modal-body">
+                  <form>
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="nome">Nome</label>
+                              <input type="text" class="form-control" id="name" value="{{ user.name }}" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="cognome">Cognome</label>
+                              <input type="text" class="form-control" id="surname" value="{{ user.surname }}" readonly>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="inputAddress">Indirizzo</label>
+                            <input type="text" class="form-control" id="inputAddress" value="{{ user.residence }}">
+                          </div>
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="inputPhone">Phone</label>
+                              <input type="text" class="form-control" id="phone"  value="{{ user.phone }}">
+                            </div>
+                          </div>
+                         
+                        </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+            <button type="button" class="btn btn-success">Salva</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-
-  <div class="carousel-item active">
-    <div class="row">
-    <div class="col-sm-3">
-        <img src="http://via.placeholder.com/200x200"  class="rounded-circle img-fluid"/>
-      </div>
-  <div class="col-sm-9">
-    <h3>Titolo segnalazione</h3>
-    <small>Testo segnalazione</small>
-    <small class="smallest mute"> - Nome</small>
-  </div>
-</div>
-</div>
-
-  <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-
-  <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>

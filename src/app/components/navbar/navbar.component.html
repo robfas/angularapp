@@ -41,7 +41,6 @@
          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Corsi di Laurea</a>
               <div  class="dropdown-menu" >
-                <a *ngFor="let t of courseTypes;let t = index;" class="dropdown-item" [routerLink]="['/staff/corsi', t.idcourseType]" [skipLocationChange]="true">{{t.description}}</a>
                
                 <a class="dropdown-item" href="/staff/newcourse">Inserisci Nuovo Corso</a>
                 <a class="dropdown-item" href="/staff/newcoursetype">Inserisci Nuovo Tipo di Corso</a>
@@ -90,21 +89,16 @@
           </li>
         
          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Corsi di Laurea</a>
+              <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Insegnamenti</a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="#">Triennale</a>
-                <a class="dropdown-item" href="#">Magistrale</a>
-             
+                <a *ngFor="let s of subjects; let s = index;" class="dropdown-item" [routerLink]="['/teacher/subjects', s.id]" [skipLocationChange]="true">{{s.name}}</a>
               </div>
             </li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Calendario Didattico</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="">Gestisci Aule</a>
-                <a class="dropdown-item" href="/staff/calendar">Gestisci Calendario Lezioni</a>
-                <a class="dropdown-item" href="/staff/examcalendar">Gestisci Calendario Esami</a>
-              </div>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Calendario Didattico<span class="sr-only">(current)</span></a>
             </li>
+              
+            
         <li class="nav-item active">
           <a class="nav-link" href="#">Segnalazioni<span class="sr-only">(current)</span></a>
         </li>

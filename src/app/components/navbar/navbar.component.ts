@@ -8,6 +8,8 @@ import { NavbarService } from '../../services/navbar.service';
 import { CourseService } from '../../services/course.service';
 import { DegreeCourse } from '../models/DegreeCourse';
 import { CourseType } from '../models/CourseType';
+import { SubjectService } from '../../services/subject.service';
+import { SubjectStudy } from '../models/SubjectStudy';
 
 @Component({
   selector: 'app-navbar',
@@ -18,12 +20,15 @@ export class NavbarComponent implements OnInit {
   user: User;
   courses: DegreeCourse[];
   courseTypes: CourseType[];
+  subjects: SubjectStudy[];
+ 
 
-  constructor(public nav: NavbarService, private loginService: LoginService, private router: Router, public courseService: CourseService) { }
+  constructor(public nav: NavbarService, private loginService: LoginService, private router: Router, public courseService: CourseService, public subjectService: SubjectService) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
       this.user={
+        iduser:JSON.parse(localStorage.getItem('currentUser')).iduser,
         name: JSON.parse(localStorage.getItem('currentUser')).name,
         surname: JSON.parse(localStorage.getItem('currentUser')).surname
       }
@@ -31,7 +36,11 @@ export class NavbarComponent implements OnInit {
     this.courseService.getAllCourseTypes().subscribe(courseTypes=>{
       this.courseTypes=courseTypes;
       console.log(courseTypes)
-    })
+    });
+    this.subjectService.getAll().subscribe(subjects => {
+      this.subjects = subjects.filter(subjects=>subjects.teacherDTO.idteacher == 2);
+      console.log(this.subjects);
+    });
   }
 
   signInUser(email,password) {

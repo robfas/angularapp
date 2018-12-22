@@ -43,6 +43,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { AcademicYearComponent } from './components/academic-year/academic-year.component';
 import { ExamCalendarComponent } from './components/exam-calendar/exam-calendar.component';
 import { LessonTeacherComponent } from './components/lesson-teacher/lesson-teacher.component';
+import { TermComponent } from './components/term/term.component';
+import { SubjectTypeComponent } from './components/subject-type/subject-type.component';
 
 registerLocaleData(localeIt);
 
@@ -74,6 +76,8 @@ registerLocaleData(localeIt);
     AcademicYearComponent,
     ExamCalendarComponent,
     LessonTeacherComponent,
+    TermComponent,
+    SubjectTypeComponent,
 
    
   ],

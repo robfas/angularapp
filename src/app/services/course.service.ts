@@ -19,6 +19,7 @@ export class CourseService {
   getCourseTypeUrl: string = 'http://localhost:8080/SpringApp/course/getCourseType';
   getAllUrl: string = 'http://localhost:8080/SpringApp/course/getAll';
   getAllCourseByTypeUrl: string = 'http://localhost:8080/SpringApp/course/getCourseByType';
+  saveTypeUrl: string = 'http://localhost:8080/SpringApp/course/saveType'
 
   constructor(private http: HttpClient) { }
 
@@ -49,5 +50,9 @@ export class CourseService {
 
   getAllCourseByType(id: number):Observable<DegreeCourse[]>{
     return this.http.get<DegreeCourse[]>(this.getAllCourseByTypeUrl + '/' + id);
+  }
+
+  saveType(typecourse: TypeDegreeCourse): Observable<TypeDegreeCourse>{
+    return this.http.post<TypeDegreeCourse>(this.saveTypeUrl, typecourse, {headers});
   }
 }
