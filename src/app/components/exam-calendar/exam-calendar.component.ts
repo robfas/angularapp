@@ -43,6 +43,9 @@ import { TypeLesson } from '../models/TypeLesson';
 import { Scheduler } from '../models/scheduler';
 import { AcademicYear } from '../models/AcademicYear';
 import { Day } from '../models/day';
+import { ExamService } from '../../services/exam.service';
+import { ExamType } from '../models/ExamType';
+import { Exam } from '../models/exam';
 
 export class CustomDateFormatter extends CalendarDateFormatter {
   // you can override any of the methods defined in the parent class
@@ -63,16 +66,18 @@ export class CustomDateFormatter extends CalendarDateFormatter {
 interface MyEvent extends CalendarEvent {
   room: Class;
   subject: SubjectStudy;
+  examType: ExamType;
+  present: boolean;
 }
 
 interface MySubject extends SubjectStudy {
-  color: any;
+  color?: any;
 }
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css'],
+  selector: 'app-exam-calendar',
+  templateUrl: './exam-calendar.component.html',
+  styleUrls: ['./exam-calendar.component.css'],
   providers: [
     {
       provide: CalendarDateFormatter,
@@ -80,7 +85,7 @@ interface MySubject extends SubjectStudy {
     }
   ]
 })
-export class CalendarComponent implements OnInit {
+export class ExamCalendarComponent implements OnInit {
   locale: string = 'it';
   courses: DegreeCourse[];
   terms: Term[];
@@ -106,8 +111,13 @@ export class CalendarComponent implements OnInit {
   selectedYear: AcademicYear = undefined;
   selectedTerm: Term = undefined;
   selectedTypeLessons: TypeLesson[] = [];
+  selectedSubject: MySubject = {};
+  selectedExamType: ExamType = {};
+  selectedTime: String;
+  examTypes: ExamType[] = [];
+  selectedExams: Exam[] = [];
 
-  constructor(private modal: NgbModal, public aaService: AcademicYearService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public calendarService: CalendarService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
+  constructor(private modal: NgbModal, public aaService: AcademicYearService, public examService: ExamService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public calendarService: CalendarService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
 
   ngOnInit() {
     this.nav.showNavStaff();
@@ -118,6 +128,10 @@ export class CalendarComponent implements OnInit {
     this.subjectService.getAll().subscribe(subjects =>{
       this.subjects = subjects;
     });
+
+    this.examService.getAllExamTypes().subscribe(examTypes => {
+      this.examTypes = examTypes
+    })
   }
 
   onChange($event) {
@@ -178,13 +192,12 @@ onChangeCourse($event) {
           name: this.subjects[s].name,
           typeSubjectDTO: this.subjects[s].typeSubjectDTO,
           color: {
-            primary: '#' + ('000000').slice(-6),
+            primary: colore,
             secondary: colore
           }
         });
       }
     });
-    
   }
 
 }
@@ -216,40 +229,43 @@ showScheduler(){
   if (this.selectedTypeDegreeCourse == undefined || this.selectedCourse == undefined || this.selectedYear == undefined || this.selectedTerm == undefined) {
     alert('Completa tutti i campi!');
   }else{
-        this.calendarService.getScheduler(this.selectedCourse, this.selectedTerm.idterm).subscribe(typeLessons =>{
-
-          for (let l of typeLessons) {
-            let item = this.mySubjects.find(i => i.id == l.subject.id);
-            console.log(item.id + " " + l.subject.id)
+        this.examService.getAllByCourseAndTerm(this.selectedCourse.idcourse, this.selectedTerm.idterm).subscribe(exams =>{
+          if(exams.length > 0) {
+            this.viewDate = exams[0].date
+            for (let e of exams) {
+              let item = this.mySubjects.find(i => i.id == e.subject.id);
                 this.events.push({
-                  start: new Date('2017-05-0' + l.day.idDay + 'T' + l.start),
-                  end: new Date('2017-05-0' + l.day.idDay + 'T' + l.end),
-                  title: l.subject.name + " " + l.classroom.building.name + ", " + l.classroom.name,
-                  id: l.idtypeLesson,
+                  start: e.date,
+                  title: e.examtype.description + " di " + e.subject.name + " in " + e.classroom.building.name + " - " + e.classroom.name + " ore: " + this.datePipe.transform(e.date, 'HH:mm'),
+                  id: e.idexam,
                   color: item.color,
-                  actions: this.actions,
+                  actions: this.actionsLimited,
                   resizable: {
                     beforeStart: true,
                     afterEnd: true
                   },
                   draggable: true,
-                  room: l.classroom,
-                  subject: l.subject
+                  room: e.classroom,
+                  subject: e.subject,
+                  examType: e.examtype,
+                  present: true
                 })
-                
-            
-            
-        }
+          }
+          console.log(this.events)
+          } else {
+            this.viewDate = this.selectedTerm.start;
+          }
+          
+          
           this.refresh.next();
         })
+
         
-      this.calendarService.schedulerExists(this.selectedTerm.idterm, this.selectedCourse.idcourse).subscribe(idscheduler=> {
+
         this.scheduler = {
-          idScheduler: idscheduler,
           degreeCourse: this.selectedCourse,
           term: this.selectedTerm
         }
-      })
 
     this.buildingService.getBuildings().subscribe(buildings => {
       this.buildings = buildings;
@@ -267,11 +283,11 @@ showScheduler(){
   @ViewChild('modalContent')
   modalContent: TemplateRef<any>;
 
-  view: CalendarView = CalendarView.Week;
+  view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
-  viewDate: Date = new Date(2017, 4, 1)
+  viewDate: Date = new Date()
 
   modalData: {
     action: string;
@@ -290,6 +306,15 @@ showScheduler(){
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
         this.handleEvent('Deleted', event);
+      }
+    }
+  ];
+
+  actionsLimited: CalendarEventAction[] = [
+    {
+      label: '<i class="fa fa-fw fa-pencil"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.handleEvent('Edited', event);
       }
     }
   ];
@@ -315,10 +340,11 @@ showScheduler(){
     }*/
   ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+
     if (isSameMonth(date, this.viewDate)) {
       this.viewDate = date;
       if (
@@ -339,105 +365,206 @@ showScheduler(){
   }: CalendarEventTimesChangedEvent): void {
     event.start = newStart;
     event.end = newEnd;
+    this.activeDayIsOpen = false;
     //this.handleEvent('Dropped or resized', event);
     this.refresh.next();
   }
 
   handleEvent(action: string, event: any): void {
-    if(action != 'Deleted') {
-      this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
-    if(event.room != undefined) {
+    if (action == 'Clicked') {
+      this.selectedSubject = {};
+      this.selectedExamType = {};
+      this.selectedClassroom = null;
+      this.selectedTime = null;
+      if (isSameMonth(event.start, this.viewDate)) {
+        this.viewDate = event.start;
+        if (
+          (isSameDay(this.viewDate, event.start) && this.activeDayIsOpen === true) ||
+          this.events.length === 0
+        ) {
+          this.activeDayIsOpen = false;
+        } else {
+          this.activeDayIsOpen = true;
+        }
+      }
+    } else if (action == 'Edited') {
+      this.selectedSubject = event.subject;
+      this.selectedExamType = event.examType;
+      this.selectedClassroom = event.room;
+      this.selectedTime = this.datePipe.transform(event.start, 'HH:mm');
       this.classroomService.getClassroomsByBuilding(event.room.building.id).subscribe(classes => {
         this.classes = classes;
         this.refresh.next();
       });
+      this.modalData = { event, action };
+      this.modal.open(this.modalContent, { size: 'lg' });
     }
     }
-    
-    /*console.log(event.id)
-    console.log(datePipe.transform(event.start, 'd'))
-    console.log(datePipe.transform(event.start, 'HH:mm'))
-    console.log(datePipe.transform(event.end, 'd'))
-    console.log(datePipe.transform(event.end, 'HH:mm'))*/
+
+  handleDay(action: string, event: any): void {
+    this.selectedSubject = {};
+      this.selectedExamType = {};
+      this.selectedClassroom = null;
+      this.selectedTime = null;
+    this.modalData = { event, action };
+    this.modal.open(this.modalContent, { size: 'lg' });
   }
 
-  addEvent2(s): void {
-    const datePipe = new DatePipe('en-US');
-    this.events.push({
-      title: s.name,
-      id: s.id,
-      start: new Date(2017, 4, 1, 8, 0),
-      end: new Date(2017, 4, 1, 9, 0),
-      color: s.color,
-      draggable: true,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      room: null,
-      subject: s
-    });
-    console.log(new Date(2017, 4, 1, 8, 0))
-    this.refresh.next();
-  }
-
-  /*addEvent(): void {
-    this.events.push({
-      title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
-      color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      room: null,
-      subject: null
-    });
-    this.refresh.next();
-  }*/
 
   onChangeBuild($event, index, event) {
     if(index != "") {
-      /*this.classroomService.getClassroomsByBuilding(this.buildings[index].id).subscribe(classes => {
-        this.classes = classes;
-        this.refresh.next();
-      });*/
-     const d: Day = {idDay: Number(this.datePipe.transform(event.start, 'd'))};
-
-      console.log(event);
-      this.classroomService.getAvailableClassrooms(this.buildings[index].id, {idtypeLesson: event.id, start: event.start, end: event.end, day: d, scheduler: this.scheduler} as TypeLesson).subscribe(classes => {
+      this.classroomService.getClassroomsByBuilding(this.buildings[index].id).subscribe(classes => {
         this.classes = classes;
         this.refresh.next();
       });
-      
-      /*console.log(event.id)
-    console.log(datePipe.transform(event.start, 'd'))
-    console.log(datePipe.transform(event.start, 'HH:mm'))
-    console.log(datePipe.transform(event.end, 'd'))
-    console.log(datePipe.transform(event.end, 'HH:mm'))*/
     } else {
       this.selectedClassroom = null
       this.classes = null
     }
   }
-  save(event: MyEvent) {
-    if(this.selectedClassroom != null) {
-        event.room = this.selectedClassroom;
-        event.title = event.subject.name + " " + this.selectedClassroom.building.name + ", " + this.selectedClassroom.name,
-        console.log(this.events)
-        this.selectedClassroom = null
 
+  onChangeSubject($event, index, event) {
+    if(index != "") {
+      this.selectedSubject = this.mySubjects[index];
+    } else {
+      this.selectedSubject = null
+    }
+  }
+
+  onChangeTime($event, time) {
+    if(time != "") {
+      this.selectedTime = time
+    } else {
+      this.selectedTime = null
+    }
+  }
+
+  onChangeExamType($event, index, event) {
+    if(index != "") {
+      this.selectedExamType = this.examTypes[index];
+    } else {
+      this.selectedExamType = null
+    }
+  }
+  
+
+  save(event: any) {
+    if(this.selectedSubject != undefined && this.selectedExamType != undefined && this.selectedClassroom != undefined && this.selectedTime != undefined) {
+      let item = this.mySubjects.find(i => i.id == this.selectedSubject.id);
+      if(this.events.length > 0) {
+        if (event.id != undefined) {
+          const index: number = this.events.indexOf(event);
+          if (index !== -1) {
+              this.events[index] = {
+                start: new Date(this.datePipe.transform(event.start, 'yyyy-MM-dd') + 'T' + this.selectedTime),
+                end: new Date(this.datePipe.transform(event.start, 'yyyy-MM-dd') + 'T' + this.selectedTime),
+                title: this.selectedExamType.description + " di " + this.selectedSubject.name + " in " + this.selectedClassroom.building.name + " - " + this.selectedClassroom.name + " ore: " + this.selectedTime,
+                id: event.id,
+                color: item.color,
+                actions: this.actions,
+                resizable: {
+                  beforeStart: true,
+                  afterEnd: true
+                },
+                draggable: true,
+                room: this.selectedClassroom,
+                subject: this.selectedSubject,
+                examType: this.selectedExamType,
+                present: event.present
+              }
+              this.refresh.next()
+            } else {
+              let id: number = (Number)(this.events[this.events.length]);
+              while(true) {
+                if(!this.events.find(i => i.id == id)) {
+                  break;
+                } else {
+                  id++;
+                }
+              }
+              this.events.push(
+                {
+                  start: new Date(this.datePipe.transform(event.date, 'yyyy-MM-dd') + 'T' + this.selectedTime),
+                  end: new Date(this.datePipe.transform(event.date, 'yyyy-MM-dd') + 'T' + this.selectedTime),
+                  title: this.selectedExamType.description + " di " + this.selectedSubject.name + " in " + this.selectedClassroom.building.name + " - " + this.selectedClassroom.name + " ore: " + this.selectedTime,
+                  id: id,
+                  color: item.color,
+                  actions: this.actions,
+                  resizable: {
+                    beforeStart: true,
+                    afterEnd: true
+                  },
+                  draggable: true,
+                  room: this.selectedClassroom,
+                  subject: this.selectedSubject,
+                  examType: this.selectedExamType,
+                  present: event.present
+                }
+              );
+            }
+        } else {
+          let id: number = (Number)(this.events[this.events.length]);
+          while(true) {
+            if(!this.events.find(i => i.id == id)) {
+              break;
+            } else {
+              id++;
+            }
+          }
+          this.events.push(
+            {
+              start: new Date(this.datePipe.transform(event.date, 'yyyy-MM-dd') + 'T' + this.selectedTime),
+              end: new Date(this.datePipe.transform(event.date, 'yyyy-MM-dd') + 'T' + this.selectedTime),
+              title: this.selectedExamType.description + " di " + this.selectedSubject.name + " in " + this.selectedClassroom.building.name + " - " + this.selectedClassroom.name + " ore: " + this.selectedTime,
+              id: (Number)(this.events[this.events.length]),
+              color: item.color,
+              actions: this.actions,
+              resizable: {
+                beforeStart: true,
+                afterEnd: true
+              },
+              draggable: true,
+              room: this.selectedClassroom,
+              subject: this.selectedSubject,
+              examType: this.selectedExamType,
+              present: event.present
+            }
+          );
+        }
+      } else {
+        this.events.push(
+          {
+            start: new Date(this.datePipe.transform(event.date, 'yyyy-MM-dd') + 'T' + this.selectedTime),
+            end: new Date(this.datePipe.transform(event.date, 'yyyy-MM-dd') + 'T' + this.selectedTime),
+            title: this.selectedExamType.description + " di " + this.selectedSubject.name + " in " + this.selectedClassroom.building.name + " - " + this.selectedClassroom.name + " ore: " + this.selectedTime,
+            id: 0,
+            color: item.color,
+            actions: this.actions,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true
+            },
+            draggable: true,
+            room: this.selectedClassroom,
+            subject: this.selectedSubject,
+            examType: this.selectedExamType,
+            present: event.present
+          }
+        );
+      }
+        this.selectedClassroom = null
+        this.selectedSubject = {}
+        this.selectedExamType = {}
+        this.selectedTime = null
         this.modal.dismissAll('success')
         this.valid = true;
         this.refresh.next();
+        console.log(this.events)
     } else {
       this.valid = false;
       console.log('error')
     }
+
     
   }
 
@@ -470,35 +597,34 @@ showScheduler(){
     if (this.events.length ==  0) {
       this.error=true;
     } else {
-      for(let e in this.events) {
-        if (this.events[e].room == undefined) {
-          this.error = true;
-          break;
-        } else if(Number(e) == this.events.length-1) {
-          this.error = false;
-        }
-      }
       if(this.error == false) {
         for(let e of this.events) {
-          this.selectedTypeLessons.push({
-              idtypeLesson: e.id,
-              start: new Date(e.start),
-              end: new Date(e.end),
-              day: {idDay: Number(this.datePipe.transform(e.start, 'd'))} as Day,
+          if(e.present) {
+            this.selectedExams.push({
+              idexam: e.id,
+              classroom: e.room,
               subject: e.subject,
-              classroom: e.room
-            } as TypeLesson);
-        
-        console.log(e.id)
+              examtype: e.examType,
+              date: e.start
+            } as Exam);
+          } else {
+            this.selectedExams.push({
+              idexam: null,
+              classroom: e.room,
+              subject: e.subject,
+              examtype: e.examType,
+              date: e.start
+            } as Exam);
+          }
+          
       }
-        this.scheduler.typeLessons = this.selectedTypeLessons;
-        console.log("SCHEDULER")
-        console.log(this.scheduler)
-        this.calendarService.save(this.scheduler).subscribe(scheduler => {
+
+      console.log(this.selectedExams)
+        this.examService.saveAll(this.selectedExams).subscribe(result => {
           this.schedule = false;
           this.mySubjects = [];
           this.events = [];
-          this.activeDayIsOpen = false;
+          
           this.degreeCourseTypes = null
           this.courses = null
           this.aa = null
@@ -511,7 +637,8 @@ showScheduler(){
           this.selectedTypeLessons = [];
         });
       }
-    }
+      }
 
   }
 }
+

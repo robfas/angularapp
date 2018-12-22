@@ -269,15 +269,15 @@ export class SchoolCalendar2Component implements OnInit {
         this.refresh.next();
       });*/
       const datePipe = new DatePipe('en-US');
-      const typeLesson: TypeLesson = {id: 1};
-      const s: Scheduler = {id: 1};
+      const typeLesson: TypeLesson = {idtypeLesson: 1};
+      const s: Scheduler = {idScheduler: 1};
      const aa: AcademicYear = {idacademicYear: 1};
      const d: Day = {idDay: 1};
       const ter: Term = {idterm: 1};
       ter.academicYear=aa
       s.term=ter
 
-      this.classroomService.getAvailableClassrooms(this.buildings[index].id, {id: 1, scheduler: s, start: event.start, end: event.end, day: d} as TypeLesson).subscribe(classes => {
+      this.classroomService.getAvailableClassrooms(this.buildings[index].id, {idtypeLesson: 1, scheduler: s, start: event.start, end: event.end, day: d} as TypeLesson).subscribe(classes => {
         this.classes = classes;
         this.refresh.next();
       });

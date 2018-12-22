@@ -1,7 +1,10 @@
 import { Term } from "./term";
+import { DegreeCourse } from "./DegreeCourse";
+import { TypeLesson } from "./TypeLesson";
 
 export class Scheduler {
-    id?: number;
-    name?: string;
+    idScheduler?: number;
     term?: Term;
+    degreeCourse?: DegreeCourse;
+    typeLessons?: TypeLesson[];
 }

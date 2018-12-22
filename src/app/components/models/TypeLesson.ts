@@ -1,11 +1,16 @@
 import { Time } from "@angular/common";
 import { Scheduler } from "./scheduler";
 import { Day } from "./day";
+import { TypeSubject } from "./TypeSubject";
+import { Class } from "./Class";
+import { SubjectStudy } from "./SubjectStudy";
 
 export class TypeLesson {
-    id: number;
-    scheduler?: Scheduler;
-    start?: Time;
-    end?: Time;
+    idtypeLesson?: number;
+    start?: Date;
+    end?: Date;
     day?: Day;
+    subject?: SubjectStudy;
+    classroom?: Class;
+    scheduler?: Scheduler;
 }

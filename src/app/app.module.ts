@@ -17,6 +17,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import localeIt from '@angular/common/locales/it';
+import { registerLocaleData } from '@angular/common';
 
 import { HttpClientModule } from '@angular/common/http';
 import { UsersSEComponent } from './components/users-se/users-se.component';
@@ -39,7 +41,10 @@ import { TicketsComponent } from './components/tickets/tickets.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { AcademicYearComponent } from './components/academic-year/academic-year.component';
+import { ExamCalendarComponent } from './components/exam-calendar/exam-calendar.component';
+import { LessonTeacherComponent } from './components/lesson-teacher/lesson-teacher.component';
 
+registerLocaleData(localeIt);
 
 @NgModule({
   declarations: [
@@ -67,6 +72,8 @@ import { AcademicYearComponent } from './components/academic-year/academic-year.
     CoursesComponent,
     CalendarComponent,
     AcademicYearComponent,
+    ExamCalendarComponent,
+    LessonTeacherComponent,
 
    
   ],
