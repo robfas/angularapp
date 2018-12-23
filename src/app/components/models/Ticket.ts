@@ -5,7 +5,7 @@ import { Employee } from '../models/Employee';
 import { TicketMessage } from './TicketMessage';
 
 export interface Ticket {
-    id: number;
+    id?: number;
     title?: string;
     ticketStatus?: TicketStatus;
     teacher?: Teacher;

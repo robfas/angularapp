@@ -1,4 +1,4 @@
-<div *ngIf="staffService.tableVisible" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+<div *ngIf="tableVisible" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
   <div class="card card-body mb-3 bg-transparent">
   <h3>Segnalazioni</h3>
   <div class="col-sm-14">
@@ -34,7 +34,7 @@
 </div>
 </div>
 
-<div *ngIf="staffService.tableArchivedVisible" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+<div *ngIf="tableArchivedVisible" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
     <div class="card card-body mb-3 bg-transparent">  
     <h3>Segnalazioni</h3>
     <div class="col-sm-14">
@@ -68,4 +68,76 @@
                 </tbody>
   </table>
   </div>
+</div>
+
+<div *ngIf="teacherTable" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+    <div class="card card-body mb-3 bg-transparent">
+            <h3>Segnalazioni Effettuate</h3>
+            <div class="col-sm-14">
+            <button type="button" class="btn btn-dark float-right" (click)=showArchivedTeacher()>
+                Archiviate
+            </button>
+          </div>
+          <table id="elencotickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+              <thead>
+                  <tr bgcolor="#cccccc">
+                      <th style="text-align:center"class="never">Id</th>
+                      <th style="text-align:center">Data apertura</th>
+                      <th style="text-align:center">Titolo</th>
+                      <th style="text-align:center">Aula</th>
+                      <th style="text-align:center">Stato</th>
+                  </tr>
+              </thead>
+              <tbody>                                                                                         
+                <tr *ngFor="let t of tickets;let i = index;"> 
+                  <td style="text-align:center"> {{ t.id }} </td>
+                  <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
+                  <td style="text-align:center"> {{ t.title }} </td>
+                  <td style="text-align:center"> {{ t.classroom.name }} </td> 
+                  <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
+                  <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+                </tr>
+              </tbody>
+          </table>
+          <div class="col-sm-14">
+                <button type="button" class="btn btn-success float-right" (click)="openNewTicket()">
+                    Apri Nuova Segnalazione
+                </button>
+                </div>
+ </div>
+ </div>
+
+<div *ngIf="newTicket" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+    <div class="card card-body mb-3 bg-transparent">
+        <h3>Apri una Segnalazione</h3>
+        <br>
+        <form>
+            <div class="form-group row">
+                <label for="laurea" class="col-sm-2 col-form-label">Titolo</label>
+                <div class="col-sm-10">
+                    <input type="text" id="title" class="form-control" placeholder="Titolo" #title>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label for="nome" class="col-sm-2 col-form-label">Aula</label>
+              <div class="col-sm-10">
+                <select class="custom-select mr-sm-2" name="nome" #classroom>
+                  <option value=0>Seleziona Aula</option>
+                  <option *ngFor="let c of classrooms; let c = index" [value]="c.id">{{ c.name }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="academicyear" class="col-sm-2 col-form-label">Messaggio</label>
+              <div class="col-sm-10">
+                <textarea class="form-control input-lg" rows="3" #textmessage></textarea> 
+            </div>
+          </div>
+          <div class="form-group row">
+                <div class="col-sm-12">
+            <button type="button" class="btn btn-success float-right" (click)="send(title.value, classroom.value, textmessage.value)">Invia</button>
+        </div>  
+        </div>
+</form>
+    </div>
 </div>
