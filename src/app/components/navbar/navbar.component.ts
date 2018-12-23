@@ -41,6 +41,7 @@ export class NavbarComponent implements OnInit {
       this.subjects = subjects.filter(subjects=>subjects.teacherDTO.idteacher == 2);
       console.log(this.subjects);
     });
+   
   }
 
   signInUser(email,password) {

@@ -33,6 +33,7 @@ export class TicketComponent implements OnInit {
   buttonVisible: boolean;
   statusVisible: boolean;
   isTeacher: boolean;
+  answerVisible: boolean;
 
   constructor(public nav: NavbarService, public ticketMessageService: TicketMessageService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) {this.buttonVisible, this.textareaVisible, this.isTeacher, this.statusVisible}
 
@@ -41,9 +42,12 @@ export class TicketComponent implements OnInit {
       this.user={
         iduser: JSON.parse(localStorage.getItem('currentUser')).iduser,
         name: JSON.parse(localStorage.getItem('currentUser')).name,
-        surname: JSON.parse(localStorage.getItem('currentUser')).surname
+        surname: JSON.parse(localStorage.getItem('currentUser')).surname,
+        type:JSON.parse(localStorage.getItem('currentUser')).type
       }};
-      //if(this.user.type == 'employee')
+      
+      
+      if(this.user.type === 'employee'){
     this.nav.showNavStaff();
     const id = +this.route.snapshot.paramMap.get('id');
       this.ticketService.getTicketById(id).subscribe(ticket => {
@@ -59,9 +63,20 @@ export class TicketComponent implements OnInit {
         this.stati = stati;
         console.log(stati);
       });
-      
+    }
     
-     
+    if(this.user.type == 'teacher'){
+      this.isTeacher = true;
+      this.nav.showNavTeacher();
+      const id = +this.route.snapshot.paramMap.get('id');
+      this.ticketService.getTicketById(id).subscribe(ticket => {
+        this.ticket = ticket;
+        if(this.ticket.ticketmessages.length %2 === 0){
+          this.answerVisible = true;
+        }
+      });
+       
+    }
       
       
     }
