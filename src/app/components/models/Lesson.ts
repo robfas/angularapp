@@ -1,5 +1,6 @@
 import { TypeLesson } from "./TypeLesson";
 import { Class } from "./Class";
+import { LessonFile } from "./LessonFile";
 
 export class Lesson {
     idlesson: number;
@@ -7,4 +8,5 @@ export class Lesson {
     start: Date;
     end: Date;
     typeLesson: TypeLesson;
+    lessonFiles: LessonFile[];
 }

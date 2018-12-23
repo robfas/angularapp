@@ -8,6 +8,7 @@ import { TypeDegreeCourse } from '../models/TypeDegreeCourse';
 import { CourseType } from '../models/CourseType';
 import { DegreeCourse } from '../models/DegreeCourse';
 import { SubjectStudy } from '../models/SubjectStudy';
+import { LessonFile } from '../models/LessonFile';
 
 @Component({
   selector: 'app-lesson-teacher',
@@ -22,9 +23,11 @@ export class LessonTeacherComponent implements OnInit {
   degreeCourses: TypeDegreeCourse[] = [];
   selectedDegreeCourse: TypeDegreeCourse = undefined;
   subjects: SubjectStudy[] = [];
-  
+  detail: boolean = false;
+  lesson: Lesson;
+  stars: number[];
  
-  constructor(private modal: NgbModal, public lessonService: LessonService, public nav: NavbarService) { }
+  constructor(public lessonService: LessonService, public nav: NavbarService) { }
 
   ngOnInit() {
     this.nav.showNavTeacher();
@@ -41,6 +44,7 @@ export class LessonTeacherComponent implements OnInit {
         }
       }
     })
+    this.stars = Array(5).fill(0).map((x,i)=>i);
   }
 
   onChange($event) {
@@ -62,6 +66,25 @@ export class LessonTeacherComponent implements OnInit {
         }
         
       }
+    }
+  }
+
+  showDetail(lesson) {
+    this.lesson = lesson;
+    this.lessonService.getLessonFiles(lesson.idlesson).subscribe(files => {
+      this.lesson.lessonFiles = files;
+      //this.lesson.lessonFiles[0].stars = 3
+      console.log(this.lesson.lessonFiles[0])
+    });
+   
+    this.detail = true;
+  }
+
+  onFileChanged(event) {
+    for(let f of event.target.files) {
+      this.lessonService.saveLessonFiles(f, this.lesson.idlesson).subscribe(file => {
+        this.lesson.lessonFiles.push(file)
+      });
     }
   }
 
