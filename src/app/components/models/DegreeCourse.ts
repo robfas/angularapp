@@ -4,9 +4,9 @@ import { AcademicYear } from "./AcademicYear";
 
 export interface DegreeCourse {
     idcourse: number;
-    name: string;
-    cfu: number;
-    typeDegreeCourse: TypeDegreeCourse;
-    academicYear: AcademicYear;
-    subjects: SubjectStudy[];
+    name?: string;
+    cfu?: number;
+    typeDegreeCourse?: TypeDegreeCourse;
+    academicYear?: AcademicYear;
+    subjects?: SubjectStudy[];
 }

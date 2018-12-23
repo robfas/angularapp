@@ -69,13 +69,23 @@
     <div>
     <ng-template #modalContent let-close="close">
       <div class="modal-header">
-        <h5 class="modal-title">Modifica aula</h5>
+        <h5 class="modal-title">Inserisci esame</h5>
         <button type="button" class="close" (click)="close()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div>
+          Insegnamento:
+            <select class="form-control" name="subject" (change)="onChangeSubject($event, subject.value, modalData?.event)" #subject>
+              <option value="">Insegnamento</option>
+            <option *ngFor="let s of mySubjects; let index = index" [value]="index" [selected]="s.id==selectedSubject.id">{{s.name}}</option>
+          </select>
+          Tipo di esame:
+            <select class="form-control" name="examtype" (change)="onChangeExamType($event, type.value, modalData?.event)" #type>
+              <option value="">Tipo di esame</option>
+            <option *ngFor="let t of examTypes; let index = index" [value]="index" [selected]="t.idexamType==selectedExamType.idexamType">{{t.description}}</option>
+          </select>
           Edificio:
           <select class="form-control" name="building" (change)="onChangeBuild($event, building.value, modalData?.event)" #building>
             <option value="">Edificio</option>
@@ -86,6 +96,8 @@
             <option value="">Aula</option>
             <option *ngFor="let c of classes; let index = index" [value]="index" [selected]="c.id == modalData?.event?.room?.id">{{c.name}}</option>
           </select>
+        Orario:
+        <input class="form-control" style="width: 15%" type="time" name="usr_time" (change)="onChangeTime($event, time.value)" value="{{selectedTime}}" #time>
       </div>
       <div *ngIf="!valid">
           <p><font color="red">&nbsp;Tutti i campi sono necessari!</font></p>
@@ -101,7 +113,7 @@
     
     <div class="row text-center">
       <div class="col-md-12">
-        <h3>Calendario studenti</h3>
+        <h3>Calendario esami</h3>
         <h5>{{ this.selectedCourse.name }}</h5>
         <h6>A.A. {{ this.selectedYear.year }}/{{ this.selectedYear.year+1 }} - Periodo {{ this.selectedTerm.number}}</h6>
       </div>
@@ -109,8 +121,42 @@
 
     <br>
 
+
     <div class="row">
-      <div class="col-md-9" style="text-align: left">
+      <div class="col-md-9" style="text-align: left; border: 1px solid #dfdfdf; border-radius: 8px; padding: 3%">
+      <div class="col-md-12">
+          <div class="row text-center" style="align-content: center; margin: auto; display: block;">
+              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'it' }}</h3>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-4" style="text-align: left;">
+                <div class="btn-group">
+                  <div
+                    class="btn btn-success"
+                    mwlCalendarPreviousView
+                    [view]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="activeDayIsOpen = false">
+                    Precedente
+                  </div>
+                  <div
+                    class="btn btn-outline-success"
+                    mwlCalendarToday
+                    [(viewDate)]="viewDate">
+                    Corrente
+                  </div>
+                  <div
+                    class="btn btn-success"
+                    mwlCalendarNextView
+                    [view]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="activeDayIsOpen = false">
+                    Prossimo
+                  </div>
+                </div>
+              </div>
+              </div>
         <div [ngSwitch]="view">
           <mwl-calendar-week-view
             *ngSwitchCase="CalendarView.Week"
@@ -124,42 +170,46 @@
             (eventClicked)="handleEvent('Clicked', $event.event)"
             (eventTimesChanged)="eventTimesChanged($event)">
           </mwl-calendar-week-view>
+          <mwl-calendar-month-view
+            *ngSwitchCase="CalendarView.Month"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [locale]="locale"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="handleDay('Clicked', $event.day)"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+          </mwl-calendar-month-view>
         </div>
       </div>
+      </div>
       <div class="col-md-3">
-        <table class="table table-bordered" style="width: 50%">
-        
-            <thead>
-              <tr>
-               
-                <th colspan="3">Insegnamento</th>
-                
-              </tr>
-            </thead>
+          <table class="table table-bordered" style="width: 50%">
           
-            <tbody>
-              <tr *ngFor="let s of mySubjects">
-                <td>
+              <thead>
+                <tr>
+                  <th> </th>
+                  <th>Insegnamento</th>
+                </tr>
+              </thead>
+            
+              <tbody>
+                <tr *ngFor="let s of mySubjects">
+                  <td>
                     <input type="color"
-                    [(ngModel)]="s.color.secondary"
-                    (change)="refresh.next()">
-                </td>
-                <td>
-                  <label>{{s.name}}</label>
-                </td>
-                <td>
-                  <button
-                    class="btn btn-outline-success my-2 my-sm-0"
-                    (click)="addEvent2(s)">
-                    Aggiungi
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          
-          </table>
-      </div>
-      </div>
+                      [(ngModel)]="s.color.primary"
+                      (change)="refresh.next()">
+                  </td>
+                  <td>
+                    <label>{{s.name}}</label>
+                  </td>
+                </tr>
+              </tbody>
+            
+            </table>
+        </div>
+    </div>
 
 <br>
 <div class="form-group row">

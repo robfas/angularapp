@@ -1,0 +1,70 @@
+<div class="card card-body mb-3 bg-transparent" style="padding-top: 70px; width: 90%; margin: auto">
+  <div class="row">
+  <div class="col-md-2">
+      <select class="custom-select mr-sm-2" name="course" #courseType [(ngModel)]="selectedCourseType" (change)="onChange($event)">
+          <option [ngValue]="undefined">Categoria Corso di Laurea</option>
+          <option *ngFor="let c of courseTypes; let i = index" [ngValue]="c">{{ c.description }}</option>
+        </select>
+        &nbsp;
+        <select class="custom-select mr-sm-2" name="course" #degreeCourse [(ngModel)]="selectedDegreeCourse" (change)="onChangeDegreeCourse($event)">
+            <option [ngValue]="undefined">Corso di Laurea</option>
+            <option *ngFor="let d of degreeCourses; let i = index" [ngValue]="d">{{ d.name }}</option>
+          </select>
+          &nbsp;
+        <select class="custom-select mr-sm-2" name="nome" #subject [(ngModel)]="selectedSubject">
+            <option [ngValue]="undefined">Seleziona l'insegnamento</option>
+            <option *ngFor="let s of subjects; let s = index" [ngValue]="s">{{ s.name }}</option>
+          </select>
+          &nbsp;
+        Dal <input class="date" type="date" />
+        &nbsp;
+        Al <input class="date" type="date" />
+  </div>
+  <div class="col-md-10">
+  <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Laurea</th>
+            <th>Corso</th>
+            <th>Data</th>
+            <th>Ora inizio</th>
+            <th>Ora fine</th>
+            <th>Edificio</th>
+            <th>Aula</th>
+            <th></th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <tr *ngFor="let l of currentLessons">
+            <td>
+              <label>{{l.typeLesson.subject.degreecourseDTO.typeDegreeCourse.name}}</label>
+            </td>
+            <td>
+              <label>{{l.typeLesson.subject.name}}</label>
+            </td>
+            <td>
+              <label>{{ l.start | date:'yyyy-MM-dd' }}</label>
+            </td>
+            <td>
+              <label>{{ l.start | date:'HH:mm' }}</label>
+            </td>
+            <td>
+            <label>{{ l.end | date:'HH:mm' }}</label>
+          </td>
+          <td>
+            <label>{{ l.classroom.building.name }}</label>
+          </td>
+          <td>
+              <label>{{ l.classroom.name }}</label>
+            </td>
+            <td>
+
+            </td>
+          </tr>
+        </tbody>
+      
+      </table>
+      </div>
+    </div>
+</div>

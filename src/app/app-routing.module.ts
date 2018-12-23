@@ -19,7 +19,9 @@ import { SubjectComponent } from './components/subject/subject.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { ExamCalendarComponent } from './components/exam-calendar/exam-calendar.component';
 import { AcademicYearComponent } from './components/academic-year/academic-year.component';
+import { LessonTeacherComponent } from './components/lesson-teacher/lesson-teacher.component';
 import { TermComponent } from './components/term/term.component';
 import { SubjectTypeComponent } from './components/subject-type/subject-type.component';
 
@@ -41,12 +43,14 @@ const routes: Routes =[
   {path: 'staff/newcoursetype', component: CourseTypeComponent},
   {path: 'staff/scheduler2/:id', component: SchoolCalendar2Component},
   {path: 'staff/calendar', component: CalendarComponent},
+  {path: 'staff/examcalendar', component: ExamCalendarComponent},
   {path: 'staff/newsubject', component: SubjectComponent},
   {path: 'staff/newsubjecttype', component: SubjectTypeComponent},
   {path: 'staff/tickets', component: TicketsComponent},
   {path: 'teacher/tickets', component: TicketsComponent},
   {path: 'staff/corsi/:id', component: CoursesComponent},
   {path: 'staff/academicYears', component: AcademicYearComponent},
+  {path: 'teacher/lesson', component: LessonTeacherComponent},
   {path: 'staff/terms/:id', component: TermComponent},
   {path: '**', component: NotFoundComponent}
 ];

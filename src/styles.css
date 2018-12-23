@@ -15,8 +15,17 @@
   display: none !important
 } 
 
-.cal-event, .cal-header {
+/*.cal-event, .cal-header {
   white-space: normal !important;
   color: black !important;
   font-size: 15px !important;
+}*/
+
+.cal-month-view .cal-day-badge {
+  display: none !important
+}
+
+.cal-week-view .cal-event {
+  font-size: 12px !important;
+  color: #000000 !important
 }
