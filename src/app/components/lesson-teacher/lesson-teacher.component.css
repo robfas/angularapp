@@ -4,6 +4,112 @@
     cursor: pointer;
   }
 
+
+  .rating-group {
+    display: inline-flex;
+  }
+
+  .rating-group2s {
+    display: inline-flex;
+  }
+  
+  /* make hover effect work properly in IE */
+  .rating__icon {
+    pointer-events: none;
+  }
+  
+  /* hide radio inputs */
+  .rating__input {
+   position: absolute !important;
+   left: -9999px !important;
+  }
+
+  /* set icon padding and size */
+  .rating__label {
+    cursor: pointer;
+    /* if you change the left/right padding, update the margin-right property of .rating__label--half as well. */
+    padding: 0 0.1em;
+    font-size: 1rem;
+  }
+
+  /* add padding and positioning to half star labels */
+  .rating__label--half {
+    padding-right: 0;
+    margin-right: -0.6em;
+    z-index: 2;
+  }
+  
+  /* set default star color */
+  .rating__icon--star {
+    color: orange;
+  }
+  
+  /* set color of none icon when unchecked */
+  .rating__icon--none {
+    color: #eee;
+  }
+
+  /* if none icon is checked, make it red */
+  .rating__input--none:checked + .rating__label .rating__icon--none {
+    color: red;
+  }
+
+  /* if any input is checked, make its following siblings grey */
+  .rating__input:checked ~ .rating__label .rating__icon--star {
+    color: #ddd;
+  }
+
+
+
+  
+  body {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 0 20px;
+  }
+  
+  .container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .darker {
+    border-color: #ccc;
+    background-color: #ddd;
+  }
+  
+  .container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+  .container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+  }
+  
+  .time-right {
+    float: right;
+    color: #aaa;
+  }
+  
+  .time-left {
+    float: left;
+    color: #999;
+  }
+
   .checked {
-    color: rgb(40, 167, 69);
+    color: orange;
   }

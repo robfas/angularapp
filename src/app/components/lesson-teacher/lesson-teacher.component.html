@@ -1,37 +1,133 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div class="card card-body mb-3 bg-transparent" style="padding-top: 70px; width: 90%; margin: auto">
+<div>
+  <ng-template #modalContent let-close="close">
+    <div class="modal-header">
+      <h5 class="modal-title">{{modalData?.file.name}}</h5>
+      <button type="button" class="close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        
+        <div class="row" style="margin: auto;">
+            <div *ngIf="modalData?.file.stars != undefined" class="rating-group">
+                <input class="rating__input rating__input--none" checked name="rating2" id="rating2-0" value="0" type="radio">
+                <label aria-label="0 stars" class="rating__label" for="rating2-0">&nbsp;</label>
+                <label aria-label="0.5 stars" class="rating__label rating__label--half" for="rating2-05"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+                <input *ngIf="modalData?.file.stars >= 0.5" class="rating__input" name="rating2" id="rating2-05" value="0.5" type="radio" checked disabled>
+                <input *ngIf="0.5 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-05" value="0.5" type="radio" disabled>
+                <label aria-label="1 star" class="rating__label" for="rating2-10"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                <input *ngIf="modalData?.file.stars >= 1" class="rating__input" name="rating2" id="rating2-10" value="1" type="radio" checked disabled>
+                <input *ngIf="1 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-10" value="1" type="radio" disabled>
+                <label aria-label="1.5 stars" class="rating__label rating__label--half" for="rating2-15"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+                <input *ngIf="modalData?.file.stars >= 1.5" class="rating__input" name="rating2" id="rating2-15" value="1.5" type="radio" checked disabled>
+                <input *ngIf="1.5 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-15" value="1.5" type="radio" disabled>
+                <label aria-label="2 stars" class="rating__label" for="rating2-20"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                <input *ngIf="modalData?.file.stars >= 2" class="rating__input" name="rating2" id="rating2-20" value="2" type="radio" checked disabled>
+                <input *ngIf="2 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-20" value="2" type="radio" disabled>
+                <label aria-label="2.5 stars" class="rating__label rating__label--half" for="rating2-25"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+                <input *ngIf="modalData?.file.stars >= 2.5" class="rating__input" name="rating2" id="rating2-25" value="2.5" type="radio" checked disabled>
+                <input *ngIf="2.5 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-25" value="2.5" type="radio" disabled>
+                <label aria-label="3 stars" class="rating__label" for="rating2-30"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                <input *ngIf="modalData?.file.stars >= 3" class="rating__input" name="rating2" id="rating2-30" value="3" type="radio" checked disabled>
+                <input *ngIf="3 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-30" value="3" type="radio" disabled>
+                <label aria-label="3.5 stars" class="rating__label rating__label--half" for="rating2-35"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+                <input *ngIf="modalData?.file.stars >= 3.5" class="rating__input" name="rating2" id="rating2-35" value="3.5" type="radio" checked disabled>
+                <input *ngIf="3.5 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-35" value="3.5" type="radio" disabled>
+                <label aria-label="4 stars" class="rating__label" for="rating2-40"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                <input *ngIf="modalData?.file.stars >= 4" class="rating__input" name="rating2" id="rating2-40" value="4" type="radio" checked disabled>
+                <input *ngIf="4 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-40" value="4" type="radio" disabled>
+                <label aria-label="4.5 stars" class="rating__label rating__label--half" for="rating2-45"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
+                <input *ngIf="modalData?.file.stars >= 4.5" class="rating__input" name="rating2" id="rating2-45" value="4.5" type="radio" checked disabled>
+                <input *ngIf="4.5 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-45" value="4.5" type="radio" disabled>
+                <label aria-label="5 stars" class="rating__label" for="rating2-50"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+                <input *ngIf="modalData?.file.stars == 5" class="rating__input" name="rating2" id="rating2-50" value="5" type="radio" checked disabled>
+                <input *ngIf="modalData?.file.stars > 4.5 && 5 > modalData?.file.stars" class="rating__input" name="rating2" id="rating2-50" value="5" type="radio" disabled>
+
+                ({{modalData?.file.stars}})
+                
+            </div>
+            
+        </div>
+        <div class="row" style="margin: auto;">{{modalData?.feedbacks.length}} recensioni</div>
+
+            <div *ngFor="let f of modalData?.feedbacks">
+            <div class="container">
+                <b>{{f.stars}}/5</b>
+              <p><i>{{f.description}}</i></p>
+              <span class="time-right">{{f.date | date:'dd-MM-yyyy HH:mm'}}</span>
+            </div>
+            <div style="line-height: 20%"><br></div>
+          </div>
+            
+        
+    </div>
+      
+  </ng-template>
+  </div>
+
+<div class="card card-body mb-3 bg-transparent" style="padding-top: 40px; width: 90%; margin: auto; margin-top: 6%;">
   
       <div *ngIf="detail">
-
-            <h3>Lezione del {{lesson.start | date:'dd-MM-yyyy' }}</h3>
+        <div style="text-align: center; padding-bottom: 2%" >
+          <h2>{{lesson.typeLesson.subject.degreecourseDTO.typeDegreeCourse.name}}</h2>
+            <h3>Lezione di {{lesson.typeLesson.subject.name}} del {{lesson.start | date:'dd-MM-yyyy' }}</h3>
             <h5>Edificio {{ lesson.classroom.building.name }}, Aula {{ lesson.classroom.name }}</h5>
-          
-            <h6>Upload File</h6>
-            <div *ngIf="lesson?.lessonFiles?.length == 0">Non ci sono file caricati</div>
-          <div *ngFor="let f of lesson.lessonFiles">
-            <div class="row" style="margin: auto">
-              <div *ngFor="let star of stars">
-                <span *ngIf="f.stars > star" class="fa fa-star checked"></span>
+          </div>
+            <div class="container">
+                <h6>Upload File</h6>
+                <div *ngIf="lesson?.lessonFiles?.length == 0">Nessun file caricato</div>
+              <div *ngFor="let f of lesson.lessonFiles">
+                <div class="row" style="margin: auto">
+                    <span class="fa fa-search" style="background-color: transparent; border: none; cursor: pointer;" (click)="showFile(f)"></span>
+                  <a href="http://localhost:8080/SpringApp/file/download/filelesson/{{f.idFile}}">
+                  <button class="dwn"><i class="fa fa-download"></i></button> {{f.name}}
+                  </a>
+                </div>
               </div>
-              <div *ngFor="let star of stars">
-                  <span *ngIf="5-f.stars > star" class="fa fa-star"></span>
-              </div>
-              
-              <a href="http://localhost:8080/SpringApp/file/download/filelesson/{{f.idFile}}">
-              <button class="dwn"><i class="fa fa-download"></i></button> {{f.name}}
-              </a>
+              <input type="file" style="color: transparent; padding-top: 1%;" (change)="onFileChanged($event)" multiple>
+            </div>
+
+            <div class="container" style="background-color: transparent; border: none; padding-left: 0%; padding-top: 2%;">
+            <h4>Recensioni</h4>
+            <div *ngIf="stars" class="row" style="margin: auto;">
+                <span *ngIf="stars>0" class="fa fa-star checked"></span>
+                <span *ngIf="stars==0" class="fa fa-star"></span>
+                <span *ngIf="stars>=2" class="fa fa-star checked"></span>
+                <span *ngIf="stars<2" class="fa fa-star"></span>
+                <span *ngIf="stars>=3"class="fa fa-star checked"></span>
+                <span *ngIf="stars<3"class="fa fa-star"></span>
+                <span *ngIf="stars>=4" class="fa fa-star checked"></span>
+                <span *ngIf="stars<4" class="fa fa-star"></span>
+                <span *ngIf="stars==5" class="fa fa-star checked"></span>
+                <span *ngIf="stars<5" class="fa fa-star"></span>
+                &nbsp; ({{stars}})
+            </div>
+              {{feedbackLesson?.length}} recensioni
+            </div>
+          <div *ngFor="let f of feedbackLesson">
+            <div class="container darker">
+              <b>{{f.stars}}/5</b>
+              <p><i>{{f.description}}</i></p>
+              <span class="time-right">{{f.date | date:'dd-MM-yyyy HH:mm'}}</span>
+                </div>
+              <br>
+          </div>
+          <div class="form-group row">
+            <div *ngIf="error">
+                <p><font color="red">&nbsp;Completa tutti i campi!</font></p>
+            </div>
+            <div class="container" style="background-color: transparent; border: none; padding-left: 0%; padding-top: 1%;">
+              <button type="button" class="btn btn-danger float-left" (click)="back()">Indietro</button>
             </div>
           </div>
-          <input type="file" style="color: transparent" (change)="onFileChanged($event)" multiple>
-
       </div>
   <div *ngIf="!detail">
       <div class="row">
   <div class="col-md-2">
     <form>
-      <select class="custom-select mr-sm-2" name="course" #courseType [(ngModel)]="selectedCourseType" (change)="onChange($event)">
+      <select class="custom-select mr-sm-2" name="course" #courseType [(ngModel)]="selectedCourseType" (change)="onChangeCourseType($event)">
           <option [ngValue]="undefined">Categoria Corso di Laurea</option>
           <option *ngFor="let c of courseTypes; let i = index" [ngValue]="c">{{ c.description }}</option>
         </select>
@@ -45,21 +141,29 @@
             <option [ngValue]="undefined">Seleziona l'insegnamento</option>
             <option *ngFor="let s of subjects; let s = index" [ngValue]="s">{{ s.name }}</option>
           </select>
-          &nbsp;
+          <div style="line-height: 50%"><br></div>
           <div class="form-row">
-              <input type="text" ngbDatepicker #d="ngbDatepicker"/>
-        Dal <input type="date" class="form-control">
-        &nbsp;
-        Al <input class="form-control" type="date">
-      </div>
+              &nbsp;Dal <input type="date" class="form-control" id="startdate" #startdate (change)="updatestart(startdate.value)">
+              <div style="line-height: 50%"><br></div>
+              &nbsp;Al <input class="form-control" type="date" id="enddate" #enddate (change)="updateend(enddate.value)">
+          </div>
+          <br>
+          <div class="form-row">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0 float-right" (click)="filtra()">Filtra</button>
+          </div>
+          <div style="line-height: 50%"><br></div>
+          <div class="form-row">
+              <button type="button" class="btn btn-outline-danger my-2 my-sm-0 float-right" (click)="removeFilter()">Rimuovi filtro</button>
+            </div>
+          <div *ngIf="!dateValid" style="color: red;">Date non valide</div>
     </form>
   </div>
   <div class="col-md-10">
   <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Laurea</th>
-            <th>Corso</th>
+            <th>Corso di Laurea</th>
+            <th>Insegnamento</th>
             <th>Data</th>
             <th>Ora inizio</th>
             <th>Ora fine</th>
@@ -78,7 +182,7 @@
               <label>{{l.typeLesson.subject.name}}</label>
             </td>
             <td>
-              <label>{{ l.start | date:'yyyy-MM-dd' }}</label>
+              <label>{{ l.start | date:'dd-MM-yyyy' }}</label>
             </td>
             <td>
               <label>{{ l.start | date:'HH:mm' }}</label>
@@ -93,7 +197,7 @@
               <label>{{ l.classroom.name }}</label>
             </td>
             <td>
-              <button class="btn btn-warning" (click)="showDetail(l)">Dettagli</button>
+                <span class="fa fa-search" style="background-color: transparent; border: none; cursor: pointer;" (click)="showDetail(l)"></span>
             </td>
           </tr>
         </tbody>

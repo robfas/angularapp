@@ -24,6 +24,8 @@ import { AcademicYearComponent } from './components/academic-year/academic-year.
 import { LessonTeacherComponent } from './components/lesson-teacher/lesson-teacher.component';
 import { TermComponent } from './components/term/term.component';
 import { SubjectTypeComponent } from './components/subject-type/subject-type.component';
+import { EditCalendarComponent } from './components/edit-calendar/edit-calendar.component';
+import { ExamComponent } from './components/exam/exam.component';
 
 
 const routes: Routes =[
@@ -43,6 +45,7 @@ const routes: Routes =[
   {path: 'staff/newcoursetype', component: CourseTypeComponent},
   {path: 'staff/scheduler2/:id', component: SchoolCalendar2Component},
   {path: 'staff/calendar', component: CalendarComponent},
+  {path: 'staff/editcalendar', component: EditCalendarComponent},
   {path: 'staff/examcalendar', component: ExamCalendarComponent},
   {path: 'staff/newsubject', component: SubjectComponent},
   {path: 'staff/newsubjecttype', component: SubjectTypeComponent},
@@ -51,6 +54,7 @@ const routes: Routes =[
   {path: 'staff/corsi/:id', component: CoursesComponent},
   {path: 'staff/academicYears', component: AcademicYearComponent},
   {path: 'teacher/lesson', component: LessonTeacherComponent},
+  {path: 'teacher/exams', component: ExamComponent},
   {path: 'staff/terms/:id', component: TermComponent},
   {path: '**', component: NotFoundComponent}
 ];

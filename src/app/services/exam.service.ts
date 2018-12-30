@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Exam } from '../components/models/exam';
 import { ExamType } from '../components/models/ExamType';
+import { ExamEnrollment } from '../components/models/ExamEnrollment';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -13,6 +14,8 @@ export class ExamService {
   getByCourseAndTermUrl: string = 'http://localhost:8080/SpringApp/exam/getAllByCourseAndTerm';
   getAllTypesUrl: string = 'http://localhost:8080/SpringApp/exam/getAllTypes';
   saveAllUrl: string = 'http://localhost:8080/SpringApp/exam/save';
+  getAllAvailableByTeacherUrl: string = 'http://localhost:8080/SpringApp/exam/getAllAvailableByTeacher';
+  insertGradeUrl: string = 'http://localhost:8080/SpringApp/exam/insertGrade';
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +29,14 @@ export class ExamService {
 
   saveAll(exams: Exam[]): Observable<boolean>{
     return this.http.post<boolean>(this.saveAllUrl, exams, {headers});
+  }
+
+  getAllAvailableByTeacher(idteacher: number): Observable<Exam[]>{
+    return this.http.get<Exam[]>(this.getAllAvailableByTeacherUrl + '/' + idteacher);
+  }
+
+  insertGrade(enrollments: ExamEnrollment[], idexam: number): Observable<{}>{
+    return this.http.post<{}>(this.insertGradeUrl + '/' + idexam, enrollments, {headers});
   }
 
 }

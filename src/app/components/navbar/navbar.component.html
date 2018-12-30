@@ -51,6 +51,7 @@
               <div class="dropdown-menu" aria-labelledby="dropdown01">
                 <a class="dropdown-item" href="/staff/department">Gestisci Dipartimento</a>
                 <a class="dropdown-item" href="/staff/calendar">Gestisci Calendario Lezioni</a>
+                <a class="dropdown-item" href="/staff/editcalendar">Modifica Lezione</a>
                 <a class="dropdown-item" href="/staff/examcalendar">Gestisci Calendario Esami</a>
               </div>
             </li>
@@ -93,6 +94,9 @@
               <div class="dropdown-menu" aria-labelledby="dropdown01">
                 <a *ngFor="let s of subjects; let s = index;" class="dropdown-item" [routerLink]="['/teacher/subjects', s.id]" [skipLocationChange]="true">{{s.name}}</a>
               </div>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/teacher/exams">Esami<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="#">Calendario Didattico<span class="sr-only">(current)</span></a>

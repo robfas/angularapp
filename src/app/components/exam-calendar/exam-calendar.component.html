@@ -48,7 +48,7 @@
           <div class="col-sm-10">
           <select class="custom-select mr-sm-2" name="term" [(ngModel)]="selectedTerm" #term>
             <option [ngValue]="undefined">Seleziona il periodo</option>
-            <option *ngFor="let t of terms; let t = index" [ngValue]="t">Periodo {{ t.number }}</option>
+            <option *ngFor="let t of terms; let i = index" [ngValue]="t">Periodo {{ i+1 }}</option>
           </select>
         </div>
         </div>
@@ -115,7 +115,7 @@
       <div class="col-md-12">
         <h3>Calendario esami</h3>
         <h5>{{ this.selectedCourse.name }}</h5>
-        <h6>A.A. {{ this.selectedYear.year }}/{{ this.selectedYear.year+1 }} - Periodo {{ this.selectedTerm.number}}</h6>
+        <h6>A.A. {{ this.selectedYear.year }}/{{ this.selectedYear.year+1 }} - Periodo dal {{ this.selectedTerm.start | date:'dd-MM-yyyy' }} al {{ this.selectedTerm.end | date:'dd-MM-yyyy' }}</h6>
       </div>
     </div>
 

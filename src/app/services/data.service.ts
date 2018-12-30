@@ -15,7 +15,7 @@ export class DataService {
 
 
   constructor() { 
-    this.students = [
+    /*this.students = [
       {
       firstname: 'Alessandro',
       lastname: 'Fiore',
@@ -38,7 +38,7 @@ export class DataService {
       hide: false
     }
   
-  ];
+  ];*/
   }
 
   getStudents(): Observable<Student[]>{
