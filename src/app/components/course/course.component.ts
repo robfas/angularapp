@@ -52,22 +52,31 @@ export class CourseComponent implements OnInit {
   constructor(public nav: NavbarService, private router: Router, public courseService: CourseService, public academicYearService: AcademicYearService, public userService: UserService, public subjectService: SubjectService) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
-    this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
-      this.courseTypes = courseTypes; 
-      console.log(this.courseTypes);
-    });
-    this.subjectService.getAllSubjectTypes().subscribe(typeSubjects =>{
-      this.typeSubjects = typeSubjects;
-      console.log(this.typeSubjects);
-    });
-    this.userService.getAllTeachers().subscribe(teachers =>{
-      this.teachers = teachers;
-    });
-    this.academicYearService.getAllYears().subscribe(academicyears =>{
-      this.academicyears = academicyears;
-      console.log(this.academicyears);
-  });
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.nav.showNavStaff();
+        this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
+          this.courseTypes = courseTypes; 
+          console.log(this.courseTypes);
+        });
+        this.subjectService.getAllSubjectTypes().subscribe(typeSubjects =>{
+          this.typeSubjects = typeSubjects;
+          console.log(this.typeSubjects);
+        });
+        this.userService.getAllTeachers().subscribe(teachers =>{
+          this.teachers = teachers;
+        });
+        this.academicYearService.getAllYears().subscribe(academicyears =>{
+          this.academicyears = academicyears;
+          console.log(this.academicyears);
+      });
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
+    
   }
 
   onchange(year){

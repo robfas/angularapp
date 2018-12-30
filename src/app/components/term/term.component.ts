@@ -6,6 +6,7 @@ import { NavbarService } from '../../services/navbar.service';
 import { AcademicYear } from '../models/AcademicYear';
 import { CourseService } from '../../services/course.service';
 import { DegreeCourse } from '../models/DegreeCourse';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-term',
@@ -17,15 +18,17 @@ export class TermComponent implements OnInit {
   newterm: Term = {};
   newterms: Term[] = [];
   years: AcademicYear[];
-  academicyears: AcademicYear[];
+  academicyears: AcademicYear[] = [];
   showterms: boolean;
   numbers : number[] = [] ;
   coursesofthisyear: DegreeCourse[];
   
-  constructor(public nav: NavbarService, public academicYearService: AcademicYearService, public courseService: CourseService, private route: ActivatedRoute) { }
+  constructor(public nav: NavbarService, private router: Router, public academicYearService: AcademicYearService, public courseService: CourseService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.nav.showNavStaff();
     const id = +this.route.snapshot.paramMap.get('id');
     this.academicYearService.getAllYears().subscribe(years=>{
       this.academicyears = years.filter(years=> years.idacademicYear===id);
@@ -45,9 +48,13 @@ export class TermComponent implements OnInit {
       }
     });
     this.numbers = [1];
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
     
-   
-
   }
 
   addrow(){

@@ -6,6 +6,7 @@ import { ClassroomService } from '../../services/classroom.service';
 import { Building } from '../models/Building';
 import { Class } from '../models/Class';
 import { ClassroomDetailDialogComponent } from '../classroom-detail-dialog/classroom-detail-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-classroom',
@@ -19,14 +20,22 @@ export class DepartmentComponent implements OnInit {
   classroom : Class;
   nomeProdotto: String;
 
-  constructor(public nav: NavbarService, public buildingService: BuildingService, public classroomService: ClassroomService, private modalService: NgbModal) { }
+  constructor(public nav: NavbarService, private router: Router, public buildingService: BuildingService, public classroomService: ClassroomService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
-    this.buildingService.getBuildings().subscribe(buildings => {
-      this.buildings = buildings;
-    });
-    this.valid = false;
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.buildingService.getBuildings().subscribe(buildings => {
+          this.buildings = buildings;
+        });
+        this.valid = false;
+        this.nav.showNavStaff();
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   /*searchClassroom(searchClassroom, idBuilding){

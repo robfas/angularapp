@@ -13,6 +13,7 @@ import { TicketMessage } from '../models/TicketMessage';
 import { User } from '../models/User';
 import { isEmpty } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticket',
@@ -35,7 +36,7 @@ export class TicketComponent implements OnInit {
   isTeacher: boolean;
   answerVisible: boolean;
 
-  constructor(public nav: NavbarService, public ticketMessageService: TicketMessageService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) {this.buttonVisible, this.textareaVisible, this.isTeacher, this.statusVisible}
+  constructor(public nav: NavbarService, private router: Router, public ticketMessageService: TicketMessageService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) {this.buttonVisible, this.textareaVisible, this.isTeacher, this.statusVisible}
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
@@ -44,8 +45,7 @@ export class TicketComponent implements OnInit {
         name: JSON.parse(localStorage.getItem('currentUser')).name,
         surname: JSON.parse(localStorage.getItem('currentUser')).surname,
         type:JSON.parse(localStorage.getItem('currentUser')).type
-      }};
-      
+      }
       
       if(this.user.type === 'employee'){
     this.nav.showNavStaff();
@@ -78,8 +78,10 @@ export class TicketComponent implements OnInit {
        
     }
       
-      
+    } else {
+      this.router.navigate(['/']);
     }
+  }
 
     updateTicket(idstatus){
       if (!idstatus || (idstatus==undefined) ){

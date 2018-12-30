@@ -10,7 +10,7 @@ import { Class } from '../models/Class';
 import { ClassroomService } from '../../services/classroom.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { ClassroomDetailDialogComponent } from '../classroom-detail-dialog/classroom-detail-dialog.component';
-
+import { Router } from '@angular/router';
 import { } from 'googlemaps'
 
 declare var require: (filename: string) => any;
@@ -36,14 +36,15 @@ export class BuildingComponent implements OnInit {
   public searchControl: FormControl;
   @ViewChild("search") public searchElementRef: ElementRef;
 
-  constructor(public mapsAPILoader: MapsAPILoader, public ngZone: NgZone, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, private route: ActivatedRoute, private modalService: NgbModal) { }
+  constructor(public mapsAPILoader: MapsAPILoader, private router: Router, public ngZone: NgZone, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, private route: ActivatedRoute, private modalService: NgbModal) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
       this.user={
         name: JSON.parse(localStorage.getItem('currentUser')).name,
         surname: JSON.parse(localStorage.getItem('currentUser')).surname
-      }};
+      };
     this.nav.showNavStaff();
     const id = +this.route.snapshot.paramMap.get('id');
     this.buildingService.getBuildingDetail(id).subscribe(building=>{
@@ -82,6 +83,14 @@ export class BuildingComponent implements OnInit {
   } catch (e) {
   }
   });
+  } else {
+    this.router.navigate(['/teacher']);
+    this.searchControl = new FormControl();
+  }
+  } else {
+    this.router.navigate(['/']);
+    this.searchControl = new FormControl();
+  }
 }
 
 setEditable() {

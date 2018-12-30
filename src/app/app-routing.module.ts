@@ -43,7 +43,6 @@ const routes: Routes =[
   {path: 'staff/department/add/building', component: AddBuildingComponent},
   {path: 'staff/newcourse', component: CourseComponent},
   {path: 'staff/newcoursetype', component: CourseTypeComponent},
-  {path: 'staff/scheduler2/:id', component: SchoolCalendar2Component},
   {path: 'staff/calendar', component: CalendarComponent},
   {path: 'staff/editcalendar', component: EditCalendarComponent},
   {path: 'staff/examcalendar', component: ExamCalendarComponent},

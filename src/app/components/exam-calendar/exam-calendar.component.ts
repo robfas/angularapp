@@ -46,6 +46,7 @@ import { Day } from '../models/day';
 import { ExamService } from '../../services/exam.service';
 import { ExamType } from '../models/ExamType';
 import { Exam } from '../models/exam';
+import { Router } from '@angular/router';
 
 export class CustomDateFormatter extends CalendarDateFormatter {
   // you can override any of the methods defined in the parent class
@@ -117,21 +118,30 @@ export class ExamCalendarComponent implements OnInit {
   examTypes: ExamType[] = [];
   selectedExams: Exam[] = [];
 
-  constructor(private modal: NgbModal, public aaService: AcademicYearService, public examService: ExamService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public calendarService: CalendarService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
+  constructor(private modal: NgbModal, private router: Router, public aaService: AcademicYearService, public examService: ExamService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public calendarService: CalendarService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
-    this.year = String(new Date().getFullYear());
-    this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
-      this.courseTypes = courseTypes; 
-    });
-    this.subjectService.getAll().subscribe(subjects =>{
-      this.subjects = subjects;
-    });
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.nav.showNavStaff();
+        this.year = String(new Date().getFullYear());
+        this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
+          this.courseTypes = courseTypes; 
+        });
+        this.subjectService.getAll().subscribe(subjects =>{
+          this.subjects = subjects;
+        });
 
-    this.examService.getAllExamTypes().subscribe(examTypes => {
-      this.examTypes = examTypes
-    })
+        this.examService.getAllExamTypes().subscribe(examTypes => {
+          this.examTypes = examTypes
+        })
+      } else {
+        this.router.navigate(['/teacher']);
+    }
+   } else {
+    this.router.navigate(['/']);
+    }
+    
   }
 
   onChange($event) {

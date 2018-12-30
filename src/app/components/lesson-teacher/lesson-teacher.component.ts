@@ -11,6 +11,7 @@ import { SubjectStudy } from '../models/SubjectStudy';
 import { LessonFile } from '../models/LessonFile';
 import { Feedback } from '../models/feedback';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lesson-teacher',
@@ -36,23 +37,32 @@ export class LessonTeacherComponent implements OnInit {
   datePipe = new DatePipe('en-US');
   dateValid: boolean = true;
  
-  constructor(private modal: NgbModal, public lessonService: LessonService, public nav: NavbarService) { }
+  constructor(private modal: NgbModal, private router: Router, public lessonService: LessonService, public nav: NavbarService) { }
 
   ngOnInit() {
-    this.nav.showNavTeacher();
-    this.lessonService.getAllTeacherLessons(JSON.parse(localStorage.getItem('currentUser')).iduser).subscribe(lessons => {
-      this.originalLessons = lessons
-      let now = new Date();
-      now.setDate(now.getDate() + 7);
-      for(let l of lessons) {
-        if(!this.courseTypes.find(i => i.idcourseType == l.typeLesson.subject.degreecourseDTO.typeDegreeCourse.courseType.idcourseType)) {
-          this.courseTypes.push(l.typeLesson.subject.degreecourseDTO.typeDegreeCourse.courseType)
-        }        
-        if(l.start<=now) {
-          this.currentLessons.push(l);
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'teacher') {
+        this.nav.showNavTeacher();
+      this.lessonService.getAllTeacherLessons(JSON.parse(localStorage.getItem('currentUser')).iduser).subscribe(lessons => {
+        this.originalLessons = lessons
+        let now = new Date();
+        now.setDate(now.getDate() + 7);
+        for(let l of lessons) {
+          if(!this.courseTypes.find(i => i.idcourseType == l.typeLesson.subject.degreecourseDTO.typeDegreeCourse.courseType.idcourseType)) {
+            this.courseTypes.push(l.typeLesson.subject.degreecourseDTO.typeDegreeCourse.courseType)
+          }        
+          if(l.start<=now) {
+            this.currentLessons.push(l);
+          }
         }
+      })
+      } else {
+        this.router.navigate(['/staff']);
       }
-    })
+    } else {
+      this.router.navigate(['/']);
+    }
+    
   }
 
   @ViewChild('modalContent')

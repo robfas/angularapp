@@ -11,7 +11,6 @@ import { ClassroomService } from '../../services/classroom.service';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { ClassroomDetailDialogComponent } from '../classroom-detail-dialog/classroom-detail-dialog.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { } from 'googlemaps'
 
 @Component({
@@ -33,22 +32,17 @@ export class AddBuildingComponent implements OnInit {
   public searchControl: FormControl;
   @ViewChild("search") public searchElementRef: ElementRef;
 
-  constructor(private router:Router,public mapsAPILoader: MapsAPILoader, public ngZone: NgZone, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, private route: ActivatedRoute, private modalService: NgbModal) { }
+  constructor(private router:Router, public mapsAPILoader: MapsAPILoader, public ngZone: NgZone, public buildingService: BuildingService, public classroomService: ClassroomService, public nav: NavbarService, private route: ActivatedRoute, private modalService: NgbModal) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
       this.user={
         name: JSON.parse(localStorage.getItem('currentUser')).name,
         surname: JSON.parse(localStorage.getItem('currentUser')).surname
-      }};
+      };
     this.nav.showNavStaff();
-    this.building = {
-      id: undefined,
-      name: undefined,
-      classrooms: [],
-      lat: 40.349159,
-      lng: 18.172073
-    }
+
   
 
   //create search FormControl
@@ -80,6 +74,14 @@ export class AddBuildingComponent implements OnInit {
   } catch (e) {
   }
   });
+  } else {
+    this.router.navigate(['/teacher']);
+    this.searchControl = new FormControl();
+  }
+  } else {
+    this.router.navigate(['/']);
+    this.searchControl = new FormControl();
+  }
 }
 
 markerDragEnd($event) {

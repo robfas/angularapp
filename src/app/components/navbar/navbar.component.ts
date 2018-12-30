@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit {
         surname: JSON.parse(localStorage.getItem('currentUser')).surname,
         type: JSON.parse(localStorage.getItem('currentUser')).type
       }
-    }
+    
     this.courseService.getAllCourseTypes().subscribe(courseTypes=>{
       this.courseTypes=courseTypes;
       console.log(courseTypes)
@@ -71,7 +71,7 @@ export class NavbarComponent implements OnInit {
        
       });
     }
-   
+    }
   }
 
   signInUser(email,password) {

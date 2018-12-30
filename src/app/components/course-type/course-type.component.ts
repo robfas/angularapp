@@ -4,6 +4,7 @@ import { CourseService } from '../../services/course.service';
 import { CourseType } from '../models/CourseType';
 import { TypeDegreeCourse } from '../models/TypeDegreeCourse';
 import { isEmpty } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-type',
@@ -14,14 +15,23 @@ export class CourseTypeComponent implements OnInit {
   courseTypes: CourseType[];
   selectedCourseTypes: CourseType[];
 
-  constructor(public nav: NavbarService, public courseService: CourseService) { }
+  constructor(public nav: NavbarService, private router: Router, public courseService: CourseService) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
-    this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
-      this.courseTypes = courseTypes; 
-      console.log(this.courseTypes);
-    });
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.nav.showNavStaff();
+        this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
+          this.courseTypes = courseTypes; 
+          console.log(this.courseTypes);
+        });
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
+    
     
   }
 

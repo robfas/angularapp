@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 import { ExamService } from '../../services/exam.service';
 import { Exam } from '../models/exam';
 import { ExamEnrollment } from '../models/ExamEnrollment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-exam',
@@ -42,23 +43,31 @@ export class ExamComponent implements OnInit {
   today: Date;
   enrollmentsResult: ExamEnrollment[];
  
-  constructor(public examService: ExamService, public nav: NavbarService) { }
+  constructor(public examService: ExamService,  private router: Router, public nav: NavbarService) { }
 
   ngOnInit() {
-    this.nav.showNavTeacher();
-    this.examService.getAllAvailableByTeacher(JSON.parse(localStorage.getItem('currentUser')).iduser).subscribe(exams => {
-      this.originalExams = exams
-      let now = new Date();
-      now.setDate(now.getDate() + 7);
-      for(let e of exams) {
-        if(!this.courseTypes.find(i => i.idcourseType == e.subject.degreecourseDTO.typeDegreeCourse.courseType.idcourseType)) {
-          this.courseTypes.push(e.subject.degreecourseDTO.typeDegreeCourse.courseType)
-        }        
-        this.currentExams.push(e);
-        
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'teacher') {
+        this.nav.showNavTeacher();
+      this.examService.getAllAvailableByTeacher(JSON.parse(localStorage.getItem('currentUser')).iduser).subscribe(exams => {
+        this.originalExams = exams
+        let now = new Date();
+        now.setDate(now.getDate() + 7);
+        for(let e of exams) {
+          if(!this.courseTypes.find(i => i.idcourseType == e.subject.degreecourseDTO.typeDegreeCourse.courseType.idcourseType)) {
+            this.courseTypes.push(e.subject.degreecourseDTO.typeDegreeCourse.courseType)
+          }        
+          this.currentExams.push(e);
+          
+        }
+      })
+      } else {
+        this.router.navigate(['/staff']);
       }
-    })
-    console.log(this.currentExams)
+    } else {
+      this.router.navigate(['/']);
+    }
+    
   }
 
 

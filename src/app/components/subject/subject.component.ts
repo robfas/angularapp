@@ -5,6 +5,7 @@ import { SubjectService } from '../../services/subject.service';
 import { UserService } from '../../services/user.service';
 import { Teacher } from '../models/Teacher';
 import { SubjectStudy } from '../models/SubjectStudy';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subject',
@@ -17,16 +18,25 @@ export class SubjectComponent implements OnInit {
   teachers: Teacher[];
   teacher: Teacher;
 
-  constructor(public nav: NavbarService, public subjectofstudyService: SubjectService, public userService: UserService) { }
+  constructor(public nav: NavbarService, private router: Router, public subjectofstudyService: SubjectService, public userService: UserService) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
-    this.subjectofstudyService.getAllSubjectTypes().subscribe(typeSubjects =>{
-      this.typeSubjects = typeSubjects;
-    });
-    this.userService.getAllTeachers().subscribe(teachers =>{
-      this.teachers = teachers;
-    }) 
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.nav.showNavStaff();
+        this.subjectofstudyService.getAllSubjectTypes().subscribe(typeSubjects =>{
+          this.typeSubjects = typeSubjects;
+        });
+        this.userService.getAllTeachers().subscribe(teachers =>{
+          this.teachers = teachers;
+        }) 
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
+    
   }
 
   saveSubject(idtypeSubject, subjdescr, subjcfu, idteacher){

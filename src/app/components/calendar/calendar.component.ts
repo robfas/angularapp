@@ -10,8 +10,7 @@ import { TypeSubject } from '../models/TypeSubject';
 import { TermService } from '../../services/term.service';
 import { CalendarService } from '../../services/calendar.service';
 import { Term } from '../models/term';
-import { SchoolCalendar2Component } from '../school-calendar2/school-calendar2.component';
-
+import { Router } from '@angular/router';
 import { ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
 import {
   startOfDay,
@@ -107,17 +106,26 @@ export class CalendarComponent implements OnInit {
   selectedTerm: Term = undefined;
   selectedTypeLessons: TypeLesson[] = [];
 
-  constructor(private modal: NgbModal, public aaService: AcademicYearService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public calendarService: CalendarService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
+  constructor(private modal: NgbModal, private router: Router, public aaService: AcademicYearService, public subjectService: SubjectService, private route: ActivatedRoute, public buildingService: BuildingService, public classroomService: ClassroomService, public calendarService: CalendarService, public nav: NavbarService, public courseService: CourseService, public termService: TermService) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
-    this.year = String(new Date().getFullYear());
-    this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
-      this.courseTypes = courseTypes; 
-    });
-    this.subjectService.getAll().subscribe(subjects =>{
-      this.subjects = subjects;
-    });
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.nav.showNavStaff();
+        this.year = String(new Date().getFullYear());
+        this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
+          this.courseTypes = courseTypes; 
+        });
+        this.subjectService.getAll().subscribe(subjects =>{
+          this.subjects = subjects;
+        });
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
+    
   }
 
   onChange($event) {

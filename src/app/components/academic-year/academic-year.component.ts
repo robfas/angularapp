@@ -20,17 +20,25 @@ export class AcademicYearComponent implements OnInit {
   constructor(public nav: NavbarService,private router: Router,public academicYearService: AcademicYearService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
-    this.academicYearService.getAllYears().subscribe(academicyears =>{
-      this.academicyears = academicyears;
-      console.log(this.academicyears);
-      if(this.academicyears.length === 0){
-        this.tableVisible = false;
-      }
-      else this.tableVisible = true;
-  });
-
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.nav.showNavStaff();
+        this.academicYearService.getAllYears().subscribe(academicyears =>{
+        this.academicyears = academicyears;
+        console.log(this.academicyears);
+        if(this.academicyears.length === 0){
+          this.tableVisible = false;
+        }
+        else this.tableVisible = true;
+      });
+    } else {
+      this.router.navigate(['/teacher']);
+    }
+  } else {
+    this.router.navigate(['/']);
+  }
 }
+
 onchange(year){
   this.years = parseInt(year)+1;
 }

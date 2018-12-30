@@ -12,6 +12,7 @@ import { TicketMessage } from '../models/TicketMessage';
 import { Teacher } from '../models/Teacher';
 import { TicketStatus } from '../models/TicketStatus';
 import { DatePipe, formatDate } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tickets',
@@ -36,7 +37,7 @@ export class TicketsComponent implements OnInit {
   teacherbadge: number = 0;
   staffbadge: number = 0;
 
-  constructor(public nav: NavbarService, public ticketService: TicketService,public ticketMessageService: TicketMessageService, public classroomService: ClassroomService, private route: ActivatedRoute, public staffService: StaffService) { }
+  constructor(public nav: NavbarService, private router: Router, public ticketService: TicketService,public ticketMessageService: TicketMessageService, public classroomService: ClassroomService, private route: ActivatedRoute, public staffService: StaffService) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')){
@@ -46,7 +47,8 @@ export class TicketsComponent implements OnInit {
         surname: JSON.parse(localStorage.getItem('currentUser')).surname,
         type: JSON.parse(localStorage.getItem('currentUser')).type
     }
-  }
+    
+  
    if(this.user.type==='employee'){
     this.nav.showNavStaff();
     this.showTable();
@@ -79,6 +81,9 @@ export class TicketsComponent implements OnInit {
     this.classroomService.getAllClassrooms().subscribe(classrooms=>{
       this.classrooms = classrooms;
     })
+  }
+  } else {
+    this.router.navigate(['/']);
   }
   }
 

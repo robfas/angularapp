@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarService } from '../../services/navbar.service';
 import { SubjectService } from '../../services/subject.service';
 import { TypeSubject } from '../models/TypeSubject';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subject-type',
@@ -10,10 +11,19 @@ import { TypeSubject } from '../models/TypeSubject';
 })
 export class SubjectTypeComponent implements OnInit {
 
-  constructor(public nav: NavbarService, public subjectofstudyService: SubjectService) { }
+  constructor(public nav: NavbarService, private router: Router, public subjectofstudyService: SubjectService) { }
 
   ngOnInit() {
-    this.nav.showNavStaff();
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.nav.showNavStaff();
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
+    
   }
 
   save(name, description){

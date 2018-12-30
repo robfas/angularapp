@@ -15,13 +15,13 @@
             </div>
             <div class="col-sm">
             <div class="row">
-              <h3>{{user.name}} {{user.surname}} <br></h3>
+              <h3>{{user?.name}} {{user?.surname}} <br></h3>
             </div>
             <div class="row">
-              <p><b>Indirizzo: </b>{{user.residence}}</p>
+              <p><b>Indirizzo: </b>{{user?.residence}}</p>
             </div>
               <div class="row">
-              <p><b>Cell: </b>{{user.phone}}</p>
+              <p><b>Cell: </b>{{user?.phone}}</p>
             </div>
         </div>
         <div class="col-sm">
@@ -29,10 +29,10 @@
                         <h3><br></h3>
                       </div>
                       <div class="row">
-                        <p><b>Email: </b>{{user.email}}</p>
+                        <p><b>Email: </b>{{user?.email}}</p>
                       </div>
                         <div class="row">
-                        <p><b>Data di nascita: </b>{{user.dateBirth | date : shortDate}}</p>
+                        <p><b>Data di nascita: </b>{{user?.dateBirth | date : shortDate}}</p>
                       </div>
         </div>
     </div>
@@ -60,21 +60,21 @@
                             <div class="form-row">
                               <div class="form-group col-md-6">
                                 <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="name" value="{{ user.name }}" readonly>
+                                <input type="text" class="form-control" id="name" value="{{ user?.name }}" readonly>
                               </div>
                               <div class="form-group col-md-6">
                                 <label for="cognome">Cognome</label>
-                                <input type="text" class="form-control" id="surname" value="{{ user.surname }}" readonly>
+                                <input type="text" class="form-control" id="surname" value="{{ user?.surname }}" readonly>
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="inputAddress">Indirizzo</label>
-                              <input type="text" class="form-control" id="inputAddress" value="{{ user.residence }}">
+                              <input type="text" class="form-control" id="inputAddress" value="{{ user?.residence }}">
                             </div>
                             <div class="form-row">
                               <div class="form-group col-md-6">
                                 <label for="inputPhone">Phone</label>
-                                <input type="text" class="form-control" id="phone"  value="{{ user.phone }}">
+                                <input type="text" class="form-control" id="phone"  value="{{ user?.phone }}">
                               </div>
                             </div>
                            

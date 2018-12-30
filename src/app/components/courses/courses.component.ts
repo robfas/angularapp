@@ -16,14 +16,21 @@ export class CoursesComponent implements OnInit {
   constructor(public nav: NavbarService, public courseService: CourseService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.nav.showNavStaff();
-    this.courseService.getAll().subscribe(courses=>{
+    if(localStorage.getItem('currentUser')) {
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        const id = +this.route.snapshot.paramMap.get('id');
+      this.nav.showNavStaff();
+      this.courseService.getAll().subscribe(courses=>{
       this.firstlevel = courses.filter(courses=>courses.typeDegreeCourse.courseType.idcourseType === id)
       console.log(id, this.firstlevel[0].typeDegreeCourse.courseType.idcourseType);
-      
-      
     });
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else  {
+      this.router.navigate(['/']);
+    }
+    
   }
 
 }

@@ -5,6 +5,7 @@ import { Ticket } from '../models/Ticket';
 import { ActivatedRoute } from '@angular/router';
 import { StaffService } from '../../services/staff.service';
 import { User } from '../models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-staff',
@@ -16,22 +17,27 @@ export class StaffComponent implements OnInit {
   filteredtickets: Ticket[];
   user: User;
 
-  constructor(public nav: NavbarService, public ticketService: TicketService, private route: ActivatedRoute, public staffService: StaffService) { }
+  constructor(public nav: NavbarService, private router: Router, public ticketService: TicketService, private route: ActivatedRoute, public staffService: StaffService) { }
 
   ngOnInit() {
-    console.log(localStorage.getItem('currentUser'))
     if(localStorage.getItem('currentUser')) {
-      this.user={
-        iduser: JSON.parse(localStorage.getItem('currentUser')).iduser,
-        name: JSON.parse(localStorage.getItem('currentUser')).name,
-        surname: JSON.parse(localStorage.getItem('currentUser')).surname,
-        residence: JSON.parse(localStorage.getItem('currentUser')).residence,
-        phone: JSON.parse(localStorage.getItem('currentUser')).phone,
-        email: JSON.parse(localStorage.getItem('currentUser')).email,
-        dateBirth: JSON.parse(localStorage.getItem('currentUser')).dateBirth,
-      }};
-
-    this.nav.showNavStaff();
+      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+        this.user={
+          iduser: JSON.parse(localStorage.getItem('currentUser')).iduser,
+          name: JSON.parse(localStorage.getItem('currentUser')).name,
+          surname: JSON.parse(localStorage.getItem('currentUser')).surname,
+          residence: JSON.parse(localStorage.getItem('currentUser')).residence,
+          phone: JSON.parse(localStorage.getItem('currentUser')).phone,
+          email: JSON.parse(localStorage.getItem('currentUser')).email,
+          dateBirth: JSON.parse(localStorage.getItem('currentUser')).dateBirth,
+        }
+        this.nav.showNavStaff();
+      } else {
+        this.router.navigate(['/teacher']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
 
   }
 
