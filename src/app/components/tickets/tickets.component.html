@@ -9,13 +9,14 @@
 <table id="elencotickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
     <thead>
         <tr bgcolor="#cccccc">
-            <th style="text-align:center"class="never">Id</th>
+            <th style="text-align:center"class="never">Numero</th>
             <th style="text-align:center">Data apertura</th>
             <th style="text-align:center">Titolo</th>
             <th style="text-align:center">Aula</th>
             <th style="text-align:center">Cognome Docente</th>
             <th style="text-align:center">Nome Docente</th>
             <th style="text-align:center">Stato</th>
+            <th style="text-align:center">Dettagli</th>
         </tr>
     </thead>
     <tbody>                                                                                         
@@ -82,11 +83,13 @@
           <table id="elencotickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
               <thead>
                   <tr bgcolor="#cccccc">
-                      <th style="text-align:center"class="never">Id</th>
+                      <th style="text-align:center"class="never">Numero</th>
                       <th style="text-align:center">Data apertura</th>
                       <th style="text-align:center">Titolo</th>
                       <th style="text-align:center">Aula</th>
                       <th style="text-align:center">Stato</th>
+                      <th style="text-align:center">Dettagli</th>
+                      
                   </tr>
               </thead>
               <tbody>                                                                                         
@@ -97,7 +100,7 @@
                   <td style="text-align:center"> {{ t.classroom.name }} </td> 
                   <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
                   <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
-                  <td style="text-align:center"> {{ teacherbadge }} </td>
+                  <td  *ngIf="t.ticketmessages.length%2===0" style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/exclamation.png" height="30" width="30" onclick=""  /></a></td>
                 </tr>
               </tbody>
           </table>
