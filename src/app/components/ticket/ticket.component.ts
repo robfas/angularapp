@@ -131,4 +131,8 @@ export class TicketComponent implements OnInit {
     }
   }
 
+  answer(){
+    this.answerVisible = false;
+    this.textareaVisible = true;
+  }
 }

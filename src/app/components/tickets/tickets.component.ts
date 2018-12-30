@@ -33,6 +33,8 @@ export class TicketsComponent implements OnInit {
   ticketStatus: TicketStatus;
   datePipe: DatePipe;
   myDate: any;
+  teacherbadge: number = 0;
+  staffbadge: number = 0;
 
   constructor(public nav: NavbarService, public ticketService: TicketService,public ticketMessageService: TicketMessageService, public classroomService: ClassroomService, private route: ActivatedRoute, public staffService: StaffService) { }
 
@@ -52,6 +54,12 @@ export class TicketsComponent implements OnInit {
     this.ticketService.getTickets().subscribe(tickets => {
       this.tickets = tickets.filter(tickets=>tickets.ticketStatus.idstatus < 3);
       console.log(this.tickets);
+      for(let i of this.tickets){
+        if(i.ticketmessages.length % 2 !== 0){
+          this.staffbadge +=1;
+          console.log(this.staffbadge);
+        }         
+      }
     });
   }
 
@@ -61,6 +69,12 @@ export class TicketsComponent implements OnInit {
     this.ticketService.getTickets().subscribe(tickets => {
       this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
       console.log(this.tickets);
+      for(let i of this.tickets){
+        if(i.ticketmessages.length % 2 === 0){
+          this.teacherbadge+=1;
+          console.log(this.teacherbadge);
+        }         
+      }
     });
     this.classroomService.getAllClassrooms().subscribe(classrooms=>{
       this.classrooms = classrooms;
@@ -117,8 +131,11 @@ export class TicketsComponent implements OnInit {
         this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(message => {
           console.log(message);
           alert('Segnalazione inviata con successo!');
+          this.ticketService.getTickets().subscribe(tickets => {
+            this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
         this.newTicket = false;
         this.teacherTable = true;
+      });
         });
       });
     }

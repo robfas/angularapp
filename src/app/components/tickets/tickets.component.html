@@ -28,7 +28,8 @@
         <td style="text-align:center"> {{ t.teacher.name }} </td> 
         <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
         <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
-      </tr>
+        <td  *ngIf="t.ticketmessages.length%2!==0" style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/exclamation.png" height="30" width="30" onclick=""  /></a></td>
+    </tr>
     </tbody>
 </table>
 </div>
@@ -96,6 +97,7 @@
                   <td style="text-align:center"> {{ t.classroom.name }} </td> 
                   <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
                   <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+                  <td style="text-align:center"> {{ teacherbadge }} </td>
                 </tr>
               </tbody>
           </table>

@@ -113,7 +113,7 @@
         <span class="time-right"> {{ m.date | date : medium  }}</span>
     </div>
       <div *ngIf="answerVisible">
-        <button type="button" class="btn btn-success float-right">Rispondi</button>       
+        <button type="button" class="btn btn-success float-right" (click)=answer()>Rispondi</button>       
       </div>
 
       <div *ngIf="textareaVisible" class="light">
