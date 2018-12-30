@@ -15,6 +15,7 @@ export class AcademicYearComponent implements OnInit {
   academicyears: AcademicYear[];
   year: number;
   years: number;
+  tableVisible: boolean;
 
   constructor(public nav: NavbarService,private router: Router,public academicYearService: AcademicYearService, private modalService: NgbModal) { }
 
@@ -23,6 +24,10 @@ export class AcademicYearComponent implements OnInit {
     this.academicYearService.getAllYears().subscribe(academicyears =>{
       this.academicyears = academicyears;
       console.log(this.academicyears);
+      if(this.academicyears.length === 0){
+        this.tableVisible = false;
+      }
+      else this.tableVisible = true;
   });
 
 }
@@ -34,6 +39,7 @@ saveYear(year){
   this.academicYearService.saveAcademicYear({year: parseInt(year)} as AcademicYear).subscribe(academicYear => {
     this.academicyears.push(academicYear);
     console.log(academicYear);
+    this.tableVisible = true;
   });
 }
 
