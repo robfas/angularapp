@@ -9,7 +9,13 @@ import{ DataService } from '../../services/data.service';
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements OnInit {
-  student: Student;
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit() {
+    
+  };
+  /*student: Student;
   students: Student[];
 
   showExtended: boolean = true;
@@ -65,7 +71,7 @@ export class StudentComponent implements OnInit {
 
   ];*/
 
-this.addStudent({
+/*this.addStudent({
   firstname: 'Adriana',
   lastname: 'Caione',
   //age: 31,
@@ -111,6 +117,6 @@ onSubmit(e){
 addNewStudent(){
   //this.students.push(this.newStudent);
   this.dataService.addStudents(this.newStudent);
-}
+}*/
 
 }

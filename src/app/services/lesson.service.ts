@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Lesson } from '../components/models/Lesson';
 import { LessonFile } from '../components/models/LessonFile';
+import { Feedback } from '../components/models/feedback';
+
+const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +15,10 @@ export class LessonService {
   getLessonFilesUrl: string = 'http://localhost:8080/SpringApp/file/getLessonFiles';
   fileLessonUploadUrl: string = 'http://localhost:8080/SpringApp/file/upload/filelesson';
   getFileUrl: string = 'http://localhost:8080/SpringApp/file/download/filelesson';
+  getFeedbackFileUrl: string = 'http://localhost:8080/SpringApp/file/getFeedbackFile';
+  getFeedbackLessonUrl: string = 'http://localhost:8080/SpringApp/lesson/getFeedback';
+  getAllLessonsByCourseAndTermUrl: string = 'http://localhost:8080/SpringApp/lesson/getAllLessonsByCourseAndTerm';
+  editLessonsUrl: string = 'http://localhost:8080/SpringApp/lesson/edit';
 
   constructor(private http: HttpClient) { }
 
@@ -31,5 +38,21 @@ export class LessonService {
 
   getFile(idfile: number): Observable<{}>{
     return this.http.get<{}>(this.getFileUrl + '/' + idfile);
+  }
+
+  getFeedbackFiles(idfile: number): Observable<Feedback[]>{
+    return this.http.get<Feedback[]>(this.getFeedbackFileUrl + '/' + idfile);
+  }
+
+  getFeedback(idlesson: number): Observable<Feedback[]>{
+    return this.http.get<Feedback[]>(this.getFeedbackLessonUrl + '/' + idlesson);
+  }
+
+  getAllLessonsByCourseAndTerm(idcourse: number, idterm: number): Observable<Lesson[]>{
+    return this.http.get<Lesson[]>(this.getAllLessonsByCourseAndTermUrl + '/idcourse=' + idcourse + '&idterm=' + idterm);
+  }
+
+  editLessons(lessons: Lesson[]): Observable<{}> {
+    return this.http.post<{}>(this.editLessonsUrl, lessons, {headers});
   }
 }

@@ -9,6 +9,8 @@ import { CourseType } from '../models/CourseType';
 import { DegreeCourse } from '../models/DegreeCourse';
 import { SubjectStudy } from '../models/SubjectStudy';
 import { LessonFile } from '../models/LessonFile';
+import { Feedback } from '../models/feedback';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-lesson-teacher',
@@ -25,9 +27,16 @@ export class LessonTeacherComponent implements OnInit {
   subjects: SubjectStudy[] = [];
   detail: boolean = false;
   lesson: Lesson;
-  stars: number[];
+  feedbackFiles: Feedback[];
+  feedbackLesson: Feedback[];
+  stars: number;
+  selectedSubject: SubjectStudy;
+  startDate: Date;
+  endDate: Date;
+  datePipe = new DatePipe('en-US');
+  dateValid: boolean = true;
  
-  constructor(public lessonService: LessonService, public nav: NavbarService) { }
+  constructor(private modal: NgbModal, public lessonService: LessonService, public nav: NavbarService) { }
 
   ngOnInit() {
     this.nav.showNavTeacher();
@@ -44,10 +53,18 @@ export class LessonTeacherComponent implements OnInit {
         }
       }
     })
-    this.stars = Array(5).fill(0).map((x,i)=>i);
   }
 
-  onChange($event) {
+  @ViewChild('modalContent')
+  modalContent: TemplateRef<any>;
+
+  modalData: {
+    file: LessonFile;
+    feedbacks: Feedback[];
+  };
+
+
+  onChangeCourseType($event) {
     for(let l of this.originalLessons) {
       if(!this.degreeCourses.find(i => i.idtypeDegreeCourse == l.typeLesson.subject.degreecourseDTO.typeDegreeCourse.idtypeDegreeCourse)) {
         if(l.typeLesson.subject.degreecourseDTO.typeDegreeCourse.courseType == this.selectedCourseType) {
@@ -55,6 +72,12 @@ export class LessonTeacherComponent implements OnInit {
         }
         
       }
+    }
+    if(this.selectedCourseType == undefined) {
+      this.selectedDegreeCourse = undefined;
+      this.degreeCourses = [];
+      this.selectedSubject = undefined;
+      this.subjects = [];
     }
   }
 
@@ -67,17 +90,31 @@ export class LessonTeacherComponent implements OnInit {
         
       }
     }
+    if(this.selectedDegreeCourse == undefined) {
+      this.selectedSubject = undefined;
+      this.subjects = [];
+    }
   }
 
   showDetail(lesson) {
     this.lesson = lesson;
+    console.log(this.lesson)
     this.lessonService.getLessonFiles(lesson.idlesson).subscribe(files => {
       this.lesson.lessonFiles = files;
-      //this.lesson.lessonFiles[0].stars = 3
-      console.log(this.lesson.lessonFiles[0])
     });
-   
+    this.lessonService.getFeedback(lesson.idlesson).subscribe(feedbacks => {
+      this.feedbackLesson = feedbacks;
+      let sum: number = 0;
+      for(let f of feedbacks) {
+        sum += f.stars;
+      }
+      this.stars = sum/feedbacks.length
+    })
     this.detail = true;
+  }
+
+  back() {
+    this.detail = false;
   }
 
   onFileChanged(event) {
@@ -87,6 +124,70 @@ export class LessonTeacherComponent implements OnInit {
       });
     }
   }
+
+  showFile(file) {
+    this.lessonService.getFeedbackFiles(file.idFile).subscribe(feedbacks => {
+      this.feedbackFiles = feedbacks;
+      this.modalData = { file, feedbacks };
+      this.modal.open(this.modalContent, { size: 'lg' });
+    })
+    
+  }
+
+  filtra() {
+    if(this.startDate != undefined && this.endDate != undefined) {
+      if((new Date(this.datePipe.transform(this.startDate, 'yyyy/MM/dd'))) > (new Date(this.datePipe.transform(this.endDate, 'yyyy/MM/dd')))) {
+        this.dateValid = false;
+      } else {
+        this.dateValid == false;
+        if(this.selectedCourseType != undefined) {
+          this.currentLessons = this.currentLessons.filter(lesson => lesson.typeLesson.subject.degreecourseDTO.typeDegreeCourse.idtypeDegreeCourse === this.selectedCourseType.idcourseType);
+        }
+        if(this.selectedDegreeCourse != undefined) {
+          this.currentLessons = this.currentLessons.filter(lesson => lesson.typeLesson.subject.degreecourseDTO.idcourse === this.selectedDegreeCourse.idtypeDegreeCourse);
+        }
+        if(this.selectedSubject != undefined) {
+          this.currentLessons = this.currentLessons.filter(lesson => lesson.typeLesson.subject.id === this.selectedSubject.id);
+        }
+        if(this.startDate != undefined) {
+          this.currentLessons = this.currentLessons.filter(lesson => (new Date(this.datePipe.transform(lesson.start, 'yyyy/MM/dd'))) > (new Date(this.datePipe.transform(this.startDate, 'yyyy/MM/dd'))));
+        }
+        if(this.endDate != undefined) {
+          this.currentLessons = this.currentLessons.filter(lesson => (new Date(this.datePipe.transform(lesson.end, 'yyyy/MM/dd'))) < (new Date(this.datePipe.transform(this.endDate, 'yyyy/MM/dd'))));
+        }
+      }
+    } else {
+      this.dateValid == false;
+      if(this.selectedCourseType != undefined) {
+        this.currentLessons = this.currentLessons.filter(lesson => lesson.typeLesson.subject.degreecourseDTO.typeDegreeCourse.idtypeDegreeCourse === this.selectedCourseType.idcourseType);
+      }
+      if(this.selectedDegreeCourse != undefined) {
+        this.currentLessons = this.currentLessons.filter(lesson => lesson.typeLesson.subject.degreecourseDTO.idcourse === this.selectedDegreeCourse.idtypeDegreeCourse);
+      }
+      if(this.selectedSubject != undefined) {
+        this.currentLessons = this.currentLessons.filter(lesson => lesson.typeLesson.subject.id === this.selectedSubject.id);
+      }
+      if(this.startDate != undefined) {
+        this.currentLessons = this.currentLessons.filter(lesson => (new Date(this.datePipe.transform(lesson.start, 'yyyy/MM/dd'))) > (new Date(this.datePipe.transform(this.startDate, 'yyyy/MM/dd'))));
+      }
+      if(this.endDate != undefined) {
+        this.currentLessons = this.currentLessons.filter(lesson => (new Date(this.datePipe.transform(lesson.end, 'yyyy/MM/dd'))) < (new Date(this.datePipe.transform(this.endDate, 'yyyy/MM/dd'))));
+      }
+    }
+  }
+
+  removeFilter() {
+    this.currentLessons = this.originalLessons;
+  }
+
+  updatestart(startdate){
+    this.startDate = startdate;
+  }
+
+  updateend(enddate){
+    this.endDate = enddate;
+  }
+
 
 }
 
