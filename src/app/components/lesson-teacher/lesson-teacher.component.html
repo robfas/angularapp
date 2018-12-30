@@ -1,6 +1,36 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="card card-body mb-3 bg-transparent" style="padding-top: 70px; width: 90%; margin: auto">
-  <div class="row">
+  
+      <div *ngIf="detail">
+
+            <h3>Lezione del {{lesson.start | date:'dd-MM-yyyy' }}</h3>
+            <h5>Edificio {{ lesson.classroom.building.name }}, Aula {{ lesson.classroom.name }}</h5>
+          
+            <h6>Upload File</h6>
+            <div *ngIf="lesson?.lessonFiles?.length == 0">Non ci sono file caricati</div>
+          <div *ngFor="let f of lesson.lessonFiles">
+            <div class="row" style="margin: auto">
+              <div *ngFor="let star of stars">
+                <span *ngIf="f.stars > star" class="fa fa-star checked"></span>
+              </div>
+              <div *ngFor="let star of stars">
+                  <span *ngIf="5-f.stars > star" class="fa fa-star"></span>
+              </div>
+              
+              <a href="http://localhost:8080/SpringApp/file/download/filelesson/{{f.idFile}}">
+              <button class="dwn"><i class="fa fa-download"></i></button> {{f.name}}
+              </a>
+            </div>
+          </div>
+          <input type="file" style="color: transparent" (change)="onFileChanged($event)" multiple>
+
+      </div>
+  <div *ngIf="!detail">
+      <div class="row">
   <div class="col-md-2">
+    <form>
       <select class="custom-select mr-sm-2" name="course" #courseType [(ngModel)]="selectedCourseType" (change)="onChange($event)">
           <option [ngValue]="undefined">Categoria Corso di Laurea</option>
           <option *ngFor="let c of courseTypes; let i = index" [ngValue]="c">{{ c.description }}</option>
@@ -16,9 +46,13 @@
             <option *ngFor="let s of subjects; let s = index" [ngValue]="s">{{ s.name }}</option>
           </select>
           &nbsp;
-        Dal <input class="date" type="date" />
+          <div class="form-row">
+              <input type="text" ngbDatepicker #d="ngbDatepicker"/>
+        Dal <input type="date" class="form-control">
         &nbsp;
-        Al <input class="date" type="date" />
+        Al <input class="form-control" type="date">
+      </div>
+    </form>
   </div>
   <div class="col-md-10">
   <table class="table table-bordered">
@@ -59,12 +93,13 @@
               <label>{{ l.classroom.name }}</label>
             </td>
             <td>
-
+              <button class="btn btn-warning" (click)="showDetail(l)">Dettagli</button>
             </td>
           </tr>
         </tbody>
       
       </table>
+      </div>
       </div>
     </div>
 </div>

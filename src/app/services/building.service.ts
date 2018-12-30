@@ -30,8 +30,8 @@ export class BuildingService {
 
   saveImage(selectedFile: File, idBuilding: number): Observable<{}> {
     const uploadData = new FormData();
-    uploadData.append('file', selectedFile, idBuilding.toString()+ ".jpg");
-    return this.http.post(this.imageUrl, uploadData);
+    uploadData.append('file', selectedFile, selectedFile.name);
+    return this.http.post(this.imageUrl + '/' + idBuilding, uploadData);
   }
   
 }
