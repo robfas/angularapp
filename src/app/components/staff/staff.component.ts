@@ -19,6 +19,7 @@ export class StaffComponent implements OnInit {
   constructor(public nav: NavbarService, public ticketService: TicketService, private route: ActivatedRoute, public staffService: StaffService) { }
 
   ngOnInit() {
+    console.log(localStorage.getItem('currentUser'))
     if(localStorage.getItem('currentUser')) {
       this.user={
         iduser: JSON.parse(localStorage.getItem('currentUser')).iduser,
