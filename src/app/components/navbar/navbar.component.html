@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link">Portale universitario<span class="sr-only">(current)</span></a>
+          <a class="nav-link"><b>Portale universitario</b><span class="sr-only">(current)</span></a>
         </li>
   
       </ul> 
@@ -17,10 +17,10 @@
       <div>
         <input type="text" name="email" class="form-control" placeholder="Email" #email>
       </div>
-      <div>
+      <div style="margin-left: 3px">
         <input type="password" name="password" class="form-control" placeholder="Password" #password>
       </div>
-    <button (click)="signInUser(email.value, password.value)" class="btn btn-outline-success my-2 my-sm-0">Login</button>
+    <button (click)="signInUser(email.value, password.value)" class="btn btn-success"  style="margin-left: 3px">Login</button>
   </form>
     </div>
   </nav>
