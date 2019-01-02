@@ -1,5 +1,7 @@
 
-<nav *ngIf="nav.homeVisible"class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav *ngIf="nav.homeVisible" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="-webkit-box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);
+-moz-box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);
+box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);">
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -25,7 +27,9 @@
     </div>
   </nav>
 
-  <nav *ngIf="nav.staffVisible" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav *ngIf="nav.staffVisible" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="-webkit-box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);
+  -moz-box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);   font-family: Verdana, Geneva, Tahoma, sans-serif;">
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -42,31 +46,34 @@
               <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Corsi di Laurea</a>
               <div  class="dropdown-menu" >
                
-                <a class="dropdown-item" href="/staff/newcourse">Inserisci Nuovo Corso</a>
-                <a class="dropdown-item" href="/staff/newcoursetype">Inserisci Nuovo Tipo di Corso</a>
+                <a class="dropdown-item" href="/staff/newcourse">Aggiungi Corso</a>
+                <a class="dropdown-item" href="/staff/newcoursetype">Inserisci Nuovo Corso</a>
               </div>
             </li>
           <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Calendario Didattico</a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="/staff/department">Gestisci Dipartimento</a>
-                <a class="dropdown-item" href="/staff/calendar">Gestisci Calendario Lezioni</a>
+                <a class="dropdown-item" href="/staff/examcalendar">Calendario Esami</a>
+                <a class="dropdown-item" href="/staff/calendar">Calendario Lezioni</a>
                 <a class="dropdown-item" href="/staff/editcalendar">Modifica Lezione</a>
-                <a class="dropdown-item" href="/staff/examcalendar">Gestisci Calendario Esami</a>
+                
               </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Insegnamenti</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown03">  
-                    <a class="dropdown-item" href="/staff/newsubject">Inserisci Nuovo Insegnamento</a>
-                    <a class="dropdown-item" href="/staff/newsubjecttype">Inserisci Nuovo Tipo di Insegnamento</a>
+                    <a class="dropdown-item" href="/staff/newsubject">Aggiungi Insegnamento</a>
+                    <a class="dropdown-item" href="/staff/newsubjecttype">Inserisci Nuovo Insegnamento</a>
                 </div>
               </li>
         <li class="nav-item active">
-          <a class="nav-link" href="/staff/tickets">Segnalazioni<span class="badge badge-light">{{staffbadge}}</span></a>
+          <a class="nav-link" href="/staff/academicYears">Gestisci Anno Accademico<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="/staff/academicYears">Gestisci Anno Accademico<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/staff/department">Gestisci Dipartimento<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/staff/tickets">Segnalazioni<span class="badge badge-light">{{staffbadge}}</span></a>
         </li>
       </ul>
          
@@ -75,7 +82,10 @@
     </div>
   </nav>
 
-  <nav *ngIf="nav.teacherVisible" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav *ngIf="nav.teacherVisible" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="-webkit-box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);
+  -moz-box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0px 16px 0px 0px rgba(255, 255, 255, 0.1);   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif">
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -86,7 +96,7 @@
       <ul class="navbar-nav mr-auto">
           
           <li class="nav-item active">
-            <a class="nav-link">Ciao {{ user.name }}<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/teacher" style="color: #ffffff;">Ciao {{ user?.name }}<span class="sr-only">(current)</span></a>
           </li>
         
          <li class="nav-item dropdown">
@@ -99,10 +109,8 @@
               <a class="nav-link" href="/teacher/exams">Esami<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Calendario Didattico<span class="sr-only">(current)</span></a>
-            </li>
-              
-            
+                <a class="nav-link" href="/teacher/lesson">Lezioni<span class="sr-only">(current)</span></a>
+              </li>
         <li class="nav-item active">
           <a class="nav-link" href="teacher/tickets">Segnalazioni<span class="badge badge-light">{{teacherbadge}}</span></a>
         </li>
@@ -112,5 +120,3 @@
    
     </div>
   </nav>
-
- 

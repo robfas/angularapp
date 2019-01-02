@@ -151,7 +151,10 @@ export class ExamComponent implements OnInit {
     }
     if(this.valid) {
       this.examService.insertGrade(this.enrollmentsResult, this.exam.idexam).subscribe(result => {
-        
+        this.detail = false;
+        this.selectedCourseType = undefined;
+        this.selectedDegreeCourse = undefined;
+        this.selectedSubject = undefined;
       });
     }
   }

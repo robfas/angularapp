@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div class="card card-body mb-3 bg-transparent" style="padding-top: 40px; width: 90%; margin: auto; margin-top: 6%;">
+<div class="card card-body mb-3 bg-transparent" style="padding-top: 40px; width: 90%; margin: auto; margin-top: 6%; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;">
   
       <div *ngIf="detail">
         <div style="text-align: center; padding-bottom: 2%" >
@@ -14,11 +14,11 @@
               <table *ngIf="exam?.enrollments.length > 0" class="table table-bordered">
                 <thead>
                   <tr>
-                    <th>Nome</th>
                     <th>Cognome</th>
+                    <th>Nome</th>
                     <th>Data di nascita</th>
                     <th>Email</th>
-                    <th>Stato</th>
+                    <th style="width: 200px">Stato</th>
                     <th>Data iscrizione</th>
                     <th>Voto</th>
                   </tr>
@@ -27,10 +27,10 @@
                 <tbody>
                   <tr *ngFor="let s of exam?.enrollments">
                     <td>
-                      <label>{{s.student.name}}</label>
+                      <label>{{s.student.surname}}</label>
                     </td>
                     <td>
-                      <label>{{s.student.surname}}</label>
+                      <label>{{s.student.name}}</label>
                     </td>
                     <td>
                       <label>{{s.student.dateBirth | date:'dd-MM-yyyy'}}</label>
@@ -70,7 +70,7 @@
             </div>
             <div class="container" style="background-color: transparent; border: none; padding-left: 0%; padding-top: 1%;">
               <button type="button" class="btn btn-danger float-left" (click)="back()">Indietro</button>
-              <button *ngIf="today >= exam.date" type="button" class="btn btn-success float-right" (click)="close()">Chiudi verbale</button>
+              <button *ngIf="today >= exam.date && exam.status.idstatus != 2" type="button" class="btn btn-success float-right" (click)="close()">Chiudi verbale</button>
             </div>
           </div>
       </div>
