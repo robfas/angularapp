@@ -54,7 +54,7 @@ export class TicketsComponent implements OnInit {
     this.showTable();
    
     this.ticketService.getTickets().subscribe(tickets => {
-      this.tickets = tickets.filter(tickets=>tickets.ticketStatus.idstatus < 3);
+      this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 || tickets.employee.idemployee === this.user.iduser || tickets.employee.idemployee === null));
       console.log(this.tickets);
       for(let i of this.tickets){
         if(i.ticketmessages.length % 2 !== 0){

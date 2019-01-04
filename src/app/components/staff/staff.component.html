@@ -52,7 +52,49 @@
       </button>
     </div>
 </div>
-</div>
+
+  <div class="card card-body mb-3 card2">  
+      <h3 style="color: white">Azioni richieste</h3>
+      <br>
+      <div class="row">
+        <table id="elencotickets" class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
+          <thead>
+              <tr >
+                 
+                  <th style="text-align:center; color: white">Data apertura</th>
+                  <th style="text-align:center; color: white">Titolo</th>
+                  <th style="text-align:center; color: white">Aula</th>
+                  <th style="text-align:center; color: white">Cognome Docente</th>
+                  <th style="text-align:center; color: white">Nome Docente</th>
+                  <th style="text-align:center; color: white">Stato</th>
+              </tr>
+          </thead>
+          <tbody>                                                                                         
+            <tr *ngFor="let t of tickets;let i = index;" routerLink="tickets/ticket/{{t.id}}"> 
+           
+              <td style="text-align:center; color: white"> {{ t.date  | date : shortDate  }} </td> 
+              <td style="text-align:center; color: white"> {{ t.title }} </td>
+              <td style="text-align:center; color: white"> {{ t.classroom.name }} </td>
+              <td style="text-align:center; color: white"> {{ t.teacher.surname }} </td> 
+              <td style="text-align:center; color: white"> {{ t.teacher.name }} </td> 
+              <td style="text-align:center; color: white"> {{ t.ticketStatus.description }} </td>
+              
+              
+          </tr>
+          </tbody>
+      </table>      
+
+
+    </div>
+      </div>
+
+  </div>
+
+
+
+
+
+
 </div>
 <!-- Modal -->
 <div class="modal fade" id="datamodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

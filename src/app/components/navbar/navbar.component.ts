@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit {
       console.log(courseTypes)
     });
     this.subjectService.getAll().subscribe(subjects => {
-      this.subjects = subjects.filter(subjects=>subjects.teacherDTO.idteacher == 2);
+      this.subjects = subjects.filter(subjects=>subjects.teacherDTO.idteacher == this.user.iduser);
       console.log(this.subjects);
     });
 
