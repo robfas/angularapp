@@ -13,6 +13,8 @@ import { Teacher } from '../models/Teacher';
 import { TicketStatus } from '../models/TicketStatus';
 import { DatePipe, formatDate } from '@angular/common';
 import { Router } from '@angular/router';
+import { BuildingService } from '../../services/building.service';
+import { Building } from '../models/Building';
 
 @Component({
   selector: 'app-tickets',
@@ -28,6 +30,8 @@ export class TicketsComponent implements OnInit {
   teacherTable: boolean;
   newTicket: boolean;
   classrooms: Class[];
+  filteredclassrooms: Class[];
+  buildings: Building[];
   ticket: Ticket = {};
   class: Class[] = [];
   teacher: Teacher;
@@ -37,7 +41,7 @@ export class TicketsComponent implements OnInit {
   teacherbadge: number = 0;
   staffbadge: number = 0;
 
-  constructor(public nav: NavbarService, private router: Router, public ticketService: TicketService,public ticketMessageService: TicketMessageService, public classroomService: ClassroomService, private route: ActivatedRoute, public staffService: StaffService) { }
+  constructor(public nav: NavbarService, private router: Router, public buildingService: BuildingService, public ticketService: TicketService,public ticketMessageService: TicketMessageService, public classroomService: ClassroomService, private route: ActivatedRoute, public staffService: StaffService) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')){
@@ -54,7 +58,7 @@ export class TicketsComponent implements OnInit {
     this.showTable();
    
     this.ticketService.getTickets().subscribe(tickets => {
-      this.tickets = tickets.filter(tickets=>tickets.ticketStatus.idstatus < 3);
+      this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 || tickets.employee.idemployee === this.user.iduser || tickets.employee.idemployee === null));
       console.log(this.tickets);
       for(let i of this.tickets){
         if(i.ticketmessages.length % 2 !== 0){
@@ -78,6 +82,9 @@ export class TicketsComponent implements OnInit {
         }         
       }
     });
+    this.buildingService.getBuildings().subscribe(buildings=>{
+      this.buildings = buildings;
+    })
     this.classroomService.getAllClassrooms().subscribe(classrooms=>{
       this.classrooms = classrooms;
     })
@@ -85,6 +92,11 @@ export class TicketsComponent implements OnInit {
   } else {
     this.router.navigate(['/']);
   }
+  }
+
+  onChange(classrooms,building){
+    this.filteredclassrooms = this.classrooms.filter(classrooms=>classrooms.building.id === parseInt(building));
+    console.log(this.filteredclassrooms)
   }
 
   showTable(){ this.tableVisible = true; this.tableArchivedVisible = false };

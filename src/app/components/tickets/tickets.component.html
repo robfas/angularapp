@@ -1,35 +1,37 @@
 <div *ngIf="tableVisible" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
-  <div class="card card-body mb-3 bg-transparent">
-  <h3>Segnalazioni</h3>
+  <div class="card card-body mb-3" style=" border-color:darkgray;
+  box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
+  <h3 style="color: white">Segnalazioni</h3>
   <div class="col-sm-14">
   <button type="button" class="btn btn-dark float-right" (click)="showArchived()">
       Archiviate
   </button>
 </div>
-<table id="elencotickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+<table id="elencotickets"  class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
     <thead>
-        <tr bgcolor="#cccccc">
-            <th style="text-align:center"class="never">Numero</th>
-            <th style="text-align:center">Data apertura</th>
-            <th style="text-align:center">Titolo</th>
-            <th style="text-align:center">Aula</th>
-            <th style="text-align:center">Cognome Docente</th>
-            <th style="text-align:center">Nome Docente</th>
-            <th style="text-align:center">Stato</th>
-            <th style="text-align:center">Dettagli</th>
+        <tr >
+            <th style="text-align:center; color: white"class="never">Numero</th>
+            <th style="text-align:center; color: white">Data apertura</th>
+            <th style="text-align:center; color: white">Titolo</th>
+            <th style="text-align:center; color: white">Aula</th>
+            <th style="text-align:center; color: white">Cognome Docente</th>
+            <th style="text-align:center; color: white">Nome Docente</th>
+            <th style="text-align:center; color: white">Stato</th>
+            <th style="text-align:center; color: white">Dettagli</th>
+            <th style="text-align:center; color: white"></th>
         </tr>
     </thead>
     <tbody>                                                                                         
       <tr *ngFor="let t of tickets;let i = index;"> 
-        <td style="text-align:center"> {{ t.id }} </td>
-        <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
-        <td style="text-align:center"> {{ t.title }} </td>
-        <td style="text-align:center"> {{ t.classroom.name }} </td>
-        <td style="text-align:center"> {{ t.teacher.surname }} </td> 
-        <td style="text-align:center"> {{ t.teacher.name }} </td> 
-        <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
-        <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
-        <td  *ngIf="t.ticketmessages.length%2!==0" style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/exclamation.png" height="30" width="30" onclick=""  /></a></td>
+        <td style="text-align:center; color: white"> {{ t.id }} </td>
+        <td style="text-align:center; color: white"> {{ t.date  | date : shortDate  }} </td> 
+        <td style="text-align:center; color: white"> {{ t.title }} </td>
+        <td style="text-align:center; color: white"> {{ t.classroom.name }} </td>
+        <td style="text-align:center; color: white"> {{ t.teacher.surname }} </td> 
+        <td style="text-align:center; color: white"> {{ t.teacher.name }} </td> 
+        <td style="text-align:center; color: white"> {{ t.ticketStatus.description }} </td>
+        <td style="text-align:center; color: white"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+        <td  *ngIf="t.ticketmessages.length%2!==0" style="text-align:center; color: white"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/exlam.png" height="30" width="30" onclick=""  /></a></td>
     </tr>
     </tbody>
 </table>
@@ -37,35 +39,36 @@
 </div>
 
 <div *ngIf="tableArchivedVisible" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
-    <div class="card card-body mb-3 bg-transparent">  
-    <h3>Segnalazioni</h3>
+    <div class="card card-body mb-3" style=" border-color:darkgray;
+  box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
+    <h3  style="color: white">Segnalazioni</h3>
     <div class="col-sm-14">
       <button type="button" class="btn btn-dark float-right" style="float: right;" (click)="ngOnInit()">
           Indietro
       </button>
     </div>
-<table id="elencoarchivedtickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+<table id="elencoarchivedtickets"  class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
       <thead>
-              <tr bgcolor="#cccccc">
-                  <th style="text-align:center" class="never">Id</th>
-                  <th style="text-align:center">Data apertura</th>
-                  <th style="text-align:center">Titolo</th>
-                  <th style="text-align:center">Aula</th>
-                  <th style="text-align:center">Cognome Docente</th>
-                  <th style="text-align:center">Nome Docente</th>
-                  <th style="text-align:center">Stato</th>
+              <tr>
+                  <th style="text-align:center; color: white" class="never">Numero</th>
+                  <th style="text-align:center; color: white">Data apertura</th>
+                  <th style="text-align:center; color: white">Titolo</th>
+                  <th style="text-align:center; color: white">Aula</th>
+                  <th style="text-align:center; color: white">Cognome Docente</th>
+                  <th style="text-align:center; color: white">Nome Docente</th>
+                  <th style="text-align:center; color: white">Stato</th>
               </tr>
           </thead>
           <tbody>                                                                                         
                   <tr *ngFor="let t of filteredtickets"> 
-                    <td style="text-align:center"> {{ t.id }} </td>
-                    <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
-                    <td style="text-align:center"> {{ t.title }} </td>
-                    <td style="text-align:center"> {{ t.classroom.name }} </td>
-                    <td style="text-align:center"> {{ t.teacher.surname }} </td> 
-                    <td style="text-align:center"> {{ t.teacher.name }} </td> 
-                    <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
-                    <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+                    <td style="text-align:center; color: white"> {{ t.id }} </td>
+                    <td style="text-align:center; color: white"> {{ t.date  | date : shortDate  }} </td> 
+                    <td style="text-align:center; color: white"> {{ t.title }} </td>
+                    <td style="text-align:center; color: white"> {{ t.classroom.name }} </td>
+                    <td style="text-align:center; color: white"> {{ t.teacher.surname }} </td> 
+                    <td style="text-align:center; color: white"> {{ t.teacher.name }} </td> 
+                    <td style="text-align:center; color: white"> {{ t.ticketStatus.description }} </td>
+                    <td style="text-align:center; color: white"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/view.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
                   </tr>
                 </tbody>
   </table>
@@ -124,11 +127,20 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="nome" class="col-sm-2 col-form-label">Edificio</label>
+                <div class="col-sm-10">
+                  <select class="custom-select mr-sm-2" name="nome" #building (change)="onChange($event, building.value)">
+                    <option value=0>Seleziona Edificio</option>
+                    <option *ngFor="let b of buildings; let b = index" [value]="b.id">{{ b.name }}</option>
+                  </select>
+                </div>
+              </div>
+            <div class="form-group row">
               <label for="nome" class="col-sm-2 col-form-label">Aula</label>
               <div class="col-sm-10">
                 <select class="custom-select mr-sm-2" name="nome" #classroom>
                   <option value=0>Seleziona Aula</option>
-                  <option *ngFor="let c of classrooms; let c = index" [value]="c.id">{{ c.name }}</option>
+                  <option *ngFor="let c of filteredclassrooms; let c = index" [value]="c.id">{{ c.name }}</option>
                 </select>
               </div>
             </div>

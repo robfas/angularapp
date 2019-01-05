@@ -29,3 +29,26 @@
     margin-left: 2rem;
     margin-right: 2rem;
 }
+
+.card1 {
+    width: 97%;
+    height: 20rem;
+    align-self: center; 
+    border-color:darkgray;
+    box-shadow: 10px 10px 5px #aaaaaa; 
+    background-image: url("http://localhost:8080/SpringApp/images/censis.jpg");
+ }
+
+ .card2 {
+    width: 100%;
+   align-self: center; 
+   border-color:darkgray;
+   box-shadow: 10px 10px 5px #aaaaaa; 
+   background-image: url("http://localhost:8080/SpringApp/images/background.jpg");
+}
+
+.footer {
+    background: black !important;
+    padding-bottom: 30px;
+
+}

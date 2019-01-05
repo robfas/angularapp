@@ -1,27 +1,25 @@
-
-<div class="jumbotron">
-    <div class="img"></div>
- 
-    <h1 class="display-3">Staff Area</h1>
-    <p>Gestisci i corsi di laurea, le segnalazioni e il calendario didattico.</p>
+<div class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent;">
+  <div class="card card-body mb-3 card1" >
+    <h1 class="display-3" style="color: white; margin-top: 20px">Staff Area</h1>
+    <p style="color: white;">Gestisci i corsi di laurea, le segnalazioni e il calendario didattico.</p>
 </div>
 <div class="card card-body mb-3 bg-transparent" style="border: transparent">
-<div class="card card-body mb-3 bg-transparent">  
-    <h3>Area personale</h3>
+<div class="card card-body mb-3 card2">  
+    <h3 style="color: white">Area personale</h3>
     <br>
     <div class="row">
             <div class="col-sm">
-              <img class="rounded-circle" src="http://localhost:8080/SpringApp/images/user.png" alt="Generic placeholder image" width="150" height="150">
+              <img class="rounded-circle" src="http://localhost:8080/SpringApp/images/usericon.png" alt="Generic placeholder image" width="150" height="150">
             </div>
             <div class="col-sm">
             <div class="row">
-              <h3>{{user?.name}} {{user?.surname}} <br></h3>
+              <h3 style="color: white">{{user?.name}} {{user?.surname}} <br></h3>
             </div>
             <div class="row">
-              <p><b>Indirizzo: </b>{{user?.residence}}</p>
+              <p style="color: white"><b>Residenza: </b>{{user?.residence}}</p>
             </div>
               <div class="row">
-              <p><b>Cell: </b>{{user?.phone}}</p>
+              <p style="color: white"><b>Domicilio: </b>{{user?.domicile}}</p>
             </div>
         </div>
         <div class="col-sm">
@@ -29,12 +27,23 @@
                         <h3><br></h3>
                       </div>
                       <div class="row">
-                        <p><b>Email: </b>{{user?.email}}</p>
+                        <p style="color: white"><b>Email: </b>{{user?.email}}</p>
                       </div>
                         <div class="row">
-                        <p><b>Data di nascita: </b>{{user?.dateBirth | date : shortDate}}</p>
+                        <p style="color: white"><b>Data di nascita: </b>{{user?.dateBirth | date : shortDate}}</p>
                       </div>
         </div>
+        <div class="col-sm">
+          <div class="row">
+                  <h3><br></h3>
+                </div>
+                <div class="row">
+                  <p style="color: white"><b>Codice Fiscale: </b>{{user?.serial_number}}</p>
+                </div>
+                  <div class="row">
+                  <p style="color: white"><b>Cell: </b>{{user?.phone}}</p>
+                </div>
+  </div>
     </div>
     <!-- Button trigger modal -->
     <div class="col-sm-14">
@@ -43,8 +52,50 @@
       </button>
     </div>
 </div>
-</div>
 
+  <div class="card card-body mb-3 card2">  
+      <h3 style="color: white">Azioni richieste</h3>
+      <br>
+      <div class="row">
+        <table id="elencotickets" class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
+          <thead>
+              <tr >
+                 
+                  <th style="text-align:center; color: white">Data apertura</th>
+                  <th style="text-align:center; color: white">Titolo</th>
+                  <th style="text-align:center; color: white">Aula</th>
+                  <th style="text-align:center; color: white">Cognome Docente</th>
+                  <th style="text-align:center; color: white">Nome Docente</th>
+                  <th style="text-align:center; color: white">Stato</th>
+              </tr>
+          </thead>
+          <tbody>                                                                                         
+            <tr *ngFor="let t of tickets;let i = index;" routerLink="tickets/ticket/{{t.id}}"> 
+           
+              <td style="text-align:center; color: white"> {{ t.date  | date : shortDate  }} </td> 
+              <td style="text-align:center; color: white"> {{ t.title }} </td>
+              <td style="text-align:center; color: white"> {{ t.classroom.name }} </td>
+              <td style="text-align:center; color: white"> {{ t.teacher.surname }} </td> 
+              <td style="text-align:center; color: white"> {{ t.teacher.name }} </td> 
+              <td style="text-align:center; color: white"> {{ t.ticketStatus.description }} </td>
+              
+              
+          </tr>
+          </tbody>
+      </table>      
+
+
+    </div>
+      </div>
+
+  </div>
+
+
+
+
+
+
+</div>
 <!-- Modal -->
 <div class="modal fade" id="datamodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -87,3 +138,9 @@
           </div>
         </div>
       </div>
+
+
+      <div class="footer" style="margin-left: 0px; margin-right: 0px;max-width: 2000px; max-height: 1000px; background-color: black">
+  <p style="color: white; text-align: center;"><b>&copy;Portale Universitario</b></p>
+  <p style="color: white;text-align: center"><b>Progetto Software Engineering 2017/2018</b></p>
+</div>

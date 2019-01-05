@@ -30,8 +30,13 @@ export class StaffComponent implements OnInit {
           phone: JSON.parse(localStorage.getItem('currentUser')).phone,
           email: JSON.parse(localStorage.getItem('currentUser')).email,
           dateBirth: JSON.parse(localStorage.getItem('currentUser')).dateBirth,
+          domicile: JSON.parse(localStorage.getItem('currentUser')).domicile,
+          serial_number: JSON.parse(localStorage.getItem('currentUser')).serial_number
         }
         this.nav.showNavStaff();
+        this.ticketService.getTickets().subscribe(tickets => {
+          this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 && ( tickets.employee.idemployee === null ||  tickets.employee.idemployee === this.user.iduser) && (tickets.ticketmessages.length)%2 !== 0));
+        })
       } else {
         this.router.navigate(['/teacher']);
       }
