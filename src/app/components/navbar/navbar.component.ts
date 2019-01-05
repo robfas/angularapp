@@ -86,6 +86,17 @@ export class NavbarComponent implements OnInit {
                       surname: data.surname,
                       iduser: data.iduser
                     }
+                    this.ticketService.getTickets().subscribe(tickets => {
+                      this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
+                      console.log(this.tickets);
+                      for(let i of this.tickets){
+                        if(i.ticketmessages.length % 2 === 0){
+                          this.teacherbadge+=1;
+                          console.log(this.teacherbadge);
+                        }         
+                      }
+                     
+                    });
                     this.router.navigate(['/teacher']);
                   } else if(data.type  == "employee") {
                     this.user={
@@ -93,6 +104,15 @@ export class NavbarComponent implements OnInit {
                       surname: data.surname,
                       iduser: data.iduser
                     }
+                    this.ticketService.getTickets().subscribe(tickets =>{
+                      this.tickets = tickets;
+                      for(let i of this.tickets){
+                        if(i.ticketmessages.length % 2 !== 0){
+                          this.staffbadge +=1;
+                          console.log(this.staffbadge);
+                        }         
+                      }
+                    });
                     this.router.navigate(['/staff']);
                   } else {
                     alert("Accesso non autorizzato");
