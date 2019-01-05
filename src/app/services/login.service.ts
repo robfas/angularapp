@@ -3,13 +3,16 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  loginUrl: string = 'http://localhost:8080/SpringApp/user/login';
+  loginUrl: string = 'http://localhost:8080/SpringApp/public/login';
+  refreshTokenUrl: string = 'http://localhost:8080/SpringApp/refreshtoken';
   
   constructor(private http: HttpClient) { }
 
@@ -24,6 +27,11 @@ export class LoginService {
                 }
               return user;
           }));
+          
+  }
+
+  refreshToken(): Observable<String> {
+    return this.http.get<String>(this.refreshTokenUrl, {headers: {'X-Auth' : JSON.parse(localStorage.getItem('currentUser')).token}});
   }
 
   logout() {

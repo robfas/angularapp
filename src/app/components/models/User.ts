@@ -12,4 +12,5 @@ export interface User{
     citizenship?: string;
     serial_number?: number;
     type?: string;
+    token?: string;
   }

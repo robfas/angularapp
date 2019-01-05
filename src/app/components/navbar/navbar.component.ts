@@ -40,11 +40,9 @@ export class NavbarComponent implements OnInit {
     
     this.courseService.getAllCourseTypes().subscribe(courseTypes=>{
       this.courseTypes=courseTypes;
-      console.log(courseTypes)
     });
     this.subjectService.getAll().subscribe(subjects => {
       this.subjects = subjects.filter(subjects=>subjects.teacherDTO.idteacher == 2);
-      console.log(this.subjects);
     });
 
     if(this.user.type === 'employee'){
@@ -53,7 +51,6 @@ export class NavbarComponent implements OnInit {
         for(let i of this.tickets){
           if(i.ticketmessages.length % 2 !== 0){
             this.staffbadge +=1;
-            console.log(this.staffbadge);
           }         
         }
       });
@@ -61,11 +58,9 @@ export class NavbarComponent implements OnInit {
     if(this.user.type === 'teacher'){
       this.ticketService.getTickets().subscribe(tickets => {
         this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
-        console.log(this.tickets);
         for(let i of this.tickets){
           if(i.ticketmessages.length % 2 === 0){
             this.teacherbadge+=1;
-            console.log(this.teacherbadge);
           }         
         }
        

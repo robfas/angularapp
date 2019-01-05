@@ -21,7 +21,7 @@ export class SubjectService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<SubjectStudy[]>{
-    return this.http.get<SubjectStudy[]>(this.getAllUrl);
+    return this.http.get<SubjectStudy[]>(this.getAllUrl, {headers: headers});
   }
 
   saveSubject(subject: SubjectStudy): Observable<SubjectStudy>{

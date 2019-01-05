@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import localeIt from '@angular/common/locales/it';
 import { registerLocaleData } from '@angular/common';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsersSEComponent } from './components/users-se/users-se.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { HomeComponent } from './components/home/home.component';
@@ -47,6 +47,9 @@ import { TermComponent } from './components/term/term.component';
 import { SubjectTypeComponent } from './components/subject-type/subject-type.component';
 import { EditCalendarComponent } from './components/edit-calendar/edit-calendar.component';
 import { ExamComponent } from './components/exam/exam.component';
+import { TokenInterceptor } from './token-interceptor/token-interceptor.component';
+import { HttpModule } from '@angular/http';
+import { AuthService } from './services/auth-service.service';
 
 registerLocaleData(localeIt);
 
@@ -81,7 +84,7 @@ registerLocaleData(localeIt);
     TermComponent,
     SubjectTypeComponent,
     EditCalendarComponent,
-    ExamComponent,
+    ExamComponent
 
    
   ],
@@ -90,6 +93,7 @@ registerLocaleData(localeIt);
     FormsModule,
     CommonModule,
     HttpClientModule,
+    HttpModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule.forRoot(),
@@ -107,7 +111,11 @@ registerLocaleData(localeIt);
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [DataService, PostService],
+  providers: [DataService, PostService, AuthService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
   entryComponents: [
     ClassroomDetailDialogComponent

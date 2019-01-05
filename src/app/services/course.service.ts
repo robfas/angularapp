@@ -37,7 +37,7 @@ export class CourseService {
   }
 
   getAllCourseTypes():Observable<CourseType[]>{
-    return this.http.get<CourseType[]>(this.getAllCourseTypesUrl);
+    return this.http.get<CourseType[]>(this.getAllCourseTypesUrl, {headers: headers});
   }
 
   getCourseType(id: number):Observable<CourseType>{
