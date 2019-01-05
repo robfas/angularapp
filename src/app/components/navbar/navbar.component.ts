@@ -37,6 +37,31 @@ export class NavbarComponent implements OnInit {
         surname: JSON.parse(localStorage.getItem('currentUser')).surname,
         type: JSON.parse(localStorage.getItem('currentUser')).type
       }
+
+      if(this.user.type === 'employee'){
+        this.ticketService.getTickets().subscribe(tickets =>{
+          this.tickets = tickets;
+          for(let i of this.tickets){
+            if(i.ticketmessages.length % 2 !== 0){
+              this.staffbadge +=1;
+              console.log(this.staffbadge);
+            }         
+          }
+        });
+      }
+      if(this.user.type === 'teacher'){
+        this.ticketService.getTickets().subscribe(tickets => {
+          this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
+          console.log(this.tickets);
+          for(let i of this.tickets){
+            if(i.ticketmessages.length % 2 === 0){
+              this.teacherbadge+=1;
+              console.log(this.teacherbadge);
+            }         
+          }
+         
+        });
+      }
     
     this.courseService.getAllCourseTypes().subscribe(courseTypes=>{
       this.courseTypes=courseTypes;
@@ -47,30 +72,7 @@ export class NavbarComponent implements OnInit {
       console.log(this.subjects);
     });
 
-    if(this.user.type === 'employee'){
-      this.ticketService.getTickets().subscribe(tickets =>{
-        this.tickets = tickets;
-        for(let i of this.tickets){
-          if(i.ticketmessages.length % 2 !== 0){
-            this.staffbadge +=1;
-            console.log(this.staffbadge);
-          }         
-        }
-      });
-    }
-    if(this.user.type === 'teacher'){
-      this.ticketService.getTickets().subscribe(tickets => {
-        this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
-        console.log(this.tickets);
-        for(let i of this.tickets){
-          if(i.ticketmessages.length % 2 === 0){
-            this.teacherbadge+=1;
-            console.log(this.teacherbadge);
-          }         
-        }
-       
-      });
-    }
+
     }
   }
 
