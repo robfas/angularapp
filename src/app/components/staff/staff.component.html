@@ -63,9 +63,9 @@
                  
                   <th style="text-align:center; color: white">Data apertura</th>
                   <th style="text-align:center; color: white">Titolo</th>
+                  <th style="text-align:center; color: white">Edificio</th>
                   <th style="text-align:center; color: white">Aula</th>
-                  <th style="text-align:center; color: white">Cognome Docente</th>
-                  <th style="text-align:center; color: white">Nome Docente</th>
+                  <th style="text-align:center; color: white">Docente</th>
                   <th style="text-align:center; color: white">Stato</th>
               </tr>
           </thead>
@@ -73,10 +73,10 @@
             <tr *ngFor="let t of tickets;let i = index;" routerLink="tickets/ticket/{{t.id}}"> 
            
               <td style="text-align:center; color: white"> {{ t.date  | date : shortDate  }} </td> 
-              <td style="text-align:center; color: white"> {{ t.title }} </td>
+              <td style="text-align:center; color: white"><b>{{ t.title }}</b></td>
+              <td style="text-align:center; color: white"> {{ t.classroom.building.name }} </td>
               <td style="text-align:center; color: white"> {{ t.classroom.name }} </td>
-              <td style="text-align:center; color: white"> {{ t.teacher.surname }} </td> 
-              <td style="text-align:center; color: white"> {{ t.teacher.name }} </td> 
+              <td style="text-align:center; color: white"> {{ t.teacher.surname }}  {{ t.teacher.name }} </td> 
               <td style="text-align:center; color: white"> {{ t.ticketStatus.description }} </td>
               
               
@@ -139,8 +139,7 @@
         </div>
       </div>
 
-
-      <div class="footer" style="margin-left: 0px; margin-right: 0px;max-width: 2000px; max-height: 1000px; background-color: black">
-  <p style="color: white; text-align: center;"><b>&copy;Portale Universitario</b></p>
-  <p style="color: white;text-align: center"><b>Progetto Software Engineering 2017/2018</b></p>
-</div>
+      <div class="footer" style="margin-left: 0px; margin-right: 0px;max-width: 2000px; max-height: 1000px; background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
+        <p style="color: white; text-align: center;"><b>&copy;Portale Universitario</b></p>
+        <p style="color: white;text-align: center"><b>Progetto Software Engineering 2017/2018</b></p>
+      </div>

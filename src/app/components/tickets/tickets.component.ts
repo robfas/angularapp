@@ -157,4 +157,10 @@ export class TicketsComponent implements OnInit {
       });
     }
    }
+
+
+   back(){
+    this.teacherTable = true;
+    this.newTicket = false;
+   }
 }

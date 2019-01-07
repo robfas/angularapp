@@ -9,7 +9,7 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class UserService {
-  getAllTeachersUrl: string = 'http://localhost:8080/SpringApp//user/getTeachers';
+  getAllTeachersUrl: string = 'http://localhost:8080/SpringApp/user/getTeachers';
   getTeacherUrl: string = 'http://localhost:8080/SpringApp/user/getTeacherById';
 
   constructor(private http: HttpClient) { }

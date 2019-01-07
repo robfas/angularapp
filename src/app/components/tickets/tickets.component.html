@@ -13,9 +13,9 @@
             <th style="text-align:center; color: white"class="never">Numero</th>
             <th style="text-align:center; color: white">Data apertura</th>
             <th style="text-align:center; color: white">Titolo</th>
+            <th style="text-align:center; color: white">Edificio</th>
             <th style="text-align:center; color: white">Aula</th>
-            <th style="text-align:center; color: white">Cognome Docente</th>
-            <th style="text-align:center; color: white">Nome Docente</th>
+            <th style="text-align:center; color: white">Docente</th>
             <th style="text-align:center; color: white">Stato</th>
             <th style="text-align:center; color: white">Dettagli</th>
             <th style="text-align:center; color: white"></th>
@@ -25,10 +25,10 @@
       <tr *ngFor="let t of tickets;let i = index;"> 
         <td style="text-align:center; color: white"> {{ t.id }} </td>
         <td style="text-align:center; color: white"> {{ t.date  | date : shortDate  }} </td> 
-        <td style="text-align:center; color: white"> {{ t.title }} </td>
+        <td style="text-align:center; color: white"><b>{{ t.title }}</b></td>
+        <td style="text-align:center; color: white"> {{ t.classroom.building.name }} </td> 
         <td style="text-align:center; color: white"> {{ t.classroom.name }} </td>
-        <td style="text-align:center; color: white"> {{ t.teacher.surname }} </td> 
-        <td style="text-align:center; color: white"> {{ t.teacher.name }} </td> 
+        <td style="text-align:center; color: white"> {{ t.teacher.surname }} {{ t.teacher.name }}</td> 
         <td style="text-align:center; color: white"> {{ t.ticketStatus.description }} </td>
         <td style="text-align:center; color: white"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
         <td  *ngIf="t.ticketmessages.length%2!==0" style="text-align:center; color: white"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/exlam.png" height="30" width="30" onclick=""  /></a></td>
@@ -76,39 +76,42 @@
 </div>
 
 <div *ngIf="teacherTable" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
-    <div class="card card-body mb-3 bg-transparent">
-            <h3>Segnalazioni Effettuate</h3>
+    <div class="card card-body mb-3" style=" border-color:darkgray;
+    box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
+            <h3 style="color: white">Segnalazioni Effettuate</h3>
             <div class="col-sm-14">
             <button type="button" class="btn btn-dark float-right" (click)=showArchivedTeacher()>
                 Archiviate
             </button>
           </div>
-          <table id="elencotickets" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+          <table id="elencotickets" class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
               <thead>
-                  <tr bgcolor="#cccccc">
-                      <th style="text-align:center"class="never">Numero</th>
-                      <th style="text-align:center">Data apertura</th>
-                      <th style="text-align:center">Titolo</th>
-                      <th style="text-align:center">Aula</th>
-                      <th style="text-align:center">Stato</th>
-                      <th style="text-align:center">Dettagli</th>
+                  <tr>
+                      <th style="text-align:center; color: white" class="never">Numero</th>
+                      <th style="text-align:center; color: white">Data apertura</th>
+                      <th style="text-align:center; color: white">Titolo</th>
+                      <th style="text-align:center; color: white">Edificio</th>
+                      <th style="text-align:center; color: white">Aula</th>
+                      <th style="text-align:center; color: white">Stato</th>
+                      <th style="text-align:center; color: white">Dettagli</th>
                       
                   </tr>
               </thead>
               <tbody>                                                                                         
                 <tr *ngFor="let t of tickets;let i = index;"> 
-                  <td style="text-align:center"> {{ t.id }} </td>
-                  <td style="text-align:center"> {{ t.date  | date : shortDate  }} </td> 
-                  <td style="text-align:center"> {{ t.title }} </td>
-                  <td style="text-align:center"> {{ t.classroom.name }} </td> 
-                  <td style="text-align:center"> {{ t.ticketStatus.description }} </td>
-                  <td style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
+                  <td style="text-align:center; color: white"> {{ t.id }} </td>
+                  <td style="text-align:center; color: white"> {{ t.date  | date : shortDate  }} </td> 
+                  <td style="text-align:center; color: white"><b>{{ t.title }}</b></td>
+                  <td style="text-align:center; color: white"> {{ t.classroom.building.name }} </td>
+                  <td style="text-align:center; color: white"> {{ t.classroom.name }} </td> 
+                  <td style="text-align:center; color: white"> {{ t.ticketStatus.description }} </td>
+                  <td style="text-align:center; color: white"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/searchicon.png" alt="Visualizza" height="30" width="30" onclick="" /></a></td>
                   <td  *ngIf="t.ticketmessages.length%2===0" style="text-align:center"><a routerLink="ticket/{{t.id}}"><img src="http://localhost:8080/SpringApp/images/exclamation.png" height="30" width="30" onclick=""  /></a></td>
                 </tr>
               </tbody>
           </table>
           <div class="col-sm-14">
-                <button type="button" class="btn btn-success float-right" (click)="openNewTicket()">
+                <button type="button" class="btn btn-primary float-right" (click)="openNewTicket()">
                     Apri Nuova Segnalazione
                 </button>
                 </div>
@@ -116,18 +119,19 @@
  </div>
 
 <div *ngIf="newTicket" class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
-    <div class="card card-body mb-3 bg-transparent">
-        <h3>Apri una Segnalazione</h3>
+    <div class="card card-body mb-3" style=" border-color:darkgray;
+    box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
+        <h3 style="color: white">Apri una Segnalazione</h3>
         <br>
         <form>
             <div class="form-group row">
-                <label for="laurea" class="col-sm-2 col-form-label">Titolo</label>
+                <label for="laurea" class="col-sm-2 col-form-label" style="color: white">Titolo</label>
                 <div class="col-sm-10">
                     <input type="text" id="title" class="form-control" placeholder="Titolo" #title>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="nome" class="col-sm-2 col-form-label">Edificio</label>
+                <label for="nome" class="col-sm-2 col-form-label" style="color: white">Edificio</label>
                 <div class="col-sm-10">
                   <select class="custom-select mr-sm-2" name="nome" #building (change)="onChange($event, building.value)">
                     <option value=0>Seleziona Edificio</option>
@@ -136,7 +140,7 @@
                 </div>
               </div>
             <div class="form-group row">
-              <label for="nome" class="col-sm-2 col-form-label">Aula</label>
+              <label for="nome" class="col-sm-2 col-form-label" style="color: white">Aula</label>
               <div class="col-sm-10">
                 <select class="custom-select mr-sm-2" name="nome" #classroom>
                   <option value=0>Seleziona Aula</option>
@@ -145,15 +149,16 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="academicyear" class="col-sm-2 col-form-label">Messaggio</label>
+              <label for="academicyear" class="col-sm-2 col-form-label" style="color: white">Messaggio</label>
               <div class="col-sm-10">
                 <textarea class="form-control input-lg" rows="3" #textmessage></textarea> 
             </div>
           </div>
           <div class="form-group row">
-                <div class="col-sm-12">
+                <div class="col-md-12">
+                <button type="button" class="btn btn-dark" (click)="back()">Indietro</button>
             <button type="button" class="btn btn-success float-right" (click)="send(title.value, classroom.value, textmessage.value)">Invia</button>
-        </div>  
+        </div>        
         </div>
 </form>
     </div>

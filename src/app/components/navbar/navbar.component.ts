@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit {
         type: JSON.parse(localStorage.getItem('currentUser')).type
       }
 
+  
       if(this.user.type === 'employee'){
         this.ticketService.getTickets().subscribe(tickets =>{
           this.tickets = tickets;
@@ -76,6 +77,8 @@ export class NavbarComponent implements OnInit {
   }
 
   signInUser(email,password) {
+    this.staffbadge=0;
+    this.teacherbadge=0;
     this.loginService.login(email,password)
             .pipe(first())
             .subscribe(
