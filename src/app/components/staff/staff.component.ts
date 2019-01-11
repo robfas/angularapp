@@ -16,6 +16,7 @@ export class StaffComponent implements OnInit {
   tickets: Ticket[];
   filteredtickets: Ticket[];
   user: User;
+  toDo: boolean;
 
   constructor(public nav: NavbarService, private router: Router, public ticketService: TicketService, private route: ActivatedRoute, public staffService: StaffService) { }
 
@@ -36,6 +37,12 @@ export class StaffComponent implements OnInit {
         this.nav.showNavStaff();
         this.ticketService.getTickets().subscribe(tickets => {
           this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 && ( tickets.employee.idemployee === null ||  tickets.employee.idemployee === this.user.iduser) && (tickets.ticketmessages.length)%2 !== 0));
+          if(this.tickets.length===0){
+            this.toDo = false;
+          }
+          else{
+            this.toDo = true;
+          }
         })
       } else {
         this.router.navigate(['/teacher']);
