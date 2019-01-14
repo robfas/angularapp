@@ -6,7 +6,7 @@
 
 <div class="card card-body mb-3 bg-transparent" style="border: transparent">
   <div class="card card-body mb-3 card2">  
-      <h3 style="color: white">Area personale</h3>
+      <h3>Area personale</h3>
       <br>
       <div class="row">
               <div class="col-sm">
@@ -14,13 +14,13 @@
               </div>
               <div class="col-sm">
               <div class="row">
-                <h3 style="color: white">{{user?.name}} {{user?.surname}} <br></h3>
+                <h3>{{user?.name}} {{user?.surname}} <br></h3>
               </div>
               <div class="row">
-                <p style="color: white"><b>Residenza: </b>{{user?.residence}}</p>
+                <p><b>Residenza: </b>{{user?.residence}}</p>
               </div>
                 <div class="row">
-                <p style="color: white"><b>Domicilio: </b>{{user?.domicile}}</p>
+                <p><b>Domicilio: </b>{{user?.domicile}}</p>
               </div>
           </div>
           <div class="col-sm">
@@ -28,10 +28,10 @@
                           <h3><br></h3>
                         </div>
                         <div class="row">
-                          <p style="color: white"><b>Email: </b>{{user?.email}}</p>
+                          <p><b>Email: </b>{{user?.email}}</p>
                         </div>
                           <div class="row">
-                          <p style="color: white"><b>Data di nascita: </b>{{user?.dateBirth | date : shortDate}}</p>
+                          <p><b>Data di nascita: </b>{{user?.dateBirth | date : shortDate}}</p>
                         </div>
           </div>
           <div class="col-sm">
@@ -39,34 +39,57 @@
                     <h3><br></h3>
                   </div>
                   <div class="row">
-                    <p style="color: white"><b>Codice Fiscale: </b>{{user?.serial_number}}</p>
+                    <p><b>Codice Fiscale: </b>{{user?.serial_number}}</p>
                   </div>
                     <div class="row">
-                    <p style="color: white"><b>Cell: </b>{{user?.phone}}</p>
+                    <p><b>Cell: </b>{{user?.phone}}</p>
                   </div>
     </div>
       </div>
       <!-- Button trigger modal -->
       <div class="col-sm-14">
-      <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#datamodal">
+      <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#datamodal">
           Modifica Dati Personali
         </button>
       </div>
   </div>
 
   <div class="card card-body mb-3 card2">  
-    <h3 style="color: white">Lezioni Odierne</h3>
+    <h3>Lezioni Odierne</h3>
     <br>
-    <div class="row">
+   
+      <div *ngIf="showLessons" class="row">
+        <table id="lessons" class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
+          <thead>
+              <tr >
+                 
+                  <th style="text-align:center;">Inizio</th>
+                  <th style="text-align:center;">Fine</th>
+                  <th style="text-align:center;">Insegnamento</th>
+                  <th style="text-align:center;">Edificio</th>
+                  <th style="text-align:center;">Aula</th>
+           
+          </thead>
+          <tbody>                                                                                         
+            <tr *ngFor="let l of lessons;let l = index;" routerLink=""> 
+           
+              <td style="text-align:center;"> {{ l.start | date : mediumTime }} </td> 
+              <td style="text-align:center;"> {{ l.end | date : mediumTime }} </td> 
+              <td style="text-align:center;"> {{ l.typeLesson.subject.name }} </td> 
+              <td style="text-align:center;"> {{ l.classroom.building.name }} </td> 
+              <td style="text-align:center;"> {{ l.classroom.name }} </td> 
+          </tr>
+          </tbody>
+      </table>      
+
 
 
     </div>
-</div>
 
   </div>
 </div>
 
-<div class="footer" style="margin-left: 0px; margin-right: 0px;max-width: 2000px; max-height: 1000px; background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
+<div class="footer" style="margin-left: 0px; margin-right: 0px;max-width: 2000px; max-height: 1000px; background-color:black">
   <p style="color: white; text-align: center;"><b>&copy;Portale Universitario</b></p>
   <p style="color: white;text-align: center"><b>Progetto Software Engineering 2017/2018</b></p>
 </div>
