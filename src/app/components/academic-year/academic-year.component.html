@@ -2,13 +2,13 @@
   <div class="row">
  
   <div class="card card-body mb-3"  style="border-color:darkgray;
-  box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
-    <h3 style="color:white">Anni Accademici:</h3>
-    <table *ngIf="tableVisible" id="elencoanni" class="table table-hover dt-responsive" style="color:white" cellspacing="0" width="100%">                                       
+  box-shadow: 10px 10px 5px #aaaaaa;  background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
+    <h3>Anni Accademici:</h3>
+    <table *ngIf="tableVisible" id="elencoanni" class="table table-hover dt-responsive"  cellspacing="0" width="100%">                                       
       <thead>
           <tr>
             
-              <th style="text-align:center">Anni</th>
+              <th style="text-align:center;">Anni</th>
               <th style="text-align:center">Dettagli</th>
 
           </tr>
@@ -17,7 +17,7 @@
         <tr *ngFor="let a of academicyears; let a = index" > 
          
           <td style="text-align:center"> {{a.year}}/{{a.year+1}} </td>
-          <td style="text-align:center"> <button type="button" class="btn btn-primary" (click)=dettagli(a)>
+          <td style="text-align:center"> <button type="button" class="btn btn-success" (click)=dettagli(a)>
            Visualizza
           </button></td>
         </tr>
@@ -28,7 +28,7 @@
 </div>
 </div>
 <div class="col-md-12">
-<button type="button" class="btn btn-primary float-right"  data-toggle="modal" data-target="#datamodal">
+<button type="button" class="btn btn-success float-right"  data-toggle="modal" data-target="#datamodal">
         Apri Nuovo Anno Accademico
       </button>
     </div>

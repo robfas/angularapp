@@ -24,10 +24,12 @@ import { Building } from '../models/Building';
 export class TicketsComponent implements OnInit {
   tickets: Ticket[];
   filteredtickets: Ticket[];
+  filteredteachertickets: Ticket[];
   user: User;
   tableVisible: boolean;
   tableArchivedVisible: boolean;
   teacherTable: boolean;
+  archivedTeacher: boolean;
   newTicket: boolean;
   classrooms: Class[];
   filteredclassrooms: Class[];
@@ -58,7 +60,7 @@ export class TicketsComponent implements OnInit {
     this.showTable();
    
     this.ticketService.getTickets().subscribe(tickets => {
-      this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 || tickets.employee.idemployee === this.user.iduser || tickets.employee.idemployee === null));
+      this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 && (tickets.employee.idemployee === this.user.iduser || tickets.employee.idemployee === null)));
       console.log(this.tickets);
       for(let i of this.tickets){
         if(i.ticketmessages.length % 2 !== 0){
@@ -73,7 +75,7 @@ export class TicketsComponent implements OnInit {
     this.nav.showNavTeacher();
     this.showTableTeacher();
     this.ticketService.getTickets().subscribe(tickets => {
-      this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
+      this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser  && tickets.ticketStatus.idstatus < 3);
       console.log(this.tickets);
       for(let i of this.tickets){
         if(i.ticketmessages.length % 2 === 0){
@@ -113,12 +115,17 @@ export class TicketsComponent implements OnInit {
    showTableTeacher(){
     this.tableArchivedVisible = false
     this.tableVisible = false;
+    this.archivedTeacher = false;
     this.teacherTable = true;
    }
 
    showArchivedTeacher(){
     this.teacherTable = false;
-   }
+    this.archivedTeacher = true;
+    this.ticketService.getTickets().subscribe(tickets => {
+    this.filteredteachertickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser && tickets.ticketStatus.idstatus > 3);
+    });
+  }
 
    openNewTicket(){
     this.teacherTable = false;
@@ -149,7 +156,7 @@ export class TicketsComponent implements OnInit {
           console.log(message);
           alert('Segnalazione inviata con successo!');
           this.ticketService.getTickets().subscribe(tickets => {
-            this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
+            this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser && tickets.ticketStatus.idstatus < 3);
         this.newTicket = false;
         this.teacherTable = true;
       });
