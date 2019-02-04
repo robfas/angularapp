@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit {
         this.ticketService.getTickets().subscribe(tickets =>{
           this.tickets = tickets;
           for(let i of this.tickets){
-            if(i.ticketmessages.length % 2 !== 0){
+            if(i.ticketmessages.length % 2 !== 0 && i.ticketStatus.idstatus !== 4){
               this.staffbadge +=1;
               console.log(this.staffbadge);
             }         
@@ -61,6 +61,10 @@ export class NavbarComponent implements OnInit {
             }         
           }
          
+        });
+        this.subjectService.getAll().subscribe(subjects => {
+          this.subjects = subjects.filter(subjects=>subjects.teacherDTO.idteacher == this.user.iduser);
+          console.log(this.subjects);
         });
       }
     

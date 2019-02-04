@@ -1,7 +1,7 @@
 <div *ngIf="!isTeacher"  class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
 <div class="card card-body mb-3" style=" border-color:darkgray;
-box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
-      <table class="table table-hover dt-responsive" style="color: white" cellspacing="0" width="100%">
+box-shadow: 10px 10px 5px #aaaaaa;  background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
+      <table class="table table-hover dt-responsive"  cellspacing="0" width="100%">
           <thead>
             <tr>
               <th scope="col">N°</th>
@@ -17,7 +17,7 @@ box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080
             <tr>
               <td> {{ ticket?.id }} </td>
               <td> {{ ticket?.date | date : shortDate  }} </td> 
-              <td> {{ ticket?.title }} </td>
+              <td> <b>{{ ticket?.title }} </b></td>
               <td> {{ ticket?.classroom.building.name }} </td>
               <td> {{ ticket?.classroom.name }} </td>
               <td> {{ ticket?.teacher.surname }} {{ ticket?.teacher.name }}  </td> 
@@ -26,12 +26,12 @@ box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080
             </tr>	
           </tbody>
         </table>
-        <div class="card card-body mb-3 bg-transparent">
-            <h3  style="color: white">Messaggi Segnalazione</h3>
+        <div class="card card-body mb-3 bg-transparent" style="border: transparent">
+            <h3 >Messaggi Segnalazione</h3>
         <div *ngFor="let m of ticket?.ticketmessages; let i = index" [class.darker]="i % 2 === 0" [class.light]="i % 2 !== 0">
-          <p class="font-weight-bold"  style="color: white">Messaggio da: {{ m.user.surname }} {{ m.user.name }} </p>
-          <p  style="color: white">{{ m.text }}</p>
-          <span class="time-right"  style="color: white"> {{ m.date | date : medium  }}</span>
+          <p class="font-weight-bold" >Messaggio da: {{ m.user.surname }} {{ m.user.name }} </p>
+          <p >{{ m.text }}</p>
+          <span class="time-right"> {{ m.date | date : medium  }}</span>
       </div>
         <div *ngIf="buttonVisible">
           <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal">Prendi in carico</button>       
@@ -45,15 +45,15 @@ box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080
         </div>
        
       </div>
-      <div *ngIf="statusVisible" class="card card-body mb-3 bg-transparent">
+      <div *ngIf="statusVisible" class="card card-body mb-3 bg-transparent" style="border: transparent">
       <form >
-        <h3  style="color: white">Aggiorna Stato</h3>
+        <h3 >Aggiorna Stato</h3>
         <br>
           <select class="custom-select mr-sm-2" name="status" #status>
             <option value=0>Seleziona Stato</option>
             <option *ngFor="let s of stati" [value]="s.idstatus">{{ s.description }}</option>
           </select>
-      <button (click)="updateTicket(status.value)" class="btn btn-primary float-right" >Aggiorna</button>
+      <button (click)="updateTicket(status.value)" class="btn btn-success float-right" >Aggiorna</button>
     </form>
     </div>
     <!-- Modal -->
@@ -71,7 +71,7 @@ box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="showTextArea()">Sì</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showTextArea()">Sì</button>
         </div>
       </div>
     </div>
@@ -82,8 +82,8 @@ box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080
 
 <div *ngIf="isTeacher"  class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
     <div class="card card-body mb-3" style=" border-color:darkgray;
-    box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080/SpringApp/images/background.jpg)">
-    <table  class="table table-hover dt-responsive" style="color: white"  cellspacing="0" width="100%">
+    box-shadow: 10px 10px 5px #aaaaaa;  background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
+    <table  class="table table-hover dt-responsive"  cellspacing="0" width="100%">
         <thead>
           <tr>
             <th scope="col">N°</th>
@@ -110,11 +110,11 @@ box-shadow: 10px 10px 5px #aaaaaa;   background-image: url(http://localhost:8080
       </table>
 
       <div class="card card-body mb-3 bg-transparent" style="border: transparent">
-          <h3 style="color: white">Messaggi Segnalazione</h3>
+          <h3>Messaggi Segnalazione</h3>
       <div *ngFor="let m of ticket?.ticketmessages; let i = index" [class.darker]="i % 2 === 0" [class.light]="i % 2 !== 0">
-        <p class="font-weight-bold" style="color: white">Messaggio da: {{ m.user.surname }} {{ m.user.name }} </p>
-        <p style="color: white">{{ m.text }}</p>
-        <span class="time-right" style="color: white"> {{ m.date | date : medium  }}</span>
+        <p class="font-weight-bold">Messaggio da: {{ m.user.surname }} {{ m.user.name }} </p>
+        <p>{{ m.text }}</p>
+        <span class="time-right"> {{ m.date | date : medium  }}</span>
     </div>
       <div *ngIf="answerVisible">
         <button type="button" class="btn btn-success float-right" (click)=answer()>Rispondi</button>       

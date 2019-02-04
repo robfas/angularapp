@@ -42,6 +42,9 @@ export class TicketsComponent implements OnInit {
   myDate: any;
   teacherbadge: number = 0;
   staffbadge: number = 0;
+  selectedClass: Class;
+  showOthers: boolean;
+  thisclassroomtickets: Ticket[];
 
   constructor(public nav: NavbarService, private router: Router, public buildingService: BuildingService, public ticketService: TicketService,public ticketMessageService: TicketMessageService, public classroomService: ClassroomService, private route: ActivatedRoute, public staffService: StaffService) { }
 
@@ -99,6 +102,25 @@ export class TicketsComponent implements OnInit {
   onChange(classrooms,building){
     this.filteredclassrooms = this.classrooms.filter(classrooms=>classrooms.building.id === parseInt(building));
     console.log(this.filteredclassrooms)
+  }
+
+  onChange2(classrooms,classroom){
+    this.showOthers = false;
+    this.selectedClass = this.classrooms.filter(classrooms=>classrooms.id === parseInt(classroom))[0];
+    console.log(this.selectedClass);
+    if(this.selectedClass === undefined){
+      this.showOthers = false;
+    }
+    else this.showOthers = true;
+  }
+
+  classroomTickets(classroom){
+    this.ticketService.getTickets().subscribe(tickets=>{
+    this.thisclassroomtickets = tickets.filter(tickets=>tickets.classroom.id===parseInt(classroom))
+    console.log(this.thisclassroomtickets);
+   
+    });
+    
   }
 
   showTable(){ this.tableVisible = true; this.tableArchivedVisible = false };

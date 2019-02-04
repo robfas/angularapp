@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LessonService } from '../../services/lesson.service';
 import { Lesson } from '../models/Lesson';
 import { getTime } from 'date-fns';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-teacher',
@@ -18,6 +19,8 @@ export class TeacherComponent implements OnInit {
   user: User;
   lessons: Lesson[];
   showLessons: boolean;
+  start: any;
+  datePipe = new DatePipe('en-US');
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
@@ -32,9 +35,10 @@ export class TeacherComponent implements OnInit {
           dateBirth: JSON.parse(localStorage.getItem('currentUser')).dateBirth,
         }
         this.nav.showNavTeacher();
+        this.start =  this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
         this.lessonService.getAllTeacherLessons(this.user.iduser).subscribe(lessons=>{
-       //   this.lessons = lessons.filter(lessons=>lessons.start === Date.now());
-
+          this.lessons = lessons.filter(lessons=>this.datePipe.transform(lessons.start, 'dd/MM/yyyy')===this.start)
+         
           console.log(this.lessons);
           if(this.lessons.length>0){
             this.showLessons = true;

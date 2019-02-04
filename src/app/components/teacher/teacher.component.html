@@ -71,7 +71,7 @@
            
           </thead>
           <tbody>                                                                                         
-            <tr *ngFor="let l of lessons;let l = index;" routerLink=""> 
+            <tr *ngFor="let l of lessons;let l = index;" > 
            
               <td style="text-align:center;"> {{ l.start | date : mediumTime }} </td> 
               <td style="text-align:center;"> {{ l.end | date : mediumTime }} </td> 
@@ -85,13 +85,16 @@
 
 
     </div>
+    <div *ngIf="!showLessons" class="row">
+      <p style="margin-left: 1rem">Non hai lezioni oggi</p>
+      </div>
 
   </div>
 </div>
 
-<div class="footer" style="margin-left: 0px; margin-right: 0px;max-width: 2000px; max-height: 1000px; background-color:black">
-  <p style="color: white; text-align: center;"><b>&copy;Portale Universitario</b></p>
-  <p style="color: white;text-align: center"><b>Progetto Software Engineering 2017/2018</b></p>
+<div class="footer" style="margin-left: 0px; margin-right: 0px;max-width: 2000px; max-height: 1000px; ">
+  <p style="text-align: center;"><b>&copy;Portale Universitario</b></p>
+  <p style="text-align: center"><b>Progetto Software Engineering 2017/2018</b></p>
 </div>
 
 <!-- Modal -->

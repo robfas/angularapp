@@ -1,6 +1,6 @@
 
 <div style="line-height:500%;"><br></div>
-<div class="card card-body mb-3 bg-transparent" style="width:80%; margin:0px auto; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;">
+<div class="card card-body mb-3 bg-transparent" style="width:80%; margin:0px auto; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;     background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
 <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
     <label><h3>Dettagli edificio {{building?.name}}</h3></label>                                                            
   <label class="switch" style="float: right;">
@@ -51,9 +51,9 @@
         <div style="line-height:100%;"><br></div>
         <ng-container *ngIf="building?.classrooms && building?.classrooms.length != 0">
             <label for="name" class="control-label">Classi</label>
-            <table id="elencoClassi" class="table table-bordered dt-responsive" cellspacing="0" style="width:100%;table-layout:fixed">                                       
+            <table id="elencoClassi" class="table table-hover dt-responsive" cellspacing="0" style="width:100%;table-layout:fixed">                                       
                 <thead>
-                    <tr bgcolor="#cccccc">
+                    <tr>
                         <th scope="col" width="5%">N°</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Edificio</th>
@@ -62,12 +62,12 @@
                     </tr>
                 </thead>
                 <tbody>  
-                    <tr bgcolor="#FFFFFF" *ngFor="let c of building?.classrooms;let i = index">
+                    <tr *ngFor="let c of building?.classrooms;let i = index">
                         <td  style="vertical-align:middle;" width="5%"> {{ i+1 }} </td>
                         <td style="vertical-align:middle;"> {{ c.name  }} </td> 
                         <td style="vertical-align:middle;"> {{ c.building.name  }} </td> 
                         <td style="vertical-align:middle;"> {{ c.seats  }} </td> 
-                        <td align="middle" > <button (click)="dettagli(c)" class="btn btn-info" [disabled]="!edit">Modifica</button></td>
+                        <td align="middle" > <button (click)="dettagli(c)" class="btn btn-success" [disabled]="!edit">Modifica</button></td>
                         </tr>
                 </tbody>
             </table>
