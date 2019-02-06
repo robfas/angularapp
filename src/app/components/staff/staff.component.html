@@ -38,7 +38,7 @@
                   <h3><br></h3>
                 </div>
                 <div class="row">
-                  <p><b>Codice Fiscale: </b>{{user?.serial_number}}</p>
+                  <p><b>Codice Fiscale: </b>{{user?.ssn}}</p>
                 </div>
                 <div class="row">
                     <p><b>Cell: </b>{{user?.phone}}</p>
@@ -124,13 +124,17 @@
                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="inputAddress">Indirizzo</label>
-                              <input type="text" class="form-control" id="inputAddress" value="{{ user?.residence }}">
+                              <label for="inputAddress">Indirizzo di residenza</label>
+                              <input type="text" class="form-control" id="inputAddress" value="{{ user?.residence }}" #residence>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputAddress">Indirizzo di domicilio</label>
+                              <input type="text" class="form-control" id="inputAddress2" value="{{ user?.domicile }}" #domicile>
                             </div>
                             <div class="form-row">
                               <div class="form-group col-md-6">
                                 <label for="inputPhone">Phone</label>
-                                <input type="text" class="form-control" id="phone"  value="{{ user?.phone }}">
+                                <input type="text" class="form-control" id="phone"  value="{{ user?.phone }}" #phone>
                               </div>
                             </div>
                            
@@ -138,7 +142,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-              <button type="button" class="btn btn-success">Salva</button>
+              <button type="button" class="btn btn-success" (click)="save(residence.value, domicile.value, phone.value)" data-dismiss="modal">Salva</button>
             </div>
           </div>
         </div>

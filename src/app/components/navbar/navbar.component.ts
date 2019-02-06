@@ -114,7 +114,7 @@ export class NavbarComponent implements OnInit {
                     this.ticketService.getTickets().subscribe(tickets =>{
                       this.tickets = tickets;
                       for(let i of this.tickets){
-                        if(i.ticketmessages.length % 2 !== 0){
+                        if(i.ticketmessages.length % 2 !== 0 && i.ticketStatus.idstatus < 3){
                           this.staffbadge +=1;
                           console.log(this.staffbadge);
                         }         
