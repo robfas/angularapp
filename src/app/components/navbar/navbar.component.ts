@@ -38,11 +38,12 @@ export class NavbarComponent implements OnInit {
         type: JSON.parse(localStorage.getItem('currentUser')).type
       }
 
+  
       if(this.user.type === 'employee'){
         this.ticketService.getTickets().subscribe(tickets =>{
           this.tickets = tickets;
           for(let i of this.tickets){
-            if(i.ticketmessages.length % 2 !== 0){
+            if(i.ticketmessages.length % 2 !== 0 && i.ticketStatus.idstatus !== 4){
               this.staffbadge +=1;
               console.log(this.staffbadge);
             }         
@@ -61,6 +62,10 @@ export class NavbarComponent implements OnInit {
           }
          
         });
+        this.subjectService.getAll().subscribe(subjects => {
+          this.subjects = subjects.filter(subjects=>subjects.teacherDTO.idteacher == this.user.iduser);
+          console.log(this.subjects);
+        });
       }
     
     this.courseService.getAllCourseTypes().subscribe(courseTypes=>{
@@ -76,6 +81,8 @@ export class NavbarComponent implements OnInit {
   }
 
   signInUser(email,password) {
+    this.staffbadge=0;
+    this.teacherbadge=0;
     this.loginService.login(email,password)
             .pipe(first())
             .subscribe(
@@ -107,7 +114,7 @@ export class NavbarComponent implements OnInit {
                     this.ticketService.getTickets().subscribe(tickets =>{
                       this.tickets = tickets;
                       for(let i of this.tickets){
-                        if(i.ticketmessages.length % 2 !== 0){
+                        if(i.ticketmessages.length % 2 !== 0 && i.ticketStatus.idstatus < 3){
                           this.staffbadge +=1;
                           console.log(this.staffbadge);
                         }         

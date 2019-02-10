@@ -1,35 +1,36 @@
-<div *ngIf="!isTeacher" class="jumbotron">
-  
-      <table  class="table table-bordered dt-responsive" cellspacing="0" width="100%">
+<div *ngIf="!isTeacher"  class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+<div class="card card-body mb-3" style=" border-color:darkgray;
+box-shadow: 10px 10px 5px #aaaaaa;  background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
+      <table class="table table-hover dt-responsive"  cellspacing="0" width="100%">
           <thead>
-            <tr bgcolor="#cccccc">
+            <tr>
               <th scope="col">N°</th>
               <th scope="col">Data</th>
               <th scope="col">Titolo</th>
+              <th scope="col">Edificio</th>
               <th scope="col">Aula</th>
-              <th scope="col">Cognome Docente</th>
-              <th scope="col">Nome Docente</th>
+              <th scope="col">Docente</th>
               <th scope="col">Stato</th>
             </tr>
           </thead>
           <tbody>
-            <tr bgcolor="#FFFFFF">
+            <tr>
               <td> {{ ticket?.id }} </td>
               <td> {{ ticket?.date | date : shortDate  }} </td> 
-              <td> {{ ticket?.title }} </td>
+              <td> <b>{{ ticket?.title }} </b></td>
+              <td> {{ ticket?.classroom.building.name }} </td>
               <td> {{ ticket?.classroom.name }} </td>
-              <td> {{ ticket?.teacher.surname }} </td> 
-              <td> {{ ticket?.teacher.name }} </td> 
+              <td> {{ ticket?.teacher.surname }} {{ ticket?.teacher.name }}  </td> 
               <td><b> {{ ticket?.ticketStatus.description }} </b></td> 
               
             </tr>	
           </tbody>
         </table>
-        <div class="card card-body mb-3 bg-transparent">
-            <h3>Messaggi Segnalazione</h3>
+        <div class="card card-body mb-3 bg-transparent" style="border: transparent">
+            <h3 >Messaggi Segnalazione</h3>
         <div *ngFor="let m of ticket?.ticketmessages; let i = index" [class.darker]="i % 2 === 0" [class.light]="i % 2 !== 0">
-          <p class="font-weight-bold">Messaggio da: {{ m.user.surname }} {{ m.user.name }} </p>
-          <p>{{ m.text }}</p>
+          <p class="font-weight-bold" >Messaggio da: {{ m.user.surname }} {{ m.user.name }} </p>
+          <p >{{ m.text }}</p>
           <span class="time-right"> {{ m.date | date : medium  }}</span>
       </div>
         <div *ngIf="buttonVisible">
@@ -44,9 +45,9 @@
         </div>
        
       </div>
-      <div class="card card-body mb-3 bg-transparent">
-      <form *ngIf="statusVisible">
-        <h3>Aggiorna Stato</h3>
+      <div *ngIf="statusVisible" class="card card-body mb-3 bg-transparent" style="border: transparent">
+      <form >
+        <h3 >Aggiorna Stato</h3>
         <br>
           <select class="custom-select mr-sm-2" name="status" #status>
             <option value=0>Seleziona Stato</option>
@@ -70,42 +71,45 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="showTextArea()">Sì</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showTextArea()">Sì</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+</div>
 
-<div *ngIf="isTeacher" class="jumbotron">
-    <table  class="table table-bordered dt-responsive" cellspacing="0" width="100%">
+<div *ngIf="isTeacher"  class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
+    <div class="card card-body mb-3" style=" border-color:darkgray;
+    box-shadow: 10px 10px 5px #aaaaaa;  background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
+    <table  class="table table-hover dt-responsive"  cellspacing="0" width="100%">
         <thead>
-          <tr bgcolor="#cccccc">
+          <tr>
             <th scope="col">N°</th>
             <th scope="col">Data</th>
             <th scope="col">Titolo</th>
+            <th scope="col">Edificio</th>
             <th scope="col">Aula</th>
-            <th scope="col">Cognome Docente</th>
-            <th scope="col">Nome Docente</th>
+            <th scope="col">Docente</th>
             <th scope="col">Stato</th>
           </tr>
         </thead>
         <tbody>
-          <tr bgcolor="#FFFFFF">
+          <tr>
             <td> {{ ticket?.id }} </td>
             <td> {{ ticket?.date | date : shortDate  }} </td> 
-            <td> {{ ticket?.title }} </td>
+            <td><b> {{ ticket?.title }} </b></td>
+            <td> {{ ticket?.classroom.building.name }} </td>
             <td> {{ ticket?.classroom.name }} </td>
-            <td> {{ ticket?.teacher.surname }} </td> 
-            <td> {{ ticket?.teacher.name }} </td> 
+            <td> {{ ticket?.teacher.surname }} {{ ticket?.teacher.name }} </td> 
             <td><b> {{ ticket?.ticketStatus.description }} </b></td> 
             
           </tr>	
         </tbody>
       </table>
 
-      <div class="card card-body mb-3 bg-transparent">
+      <div class="card card-body mb-3 bg-transparent" style="border: transparent">
           <h3>Messaggi Segnalazione</h3>
       <div *ngFor="let m of ticket?.ticketmessages; let i = index" [class.darker]="i % 2 === 0" [class.light]="i % 2 !== 0">
         <p class="font-weight-bold">Messaggio da: {{ m.user.surname }} {{ m.user.name }} </p>

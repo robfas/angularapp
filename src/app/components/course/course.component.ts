@@ -48,6 +48,7 @@ export class CourseComponent implements OnInit {
   myterms: Term[];
   mysubject: SubjectStudy;
   mysubjects: SubjectStudy[] = [];
+  showremove: boolean;
 
   constructor(public nav: NavbarService, private router: Router, public courseService: CourseService, public academicYearService: AcademicYearService, public userService: UserService, public subjectService: SubjectService) { }
 
@@ -65,11 +66,13 @@ export class CourseComponent implements OnInit {
         });
         this.userService.getAllTeachers().subscribe(teachers =>{
           this.teachers = teachers;
+          console.log(this.teachers)
         });
         this.academicYearService.getAllYears().subscribe(academicyears =>{
           this.academicyears = academicyears;
           console.log(this.academicyears);
       });
+     
       } else {
         this.router.navigate(['/teacher']);
       }
@@ -128,6 +131,7 @@ add(s, cfu, teacher, period, mysubject) {
     alert('Inserisci numero di cfu!');
   }
   else{
+   
   console.log(s);
   const index: number = this.selectedSubjects.indexOf(s)  
   this.selectedSubjects.push(s);
@@ -162,7 +166,7 @@ remove(s, cfu, remainingcfus) {
   this.mysubjects.splice(index, 1);
   
   this.remainingcfus = this.remainingcfus + parseInt(cfu);
-  
+ 
   console.log(this.mysubjects);
   }
   else alert('Materia già rimossa');

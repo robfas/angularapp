@@ -36,7 +36,8 @@
     align-self: center; 
     border-color:darkgray;
     box-shadow: 10px 10px 5px #aaaaaa; 
-    background-image: url("http://localhost:8080/SpringApp/images/censis.jpg");
+    background: url("http://localhost:8080/SpringApp/images/teacherhome.jpg");
+    background-size: 100%;
  }
 
  .card2 {
@@ -44,11 +45,11 @@
    align-self: center; 
    border-color:darkgray;
    box-shadow: 10px 10px 5px #aaaaaa; 
-   background-image: url("http://localhost:8080/SpringApp/images/background.jpg");
+   background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );
 }
 
 .footer {
-    background: black !important;
+
     padding-bottom: 30px;
 
 }

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div class="card card-body mb-3 bg-transparent" style="padding-top: 40px; width: 90%; margin: auto; margin-top: 6%; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;">
+<div class="card card-body mb-3 bg-transparent" style="padding-top: 40px; width: 90%; margin: auto; margin-top: 6%; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;     background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
   
       <div *ngIf="detail">
         <div style="text-align: center; padding-bottom: 2%" >
@@ -11,7 +11,7 @@
           </div>
             <div class="container" style="background-color: transparent; border: none; padding-left: 0%; padding-top: 2%;">
               <h4>Studenti</h4>
-              <table *ngIf="exam?.enrollments.length > 0" class="table table-bordered">
+              <table *ngIf="exam?.enrollments.length > 0" class="table table-hover dt-responsive">
                 <thead>
                   <tr>
                     <th>Cognome</th>
@@ -110,7 +110,7 @@
     </form>
   </div>
   <div class="col-md-10">
-  <table class="table table-bordered">
+  <table class="table table-hover dt-responsive">
         <thead>
           <tr>
             <th>Corso di Laurea</th>

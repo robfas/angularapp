@@ -10,7 +10,7 @@ export interface User{
     phone?: string;
     sex?: string;
     citizenship?: string;
-    serial_number?: number;
+    ssn?: string;
     type?: string;
     token?: string;
   }

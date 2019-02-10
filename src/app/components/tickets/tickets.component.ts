@@ -24,10 +24,12 @@ import { Building } from '../models/Building';
 export class TicketsComponent implements OnInit {
   tickets: Ticket[];
   filteredtickets: Ticket[];
+  filteredteachertickets: Ticket[];
   user: User;
   tableVisible: boolean;
   tableArchivedVisible: boolean;
   teacherTable: boolean;
+  archivedTeacher: boolean;
   newTicket: boolean;
   classrooms: Class[];
   filteredclassrooms: Class[];
@@ -40,6 +42,9 @@ export class TicketsComponent implements OnInit {
   myDate: any;
   teacherbadge: number = 0;
   staffbadge: number = 0;
+  selectedClass: Class;
+  showOthers: boolean;
+  thisclassroomtickets: Ticket[];
 
   constructor(public nav: NavbarService, private router: Router, public buildingService: BuildingService, public ticketService: TicketService,public ticketMessageService: TicketMessageService, public classroomService: ClassroomService, private route: ActivatedRoute, public staffService: StaffService) { }
 
@@ -58,7 +63,7 @@ export class TicketsComponent implements OnInit {
     this.showTable();
    
     this.ticketService.getTickets().subscribe(tickets => {
-      this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 || tickets.employee.idemployee === this.user.iduser || tickets.employee.idemployee === null));
+      this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 && (tickets.employee.idemployee === this.user.iduser || tickets.employee.idemployee === null)));
       console.log(this.tickets);
       for(let i of this.tickets){
         if(i.ticketmessages.length % 2 !== 0){
@@ -73,7 +78,7 @@ export class TicketsComponent implements OnInit {
     this.nav.showNavTeacher();
     this.showTableTeacher();
     this.ticketService.getTickets().subscribe(tickets => {
-      this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
+      this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser  && tickets.ticketStatus.idstatus < 3);
       console.log(this.tickets);
       for(let i of this.tickets){
         if(i.ticketmessages.length % 2 === 0){
@@ -99,6 +104,25 @@ export class TicketsComponent implements OnInit {
     console.log(this.filteredclassrooms)
   }
 
+  onChange2(classrooms,classroom){
+    this.showOthers = false;
+    this.selectedClass = this.classrooms.filter(classrooms=>classrooms.id === parseInt(classroom))[0];
+    console.log(this.selectedClass);
+    if(this.selectedClass === undefined){
+      this.showOthers = false;
+    }
+    else this.showOthers = true;
+  }
+
+  classroomTickets(classroom){
+    this.ticketService.getTickets().subscribe(tickets=>{
+    this.thisclassroomtickets = tickets.filter(tickets=>tickets.classroom.id===parseInt(classroom))
+    console.log(this.thisclassroomtickets);
+   
+    });
+    
+  }
+
   showTable(){ this.tableVisible = true; this.tableArchivedVisible = false };
 
   showArchivedTickets() {this.tableVisible = false; this.tableArchivedVisible = true};
@@ -113,12 +137,17 @@ export class TicketsComponent implements OnInit {
    showTableTeacher(){
     this.tableArchivedVisible = false
     this.tableVisible = false;
+    this.archivedTeacher = false;
     this.teacherTable = true;
    }
 
    showArchivedTeacher(){
     this.teacherTable = false;
-   }
+    this.archivedTeacher = true;
+    this.ticketService.getTickets().subscribe(tickets => {
+    this.filteredteachertickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser && tickets.ticketStatus.idstatus > 3);
+    });
+  }
 
    openNewTicket(){
     this.teacherTable = false;
@@ -149,12 +178,18 @@ export class TicketsComponent implements OnInit {
           console.log(message);
           alert('Segnalazione inviata con successo!');
           this.ticketService.getTickets().subscribe(tickets => {
-            this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser);
+            this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser && tickets.ticketStatus.idstatus < 3);
         this.newTicket = false;
         this.teacherTable = true;
       });
         });
       });
     }
+   }
+
+
+   back(){
+    this.teacherTable = true;
+    this.newTicket = false;
    }
 }

@@ -1,9 +1,10 @@
 <div class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent">
-  <div *ngIf="showterms" class="card card-body mb-3 bg-transparent">
-      <h3>Periodi Anno Accademico {{academicyears[0].year}}/{{academicyears[0].year + 1}}</h3>
-      <table id="terms" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+  <div *ngIf="showterms" class="card card-body mb-3"  style="border-color:darkgray;
+  box-shadow: 10px 10px 5px #aaaaaa;  background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
+      <h3>Periodi Anno Accademico {{academicyears[0]?.year}}/{{academicyears[0]?.year + 1}}</h3>
+      <table id="terms" class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
         <thead>
-            <tr bgcolor="#cccccc">
+            <tr>
               
                 <th style="text-align:center">Periodo</th>
                 <th style="text-align:center">Data inizio</th>
@@ -21,10 +22,10 @@
         </tbody>
     </table>
     <br>
-    <h3>Corsi Attivi per l'Anno Accademico {{academicyears[0].year}}/{{academicyears[0].year + 1}}</h3>
-    <table id="courses" class="table table-bordered dt-responsive" cellspacing="0" width="100%">                                       
+    <h3>Corsi Attivi per l'Anno Accademico {{academicyears[0]?.year}}/{{academicyears[0]?.year + 1}}</h3>
+    <table id="courses" class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
         <thead>
-            <tr bgcolor="#cccccc">
+            <tr>
               
                 <th style="text-align:center">Nome</th>
                 <th style="text-align:center">Numero Iscritti</th>
@@ -42,11 +43,12 @@
           </tbody>
       </table>
   </div>
-  <div *ngIf="!showterms" class="card card-body mb-3 bg-transparent">
+  <div *ngIf="!showterms" class="card card-body mb-3"  style="border-color:darkgray;
+  box-shadow: 10px 10px 5px #aaaaaa;  background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
       <h3>Periodi Anno Accademico {{academicyears[0].year}}/{{academicyears[0].year + 1}}:</h3>
       <p>Non ancora definiti</p>
       <div class="col-sm-14">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#termsmodal">
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#termsmodal">
           Definisci Periodi
          </button>
       </div>

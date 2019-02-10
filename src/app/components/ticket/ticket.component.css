@@ -14,7 +14,7 @@
 /* Chat containers */
 .light {
     border: 2px solid #72727269;
-    background-color: #cfedf780;
+    background-color: #60acc59c;
     border-radius: 5px;
     padding: 10px;
     margin: 10px 0;
@@ -27,7 +27,7 @@
     float: right;
     border-radius: 5px;
     border-color: rgba(138, 138, 138, 0.473);
-    background-color: rgba(185, 238, 194, 0.712);
+    background-color: rgba(120, 184, 61, 0.712);
     padding: 10px;
     margin: 10px 0;
 }
