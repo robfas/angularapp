@@ -1,14 +1,14 @@
 
-<title>Gestisci Dipartimento</title>
+<body style="background-color: rgb(226, 231, 236)"><title>Gestisci Dipartimento</title>
 <div style="line-height:500%;"><br></div>
-<div class="card card-body mb-3 bg-transparent" style="width:70%; padding-top:0cm; margin:0px auto; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;     background-image: linear-gradient(rgba(73, 146, 73, 0.699), rgba(188, 241, 188, 0.863) );">
+<div class="card card-body mb-3 bg-transparent" style="width:70%; padding-top:0cm; margin:0px auto; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;">
 <div class="container">
     <div class="row">
     <ng-container *ngFor="let b of buildings;">
         <div class="card_main_container">
                 <div class="example-2 card_main">
                     <div class="wrapper">
-                            <img src="http://localhost:8080/SpringApp/file/download/building/{{b.id}}" alt="Edificio" height="200" width="330">
+                        <img [src]="_DomSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + b.pic)" alt="Edificio" height="200" width="330">
                         <div class="data">
                             <div class="content">
                                 <h1 class="title">{{ b.name }}</h1>
@@ -31,3 +31,4 @@
     </div>
 </div>
 </div>
+</body>

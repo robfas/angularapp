@@ -13,4 +13,5 @@ export interface User{
     ssn?: string;
     type?: string;
     token?: string;
+    propic?: string;
   }

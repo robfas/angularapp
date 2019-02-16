@@ -7,4 +7,5 @@ export interface Building {
 	lat?: number;
 	lng?: number;
 	classrooms?: Class[];
+	pic?: String;
 }

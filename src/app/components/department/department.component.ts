@@ -7,6 +7,7 @@ import { Building } from '../models/Building';
 import { Class } from '../models/Class';
 import { ClassroomDetailDialogComponent } from '../classroom-detail-dialog/classroom-detail-dialog.component';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-classroom',
@@ -20,7 +21,7 @@ export class DepartmentComponent implements OnInit {
   classroom : Class;
   nomeProdotto: String;
 
-  constructor(public nav: NavbarService, private router: Router, public buildingService: BuildingService, public classroomService: ClassroomService, private modalService: NgbModal) { }
+  constructor(public nav: NavbarService, public _DomSanitizer: DomSanitizer, private router: Router, public buildingService: BuildingService, public classroomService: ClassroomService, private modalService: NgbModal) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {

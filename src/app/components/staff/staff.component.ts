@@ -7,6 +7,7 @@ import { StaffService } from '../../services/staff.service';
 import { User } from '../models/User';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-staff',
@@ -19,26 +20,13 @@ export class StaffComponent implements OnInit {
   user: User;
   toDo: boolean;
 
-  constructor(public nav: NavbarService, private router: Router, public ticketService: TicketService, private route: ActivatedRoute, public staffService: StaffService, public userService: UserService) { }
+  constructor(public nav: NavbarService, public _DomSanitizer: DomSanitizer, private router: Router, public ticketService: TicketService, private route: ActivatedRoute, public staffService: StaffService, public userService: UserService) { }
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
       if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
-        this.user={
-          iduser: JSON.parse(localStorage.getItem('currentUser')).iduser,
-          name: JSON.parse(localStorage.getItem('currentUser')).name,
-          surname: JSON.parse(localStorage.getItem('currentUser')).surname,
-          residence: JSON.parse(localStorage.getItem('currentUser')).residence,
-          citizenship: JSON.parse(localStorage.getItem('currentUser')).citizenship,
-          phone: JSON.parse(localStorage.getItem('currentUser')).phone,
-          email: JSON.parse(localStorage.getItem('currentUser')).email,
-          dateBirth: JSON.parse(localStorage.getItem('currentUser')).dateBirth,
-          placeBirth: JSON.parse(localStorage.getItem('currentUser')).placeBirth,
-          ssn: JSON.parse(localStorage.getItem('currentUser')).ssn,
-          domicile: JSON.parse(localStorage.getItem('currentUser')).domicile,
-          type: JSON.parse(localStorage.getItem('currentUser')).type,
-          sex: JSON.parse(localStorage.getItem('currentUser')).sex 
-        }
+        this.user=JSON.parse(localStorage.getItem('currentUser'))
+        console.log(this.user)
         this.nav.showNavStaff();
         this.ticketService.getTickets().subscribe(tickets => {
           this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 && ( tickets.employee.idemployee === null ||  tickets.employee.idemployee === this.user.iduser) && (tickets.ticketmessages.length)%2 !== 0));

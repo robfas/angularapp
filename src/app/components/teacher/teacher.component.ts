@@ -7,6 +7,7 @@ import { Lesson } from '../models/Lesson';
 import { getTime } from 'date-fns';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../services/user.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-teacher',
@@ -16,7 +17,7 @@ import { UserService } from '../../services/user.service';
 export class TeacherComponent implements OnInit {
 
   
-  constructor(public nav: NavbarService, private router: Router, public lessonService: LessonService, public userService: UserService) { }
+  constructor(public nav: NavbarService, private router: Router, public _DomSanitizer: DomSanitizer, public lessonService: LessonService, public userService: UserService) { }
   user: User;
   lessons: Lesson[];
   showLessons: boolean;
@@ -26,21 +27,7 @@ export class TeacherComponent implements OnInit {
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
       if(JSON.parse(localStorage.getItem('currentUser')).type == 'teacher') {
-        this.user={
-          iduser: JSON.parse(localStorage.getItem('currentUser')).iduser,
-          name: JSON.parse(localStorage.getItem('currentUser')).name,
-          surname: JSON.parse(localStorage.getItem('currentUser')).surname,
-          residence: JSON.parse(localStorage.getItem('currentUser')).residence,
-          citizenship: JSON.parse(localStorage.getItem('currentUser')).citizenship,
-          phone: JSON.parse(localStorage.getItem('currentUser')).phone,
-          email: JSON.parse(localStorage.getItem('currentUser')).email,
-          dateBirth: JSON.parse(localStorage.getItem('currentUser')).dateBirth,
-          placeBirth: JSON.parse(localStorage.getItem('currentUser')).placeBirth,
-          ssn: JSON.parse(localStorage.getItem('currentUser')).ssn,
-          domicile: JSON.parse(localStorage.getItem('currentUser')).domicile,
-          type: JSON.parse(localStorage.getItem('currentUser')).type,
-          sex: JSON.parse(localStorage.getItem('currentUser')).sex 
-        }
+        this.user= JSON.parse(localStorage.getItem('currentUser'))
         this.nav.showNavTeacher();
         console.log(this.user)
         this.start =  this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
