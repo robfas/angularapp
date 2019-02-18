@@ -131,31 +131,48 @@ add(s, cfu, teacher, period, mysubject) {
     alert('Inserisci numero di cfu!');
   }
   else{
-   
-  console.log(s);
-  const index: number = this.selectedSubjects.indexOf(s)  
-  this.selectedSubjects.push(s);
 
-  this.myteachers = this.teachers.filter(teachers=>teachers.idteacher == parseInt(teacher))
-  console.log(this.myteachers);
-  this.myterms= this.terms.filter(terms=>terms.idterm === parseInt(period))
-  console.log(this.myterms);
-  
-  this.mysubject={
-    name: this.selectedSubjects[0].name,
-    teacherDTO: this.myteachers[0],
-    typeSubjectDTO: this.selectedSubjects[0],
-    cfu: cfu,
-    description: this.selectedSubjects[0].description,
-    term: this.myterms[0]
-    }
-  this.mysubjects.push(this.mysubject);
-  this.mysubject = {}; 
-  this.selectedSubjects = [];
-  this.remainingcfus = this.remainingcfus - cfu;
-  
-  console.log(this.mysubjects);
+  console.log(s);
+  let index = this.mysubjects.findIndex(item => item.typeSubjectDTO.idtypeSubject == s.idtypeSubject);
+  if(index == -1) {
+    this.selectedSubjects.push(s);
+
+    this.myteachers = this.teachers.filter(teachers=>teachers.idteacher == parseInt(teacher))
+    console.log(this.myteachers);
+    this.myterms= this.terms.filter(terms=>terms.idterm === parseInt(period))
+    console.log(this.myterms);
+    
+    this.mysubject={
+      name: this.selectedSubjects[0].name,
+      teacherDTO: this.myteachers[0],
+      typeSubjectDTO: this.selectedSubjects[0],
+      cfu: cfu,
+      description: this.selectedSubjects[0].description,
+      term: this.myterms[0]
+      }
+    this.mysubjects.push(this.mysubject);
+    this.mysubject = {}; 
+    this.selectedSubjects = [];
+    this.remainingcfus = this.remainingcfus - cfu;
+    
+    console.log(this.mysubjects);
+  } else {
+    alert('Materia già aggiunta')
   }
+  
+  }
+}
+
+check(s) {
+  let index = this.mysubjects.findIndex(item => item.typeSubjectDTO.idtypeSubject == s.idtypeSubject);
+  if(index == -1) {
+    console.log('-1')
+    return false
+  } else {
+    console.log('1')
+    return true
+  }
+
 }
 
 remove(s, cfu, remainingcfus) {

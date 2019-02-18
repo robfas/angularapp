@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class TicketStatusService {
-  getAllUrl: string = 'http://localhost:8080/SpringApp/ticketStatus/getAll';
+  getAllUrl: string = 'http://localhost:8080/SpringApp/ticket/getAllTicketStatus';
   
 
   constructor(private http: HttpClient) { }
