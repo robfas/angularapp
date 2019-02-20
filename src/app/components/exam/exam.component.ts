@@ -104,7 +104,6 @@ export class ExamComponent implements OnInit {
   }
 
   onChangeGrade(value, student) {
-    console.log(value)
     const index: number = this.enrollmentsResult.findIndex(x => x.student==student);
     
     if(value == 'Ritirato') {
@@ -132,7 +131,6 @@ export class ExamComponent implements OnInit {
       this.enrollmentsResult[index].grade = value;
       this.enrollmentsResult[index].result.description='Superato';
     }
-    console.log(this.enrollmentsResult)
   }
 
   showDetail(exam) {

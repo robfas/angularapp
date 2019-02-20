@@ -64,11 +64,9 @@ export class TicketsComponent implements OnInit {
    
     this.ticketService.getTickets().subscribe(tickets => {
       this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 && (tickets.employee.idemployee === this.user.iduser || tickets.employee.idemployee === null)));
-      console.log(this.tickets);
       for(let i of this.tickets){
         if(i.ticketmessages.length % 2 !== 0){
           this.staffbadge +=1;
-          console.log(this.staffbadge);
         }         
       }
     });
@@ -79,11 +77,9 @@ export class TicketsComponent implements OnInit {
     this.showTableTeacher();
     this.ticketService.getTickets().subscribe(tickets => {
       this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser  && tickets.ticketStatus.idstatus < 3);
-      console.log(this.tickets);
       for(let i of this.tickets){
         if(i.ticketmessages.length % 2 === 0){
           this.teacherbadge+=1;
-          console.log(this.teacherbadge);
         }         
       }
     });
@@ -101,13 +97,13 @@ export class TicketsComponent implements OnInit {
 
   onChange(classrooms,building){
     this.filteredclassrooms = this.classrooms.filter(classrooms=>classrooms.building.id === parseInt(building));
-    console.log(this.filteredclassrooms)
+
   }
 
   onChange2(classrooms,classroom){
     this.showOthers = false;
     this.selectedClass = this.classrooms.filter(classrooms=>classrooms.id === parseInt(classroom))[0];
-    console.log(this.selectedClass);
+
     if(this.selectedClass === undefined){
       this.showOthers = false;
     }
@@ -117,8 +113,7 @@ export class TicketsComponent implements OnInit {
   classroomTickets(classroom){
     this.ticketService.getTickets().subscribe(tickets=>{
     this.thisclassroomtickets = tickets.filter(tickets=>tickets.classroom.id===parseInt(classroom))
-    console.log(this.thisclassroomtickets);
-   
+
     });
     
   }
@@ -170,12 +165,10 @@ export class TicketsComponent implements OnInit {
         idstatus: 1,
       }
       this.myDate = formatDate(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS", 'en');
-      console.log(this.teacher, this.myDate,this.class);
       this.ticketService.saveTicket({title: title, teacher: this.teacher, ticketStatus: this.ticketStatus, date: this.myDate, classroom: this.class[0]}as Ticket).subscribe(ticket=>{
         this.ticket = ticket;
-        console.log(ticket);
         this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(message => {
-          console.log(message);
+
           alert('Segnalazione inviata con successo!');
           this.ticketService.getTickets().subscribe(tickets => {
             this.tickets = tickets.filter(tickets=>tickets.teacher.idteacher === this.user.iduser && tickets.ticketStatus.idstatus < 3);

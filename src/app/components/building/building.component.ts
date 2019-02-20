@@ -102,8 +102,6 @@ setEditable() {
 }
 
 markerDragEnd($event) {
-  console.log($event.coords.lat);
-  console.log($event.coords.lng);
   this.building.lat = $event.coords.lat;
   this.building.lng = $event.coords.lng;
 }
@@ -125,11 +123,9 @@ save(name, address) {
       lng:this.building.lng,
       classrooms:this.building.classrooms}
     this.buildingService.saveBuilding(this.building).subscribe(building=>{
-      console.log(building)
       this.building = building
       if(this.selectedFile !=  undefined) {
       this.buildingService.saveImage(this.selectedFile, this.building.id).subscribe((result) => {
-        console.log(result)
       });
     }
       });

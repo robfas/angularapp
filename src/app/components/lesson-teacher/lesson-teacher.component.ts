@@ -108,7 +108,6 @@ export class LessonTeacherComponent implements OnInit {
 
   showDetail(lesson) {
     this.lesson = lesson;
-    console.log(this.lesson)
     this.lessonService.getLessonFiles(lesson.idlesson).subscribe(files => {
       this.lesson.lessonFiles = files;
     });

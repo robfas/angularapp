@@ -22,7 +22,6 @@ export class CoursesComponent implements OnInit {
       this.nav.showNavStaff();
       this.courseService.getAll().subscribe(courses=>{
       this.firstlevel = courses.filter(courses=>courses.typeDegreeCourse.courseType.idcourseType === id)
-      console.log(id, this.firstlevel[0].typeDegreeCourse.courseType.idcourseType);
     });
       } else {
         this.router.navigate(['/teacher']);

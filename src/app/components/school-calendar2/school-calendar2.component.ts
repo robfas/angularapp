@@ -116,7 +116,6 @@ export class SchoolCalendar2Component implements OnInit {
         });
       }
       this.refresh.next();
-      console.log(this.mySubjects)
     });
     this.buildingService.getBuildings().subscribe(buildings => {
       this.buildings = buildings;
@@ -218,15 +217,9 @@ export class SchoolCalendar2Component implements OnInit {
         this.refresh.next();
       });
     }
-    /*console.log(event.id)
-    console.log(datePipe.transform(event.start, 'd'))
-    console.log(datePipe.transform(event.start, 'HH:mm'))
-    console.log(datePipe.transform(event.end, 'd'))
-    console.log(datePipe.transform(event.end, 'HH:mm'))*/
   }
 
   addEvent2(s): void {
-    console.log(s.color)
     const datePipe = new DatePipe('en-US');
     this.events.push({
       title: s.name,
@@ -282,11 +275,6 @@ export class SchoolCalendar2Component implements OnInit {
         this.refresh.next();
       });
       
-      /*console.log(event.id)
-    console.log(datePipe.transform(event.start, 'd'))
-    console.log(datePipe.transform(event.start, 'HH:mm'))
-    console.log(datePipe.transform(event.end, 'd'))
-    console.log(datePipe.transform(event.end, 'HH:mm'))*/
     } else {
       this.selectedClassroom = null
       this.classes = null
@@ -296,7 +284,6 @@ export class SchoolCalendar2Component implements OnInit {
     if(this.selectedClassroom != null) {
         event.room = this.selectedClassroom;
         event.title = event.subject.name + " - " + this.selectedClassroom.building.name + ", " + this.selectedClassroom.name,
-        console.log(this.events)
         this.selectedClassroom = null
 
         this.modal.dismissAll('success')
@@ -304,7 +291,6 @@ export class SchoolCalendar2Component implements OnInit {
         this.refresh.next();
     } else {
       this.valid = false;
-      console.log('error')
     }
     
   }

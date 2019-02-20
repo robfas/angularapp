@@ -263,7 +263,6 @@ showScheduler(){
                   typeLesson: l.typeLesson
                 })
           }
-          console.log(this.events)
           } else {
             this.viewDate = this.selectedTerm.start;
           }
@@ -453,7 +452,6 @@ showScheduler(){
     if(this.selectedClassroom != undefined && this.selectedTime != undefined && this.selectedTimeEnd != undefined) {
       if(new Date(this.datePipe.transform(event.start, 'yyyy/MM/dd') + ' ' + this.selectedTime) >= new Date(this.datePipe.transform(event.end, 'yyyy/MM/dd') + ' ' + this.selectedTimeEnd)) {
         this.timeErr=false;
-        console.log("errtime")
       } else {
         this.timeErr=true;
         let item = this.mySubjects.find(i => i.id == this.selectedSubject.id);
@@ -502,11 +500,9 @@ showScheduler(){
         this.modal.dismissAll('success')
         this.valid = true;
         this.refresh.next();
-        console.log(this.events)
         }
     } else {
       this.valid = false;
-      console.log('error')
     }
     
   }
@@ -542,9 +538,7 @@ showScheduler(){
     } else {
       if(this.error == false) {
 
-        console.log(this.editedLessons)
       this.lessonService.editLessons(this.editedLessons).subscribe(result => {
-        console.log(result)
         this.schedule = false;
           this.mySubjects = [];
           this.events = [];

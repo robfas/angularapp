@@ -26,7 +26,6 @@ export class StaffComponent implements OnInit {
     if(localStorage.getItem('currentUser')) {
       if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
         this.user=JSON.parse(localStorage.getItem('currentUser'))
-        console.log(this.user)
         this.nav.showNavStaff();
         this.ticketService.getTickets().subscribe(tickets => {
           this.tickets = tickets.filter(tickets=>(tickets.ticketStatus.idstatus < 3 && ( tickets.employee.idemployee === null ||  tickets.employee.idemployee === this.user.iduser) && (tickets.ticketmessages.length)%2 !== 0));
@@ -47,9 +46,11 @@ export class StaffComponent implements OnInit {
   }
 
   save(residence,domicile,phone){
-    console.log(residence,domicile,phone)
+    
     this.userService.saveUser({iduser: this.user.iduser, name: this.user.name, surname: this.user.surname, email: this.user.email, phone: phone, residence: residence, domicile: domicile, citizenship: this.user.citizenship, placeBirth: this.user.placeBirth, sex: this.user.sex, ssn: this.user.ssn, dateBirth: this.user.dateBirth, type: this.user.type} as User).subscribe(user => {
-      console.log(user);
+      this.user.residence = residence
+      this.user.domicile = domicile
+      this.user.phone = phone
     });
   }
 }

@@ -53,15 +53,12 @@ export class TicketComponent implements OnInit {
       this.ticketService.getTicketById(id).subscribe(ticket => {
         this.ticket = ticket;
         if(this.ticket.employee.idemployee === null || this.ticket.employee.idemployee === undefined ){
-          console.log(ticket.employee);
           this.showButton();
-          console.log(this.buttonVisible);
       }
         else this.showTextArea();
       });
       this.ticketStatusService.getTicketStatus().subscribe(stati => {
         this.stati = stati;
-        console.log(stati);
       });
     }
     
@@ -87,8 +84,6 @@ export class TicketComponent implements OnInit {
       if (!idstatus || (idstatus==undefined) ){
         alert('Insert post!');
       }else{
-        console.log(this.ticket);
-        console.log(idstatus);
         this.state.idstatus = parseInt(idstatus);
         this.ticketService.saveTicket({id: this.ticket.id, title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.state, date: this.ticket.date, ticketmessages:this.ticket.ticketmessages} as Ticket).subscribe(ticket => {
           window.location.reload();
@@ -111,11 +106,9 @@ export class TicketComponent implements OnInit {
     this.ticket.employee.idemployee = this.user.iduser;
     this.ticket.employee.name = this.user.name;
     this.ticket.employee.surname = this.user.surname;
-      console.log(this.ticket.employee)
     
     this.ticketService.saveTicket({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, ticketmessages: this.ticket.ticketmessages, date: this.ticket.date} as Ticket).subscribe(ticket => {
-      console.log(ticket);
-      console.log(this.ticket.ticketmessages);
+
     });
     
   }
@@ -127,7 +120,6 @@ export class TicketComponent implements OnInit {
     }
     else{      
       this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(message => {
-        console.log(message);
       });
       window.location.reload();
     }

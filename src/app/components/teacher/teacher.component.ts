@@ -29,12 +29,10 @@ export class TeacherComponent implements OnInit {
       if(JSON.parse(localStorage.getItem('currentUser')).type == 'teacher') {
         this.user= JSON.parse(localStorage.getItem('currentUser'))
         this.nav.showNavTeacher();
-        console.log(this.user)
         this.start =  this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
         this.lessonService.getAllTeacherLessons(this.user.iduser).subscribe(lessons=>{
           this.lessons = lessons.filter(lessons=>this.datePipe.transform(lessons.start, 'dd/MM/yyyy')===this.start)
          
-          console.log(this.lessons);
           if(this.lessons.length>0){
             this.showLessons = true;
           }
@@ -50,9 +48,7 @@ export class TeacherComponent implements OnInit {
 
 
   save(residence,domicile,phone){
-    console.log(residence,domicile,phone)
     this.userService.saveUser({iduser: this.user.iduser, name: this.user.name, surname: this.user.surname, email: this.user.email, phone: phone, residence: residence, domicile: domicile, citizenship: this.user.citizenship, placeBirth: this.user.placeBirth, sex: this.user.sex, ssn: this.user.ssn, dateBirth: this.user.dateBirth, type: this.user.type} as User).subscribe(user => {
-      console.log(user);
     });
   }
 

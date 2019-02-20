@@ -261,7 +261,6 @@ showScheduler(){
                   present: true
                 })
           }
-          console.log(this.events)
           } else {
             this.viewDate = this.selectedTerm.start;
           }
@@ -569,10 +568,8 @@ showScheduler(){
         this.modal.dismissAll('success')
         this.valid = true;
         this.refresh.next();
-        console.log(this.events)
     } else {
       this.valid = false;
-      console.log('error')
     }
 
     
@@ -629,7 +626,6 @@ showScheduler(){
           
       }
 
-      console.log(this.selectedExams)
         this.examService.saveAll(this.selectedExams).subscribe(result => {
           this.schedule = false;
           this.mySubjects = [];

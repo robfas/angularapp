@@ -44,7 +44,6 @@ export class ClassroomDetailDialogComponent implements OnInit {
 
   ngOnInit() {
     if (this.classroom.id == undefined) {
-      console.log("Eeeeundefined");
       this.new = true;
       this.edit=true;
       try {
@@ -69,7 +68,7 @@ export class ClassroomDetailDialogComponent implements OnInit {
       });
         //this.originalTool = this.classroom.tool.map(x => Object.assign({}, x)); //deep copy
       } catch (error) {
-        console.log
+        
       }
     } else {
       this.originalTool = this.classroom.tool.map(x => Object.assign({}, x)); //deep copy
@@ -93,7 +92,6 @@ export class ClassroomDetailDialogComponent implements OnInit {
       }
       
     });
-    console.log(this.tool)
   }
     //create search FormControl
     this.searchControl = new FormControl();
@@ -189,12 +187,9 @@ export class ClassroomDetailDialogComponent implements OnInit {
         instru.quantity = quantity;
         this.selectedTool.push(instru);
       }    
-    console.log(this.selectedTool);
   }
 
   markerDragEnd($event) {
-    console.log($event.coords.lat);
-    console.log($event.coords.lng);
     this.classroom.lat = $event.coords.lat;
     this.classroom.lng = $event.coords.lng;
   }

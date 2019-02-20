@@ -43,7 +43,7 @@ export class TermComponent implements OnInit {
         this.showterms = true;
         this.courseService.getAll().subscribe(courses =>{
           this.coursesofthisyear = courses.filter(courses=>courses.academicYear.idacademicYear === id)
-          console.log(this.coursesofthisyear)
+
         });
       }
     });
@@ -70,10 +70,8 @@ export class TermComponent implements OnInit {
   
   updatestart(startdate, enddate, academicyears){
     let item = this.newterms.find(i => i.end === enddate);
-    console.log(item)
     if(item){
       item.start = startdate
-      console.log(item);
     }
     else{
     this.newterm = {
@@ -83,23 +81,19 @@ export class TermComponent implements OnInit {
     }
     this.newterms.push(this.newterm);
    }
-    console.log(this.newterms);
   }
 
   updateend(startdate, enddate){
     let item = this.newterms.find(i => i.start === startdate);
-    console.log(item)
     const index: number = this.newterms.indexOf(item)
     item.end = enddate
   
-    console.log(item, this.newterms);
 
   }
 
   save(){
     this.academicYearService.saveAllTerm(this.newterms).subscribe(terms => {
       this.terms = terms;
-      console.log(terms)
       this.showterms = true;
     })
   }

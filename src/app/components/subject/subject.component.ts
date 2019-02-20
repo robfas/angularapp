@@ -40,12 +40,9 @@ export class SubjectComponent implements OnInit {
   }
 
   saveSubject(idtypeSubject, subjdescr, subjcfu, idteacher){
-    console.log(idteacher, idtypeSubject);
     this.typeSubjects = this.typeSubjects.filter(typeSubjects=>typeSubjects.idtypeSubject === parseInt(idtypeSubject));
-    console.log(this.typeSubjects);
     this.teachers = this.teachers.filter(teachers=>teachers.idteacher === parseInt(idteacher));
     this.subjectofstudyService.saveSubject({name: this.typeSubjects[0].name, description: subjdescr, teacherDTO: this.teachers[0], cfu: subjcfu, typeSubjectDTO: this.typeSubjects[0]} as SubjectStudy).subscribe(subject => {
-      console.log(subject);
     });
   }
 }

@@ -32,8 +32,8 @@ export class SubjectTypeComponent implements OnInit {
     }
     else{
     this.subjectofstudyService.saveTypeSubject({name: name, description: description} as TypeSubject).subscribe(typesubject => {
-      console.log(typesubject);
       alert("Tipo di insegnamento inserito con successo!");
+      this.router.navigate(['/staff']);
     })
   }
   }

@@ -228,7 +228,6 @@ showScheduler(){
 
           for (let l of typeLessons) {
             let item = this.mySubjects.find(i => i.id == l.subject.id);
-            console.log(item.id + " " + l.subject.id)
                 this.events.push({
                   start: new Date('2017-05-0' + l.day.idDay + 'T' + l.start),
                   end: new Date('2017-05-0' + l.day.idDay + 'T' + l.end),
@@ -362,12 +361,6 @@ showScheduler(){
       });
     }
     }
-    
-    /*console.log(event.id)
-    console.log(datePipe.transform(event.start, 'd'))
-    console.log(datePipe.transform(event.start, 'HH:mm'))
-    console.log(datePipe.transform(event.end, 'd'))
-    console.log(datePipe.transform(event.end, 'HH:mm'))*/
   }
 
   addEvent2(s): void {
@@ -387,7 +380,6 @@ showScheduler(){
       room: null,
       subject: s
     });
-    console.log(new Date(2017, 4, 1, 8, 0))
     this.refresh.next();
   }
 
@@ -416,17 +408,11 @@ showScheduler(){
       });*/
      const d: Day = {idDay: Number(this.datePipe.transform(event.start, 'd'))};
 
-      console.log(event);
       this.classroomService.getAvailableClassrooms(this.buildings[index].id, {idtypeLesson: event.id, start: event.start, end: event.end, day: d, scheduler: this.scheduler} as TypeLesson).subscribe(classes => {
         this.classes = classes;
         this.refresh.next();
       });
       
-      /*console.log(event.id)
-    console.log(datePipe.transform(event.start, 'd'))
-    console.log(datePipe.transform(event.start, 'HH:mm'))
-    console.log(datePipe.transform(event.end, 'd'))
-    console.log(datePipe.transform(event.end, 'HH:mm'))*/
     } else {
       this.selectedClassroom = null
       this.classes = null
@@ -436,7 +422,6 @@ showScheduler(){
     if(this.selectedClassroom != null) {
         event.room = this.selectedClassroom;
         event.title = event.subject.name + " " + this.selectedClassroom.building.name + ", " + this.selectedClassroom.name,
-        console.log(this.events)
         this.selectedClassroom = null
 
         this.modal.dismissAll('success')
@@ -444,7 +429,6 @@ showScheduler(){
         this.refresh.next();
     } else {
       this.valid = false;
-      console.log('error')
     }
     
   }
@@ -497,11 +481,8 @@ showScheduler(){
               classroom: e.room
             } as TypeLesson);
         
-        console.log(e.id)
       }
         this.scheduler.typeLessons = this.selectedTypeLessons;
-        console.log("SCHEDULER")
-        console.log(this.scheduler)
         this.calendarService.save(this.scheduler).subscribe(scheduler => {
           this.schedule = false;
           this.mySubjects = [];

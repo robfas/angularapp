@@ -25,7 +25,6 @@ export class AcademicYearComponent implements OnInit {
         this.nav.showNavStaff();
         this.academicYearService.getAllYears().subscribe(academicyears =>{
         this.academicyears = academicyears;
-        console.log(this.academicyears);
         if(this.academicyears.length === 0){
           this.tableVisible = false;
         }
@@ -46,7 +45,6 @@ onchange(year){
 saveYear(year){
   this.academicYearService.saveAcademicYear({year: parseInt(year)} as AcademicYear).subscribe(academicYear => {
     this.academicyears.push(academicYear);
-    console.log(academicYear);
     this.tableVisible = true;
   });
 }

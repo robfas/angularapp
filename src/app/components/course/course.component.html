@@ -32,7 +32,7 @@
       
         <div class="form-group row">
           <div class="col-sm-12">
-            <button type="button" class="btn btn-success float-right" (click)="showSubjectList(idcourseType.value, idtypeDegreeCourse.value, academicyear.value)">Avanti</button>
+            <button *ngIf="!showSubjects" type="button" class="btn btn-success float-right" (click)="showSubjectList(idcourseType.value, idtypeDegreeCourse.value, academicyear.value)">Avanti</button>
           </div>
         </div>
     
@@ -74,6 +74,7 @@
                   <div class="col-sm-1.5">
                     <button  type="button" class="btn btn-outline-success my-2 my-sm-0" (click)="add(s, cfu.value, teacher.value, term.value)"><b>Aggiungi</b></button>
                   </div>
+                  &nbsp;
                     <div class="col-sm-1.5">
                     <button *ngIf="check(s)" type="button" class="btn btn-outline-danger my-2 my-sm-0 float-right" (click)="remove(s, cfu.value)" ><b>Rimuovi</b></button>
                   </div>

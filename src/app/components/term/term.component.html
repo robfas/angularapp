@@ -17,8 +17,8 @@
           <tr *ngFor="let t of terms; let i = index" > 
            
             <td style="text-align:center"> {{ i+1 }} </td>
-            <td style="text-align:center"> {{ t.start |  date : shortDate  }} </td>
-            <td style="text-align:center"> {{ t.end | date : shortDate }} </td>
+            <td style="text-align:center"> {{ t.start |  date: 'dd/MM/yyyy'  }} </td>
+            <td style="text-align:center"> {{ t.end | date: 'dd/MM/yyyy' }} </td>
           </tr>
         </tbody>
     </table>

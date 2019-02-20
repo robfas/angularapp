@@ -23,7 +23,6 @@ export class CourseTypeComponent implements OnInit {
         this.nav.showNavStaff();
         this.courseService.getAllCourseTypes().subscribe(courseTypes =>{
           this.courseTypes = courseTypes; 
-          console.log(this.courseTypes);
         });
       } else {
         this.router.navigate(['/teacher']);
@@ -41,13 +40,13 @@ export class CourseTypeComponent implements OnInit {
     }
     else{
     this.selectedCourseTypes = this.courseTypes.filter(courseTypes=>courseTypes.idcourseType === parseInt(courseType));
-    console.log(this.selectedCourseTypes);
       if(this.selectedCourseTypes.length===0){
         alert("Scegli un tipo di corso!")
       }
       else{
       this.courseService.saveType({name: name, courseType: this.selectedCourseTypes[0]} as TypeDegreeCourse).subscribe(type => {
         alert('Tipo di Corso salvato con successo!');
+        this.router.navigate(['/staff']);
       })
   }
   }
