@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<body style="background-color: rgb(226, 231, 236)"></body>
+
 <div>
   <ng-template #modalContent let-close="close">
     <div class="modal-header">
@@ -67,9 +67,9 @@
   </ng-template>
   </div>
 
-<div class="card card-body mb-3" style="padding-top: 40px; width: 90%; margin: auto; margin-top: 6%; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;     ">
-  
-      <div *ngIf="detail">
+  <div style="background-color: rgb(226, 231, 236)">
+<div class="card card-body mb-3 bg-transparent" style="padding-top: 70px; border: transparent;">
+      <div *ngIf="detail" class="card card-body mb-3" style="border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;">
         <div style="text-align: center; padding-bottom: 2%" >
           <h2>{{lesson.typeLesson.subject.degreecourseDTO.typeDegreeCourse.name}}</h2>
             <h3>Lezione di {{lesson.typeLesson.subject.name}} del {{lesson.start | date:'dd-MM-yyyy' }}</h3>
@@ -123,7 +123,7 @@
             </div>
           </div>
       </div>
-  <div *ngIf="!detail">
+  <div *ngIf="!detail" class="card card-body mb-3" style="border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;">
       
         <h3>Le tue Lezioni</h3>
         <div style="line-height: 100%"><br></div>
@@ -209,4 +209,5 @@
       </div>
       </div>
     </div>
+</div>
 </div>

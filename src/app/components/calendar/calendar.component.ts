@@ -256,6 +256,7 @@ showScheduler(){
           degreeCourse: this.selectedCourse,
           term: this.selectedTerm
         }
+        console.log(this.scheduler)
       })
 
     this.buildingService.getBuildings().subscribe(buildings => {
@@ -264,6 +265,7 @@ showScheduler(){
     });
     this.schedule = true;
   }
+  
   }
 
   getRandomColor() {
@@ -344,13 +346,16 @@ showScheduler(){
     newStart,
     newEnd
   }: CalendarEventTimesChangedEvent): void {
+    if(this.scheduler.idScheduler == null) {
     event.start = newStart;
     event.end = newEnd;
+    }
     //this.handleEvent('Dropped or resized', event);
     this.refresh.next();
   }
 
   handleEvent(action: string, event: any): void {
+    if(this.scheduler.idScheduler == null) {
     if(action != 'Deleted') {
       this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
@@ -361,6 +366,7 @@ showScheduler(){
       });
     }
     }
+  }
   }
 
   addEvent2(s): void {

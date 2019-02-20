@@ -126,6 +126,10 @@ export class ExamComponent implements OnInit {
       this.enrollmentsResult[index].result.idresult=undefined
       this.enrollmentsResult[index].grade=undefined
       this.enrollmentsResult[index].result.description=undefined;
+    } else if(value == 'Voto') {
+      this.enrollmentsResult[index].result.idresult=1
+      this.enrollmentsResult[index].grade=undefined
+      this.enrollmentsResult[index].result.description='Iscritto';
     } else  {
       this.enrollmentsResult[index].result.idresult=2
       this.enrollmentsResult[index].grade = value;
