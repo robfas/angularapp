@@ -53,6 +53,7 @@ export class LessonTeacherComponent implements OnInit {
           }        
           if(l.start<=now) {
             this.currentLessons.push(l);
+            console.log(this.currentLessons)
           }
         }
       })

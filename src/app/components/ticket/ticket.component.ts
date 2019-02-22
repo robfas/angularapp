@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavbarService } from '../../services/navbar.service';
 import { TicketService } from '../../services/ticket.service';
 import { TicketStatusService } from '../../services/ticketStatus.service';
-import { Location } from '@angular/common';
+import { Location, DatePipe, formatDate } from '@angular/common';
 import { TicketStatus } from '../models/TicketStatus';
 import { Teacher } from '../models/Teacher';
 import { Class } from '../models/Class';
@@ -35,6 +35,7 @@ export class TicketComponent implements OnInit {
   statusVisible: boolean;
   isTeacher: boolean;
   answerVisible: boolean;
+  newDate: any;
 
   constructor(public nav: NavbarService, private router: Router, public ticketMessageService: TicketMessageService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) {this.buttonVisible, this.textareaVisible, this.isTeacher, this.statusVisible}
 
@@ -118,8 +119,10 @@ export class TicketComponent implements OnInit {
     if(textmessage === undefined || !textmessage){
       alert('Inserisci messaggio!');
     }
-    else{      
-      this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(message => {
+    else{
+      this.newDate = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", 'en'); 
+      
+      this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.newDate} as TicketMessage).subscribe(message => {
       });
       window.location.reload();
     }

@@ -164,8 +164,8 @@ export class TicketsComponent implements OnInit {
       this.ticketStatus ={
         idstatus: 1,
       }
-      this.myDate = formatDate(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS", 'en');
-      this.ticketService.saveTicket({title: title, teacher: this.teacher, ticketStatus: this.ticketStatus, date: this.myDate, classroom: this.class[0]}as Ticket).subscribe(ticket=>{
+      //this.myDate = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", 'en');
+      this.ticketService.saveTicket({title: title, teacher: this.teacher, ticketStatus: this.ticketStatus,  classroom: this.class[0]}as Ticket).subscribe(ticket=>{
         this.ticket = ticket;
         this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(message => {
 

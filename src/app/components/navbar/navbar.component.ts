@@ -41,10 +41,12 @@ export class NavbarComponent implements OnInit {
   
       if(this.user.type === 'employee'){
         this.ticketService.getTickets().subscribe(tickets =>{
-          this.tickets = tickets;
+          this.tickets = tickets.filter(tickets=>tickets.employee.idemployee === null || tickets.employee.idemployee===this.user.iduser);
           for(let i of this.tickets){
-            if(i.ticketmessages.length % 2 !== 0 && i.ticketStatus.idstatus !== 4){
+            console.log(i)
+            if(i.ticketmessages.length % 2 !== 0 && i.ticketStatus.idstatus < 3){
               this.staffbadge +=1;
+              console.log(i.ticketStatus.idstatus)
             }         
           }
         });
@@ -105,8 +107,9 @@ export class NavbarComponent implements OnInit {
                       iduser: data.iduser
                     }
                     this.ticketService.getTickets().subscribe(tickets =>{
-                      this.tickets = tickets;
+                      this.tickets =  tickets.filter(tickets=>tickets.employee.idemployee === null || tickets.employee.idemployee===this.user.iduser);
                       for(let i of this.tickets){
+                        console.log(i)
                         if(i.ticketmessages.length % 2 !== 0 && i.ticketStatus.idstatus < 3){
                           this.staffbadge +=1;
                         }         
