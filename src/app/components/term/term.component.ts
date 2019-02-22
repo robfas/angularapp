@@ -21,7 +21,7 @@ export class TermComponent implements OnInit {
   academicyears: AcademicYear[] = [];
   showterms: boolean;
   numbers : number[] = [] ;
-  coursesofthisyear: DegreeCourse[];
+  coursesofthisyear: DegreeCourse[] = [];
   
   constructor(public nav: NavbarService, private router: Router, public academicYearService: AcademicYearService, public courseService: CourseService, private route: ActivatedRoute) { }
 
@@ -92,6 +92,7 @@ export class TermComponent implements OnInit {
   }
 
   save(){
+    console.log(this.newterms)
     this.academicYearService.saveAllTerm(this.newterms).subscribe(terms => {
       this.terms = terms;
       this.showterms = true;

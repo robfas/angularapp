@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Building } from '../components/models/Building';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -9,12 +10,12 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class BuildingService {
-  getAllUrl: string = 'http://localhost:8080/SpringApp/building/getAll';
-  getByIdUrl: string = 'http://localhost:8080/SpringApp/building/getById';
-  buildingSaveUrl: string = 'http://localhost:8080/SpringApp/building/save';
-  imageUrl: string = 'http://localhost:8080/SpringApp/file/upload/building';
+  getAllUrl: string = 'http://' + this.global.address + ':80/SpringApp/building/getAll';
+  getByIdUrl: string = 'http://' + this.global.address + ':80/SpringApp/building/getById';
+  buildingSaveUrl: string = 'http://' + this.global.address + ':80/SpringApp/building/save';
+  imageUrl: string = 'http://' + this.global.address + ':80/SpringApp/file/upload/building';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
   getBuildings(): Observable<Building[]>{
     return this.http.get<Building[]>(this.getAllUrl);

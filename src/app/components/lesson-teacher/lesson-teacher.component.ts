@@ -44,6 +44,7 @@ export class LessonTeacherComponent implements OnInit {
       if(JSON.parse(localStorage.getItem('currentUser')).type == 'teacher') {
         this.nav.showNavTeacher();
       this.lessonService.getAllTeacherLessons(JSON.parse(localStorage.getItem('currentUser')).iduser).subscribe(lessons => {
+        console.log(lessons)
         this.originalLessons = lessons
         let now = new Date();
         now.setDate(now.getDate() + 7);

@@ -14,15 +14,16 @@ import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { User } from '../components/models/User';
+import { GlobalService } from '../services/global.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   user: User
-  constructor(public auth: AuthService, public router: Router, public loginService: LoginService) {}
+  constructor(public auth: AuthService, public router: Router, public loginService: LoginService, public global: GlobalService) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
 
-    if(request.url!='http://localhost:8080/SpringApp/public/login' && request.url!='http://localhost:8080/SpringApp/refreshtoken') {
+    if(request.url!='http://' + this.global.address + ':80/SpringApp/public/login' && request.url!='http://' + this.global.address + ':80/SpringApp/refreshtoken') {
       /*this.loginService.refreshToken().subscribe(token => {
         this.user = JSON.parse(localStorage.getItem('currentUser'));
         this.user.token = JSON.stringify({ token: token })

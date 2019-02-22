@@ -4,6 +4,7 @@ import { DegreeCourse } from '../components/models/DegreeCourse';
 import { Observable } from 'rxjs';
 import { TypeDegreeCourse } from '../components/models/TypeDegreeCourse';
 import { CourseType } from '../components/models/CourseType';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -12,16 +13,16 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class CourseService {
-  saveUrl: string = 'http://localhost:8080/SpringApp/course/save';
-  getAllTypesUrl: string = 'http://localhost:8080/SpringApp/course/getAllTypes';
-  getTypesByIdUrl: string = 'http://localhost:8080/SpringApp/course/getTypesById';
-  getAllCourseTypesUrl: string = 'http://localhost:8080/SpringApp/course/getAllCourseTypes';
-  getCourseTypeUrl: string = 'http://localhost:8080/SpringApp/course/getCourseType';
-  getAllUrl: string = 'http://localhost:8080/SpringApp/course/getAll';
-  getAllCourseByTypeUrl: string = 'http://localhost:8080/SpringApp/course/getCourseByType';
-  saveTypeUrl: string = 'http://localhost:8080/SpringApp/course/saveType'
+  saveUrl: string = 'http://' + this.global.address + ':80/SpringApp/course/save';
+  getAllTypesUrl: string = 'http://' + this.global.address + ':80/SpringApp/course/getAllTypes';
+  getTypesByIdUrl: string = 'http://' + this.global.address + ':80/SpringApp/course/getTypesById';
+  getAllCourseTypesUrl: string = 'http://' + this.global.address + ':80/SpringApp/course/getAllCourseTypes';
+  getCourseTypeUrl: string = 'http://' + this.global.address + ':80/SpringApp/course/getCourseType';
+  getAllUrl: string = 'http://' + this.global.address + ':80/SpringApp/course/getAll';
+  getAllCourseByTypeUrl: string = 'http://' + this.global.address + ':80/SpringApp/course/getCourseByType';
+  saveTypeUrl: string = 'http://' + this.global.address + ':80/SpringApp/course/saveType'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
 
   saveCourse(course: DegreeCourse): Observable<DegreeCourse>{

@@ -86,7 +86,7 @@ export class TicketComponent implements OnInit {
         alert('Insert post!');
       }else{
         this.state.idstatus = parseInt(idstatus);
-        this.ticketService.saveTicket({id: this.ticket.id, title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.state, date: this.ticket.date, ticketmessages:this.ticket.ticketmessages} as Ticket).subscribe(ticket => {
+        this.ticketService.saveTicket({id: this.ticket.id, title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.state, date: this.ticket.date} as Ticket).subscribe(ticket => {
           window.location.reload();
         });
 
@@ -108,7 +108,7 @@ export class TicketComponent implements OnInit {
     this.ticket.employee.name = this.user.name;
     this.ticket.employee.surname = this.user.surname;
     
-    this.ticketService.saveTicket({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, ticketmessages: this.ticket.ticketmessages, date: this.ticket.date} as Ticket).subscribe(ticket => {
+    this.ticketService.saveTicket({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, date: this.ticket.date} as Ticket).subscribe(ticket => {
 
     });
     
@@ -120,8 +120,7 @@ export class TicketComponent implements OnInit {
       alert('Inserisci messaggio!');
     }
     else{
-      this.newDate = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", 'en'); 
-      
+      this.newDate = formatDate(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS", 'en'); 
       this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.newDate} as TicketMessage).subscribe(message => {
       });
       window.location.reload();

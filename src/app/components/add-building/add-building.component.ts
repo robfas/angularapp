@@ -22,7 +22,7 @@ export class AddBuildingComponent implements OnInit {
   user: User;
   valid: boolean = true;
   fileValid: boolean = true;
-  building: Building;
+  building: Building = {};
   public latitude: number;
   public longitude: number;
   toDelete: number;
@@ -36,15 +36,15 @@ export class AddBuildingComponent implements OnInit {
 
   ngOnInit() {
     if(localStorage.getItem('currentUser')) {
-      if(JSON.parse(localStorage.getItem('currentUser')).type == 'employee') {
+      if(JSON.parse(localStorage.getItem('currentUser')).type === 'employee') {
+        this.building.lat=40.353291
+        this.building.lng=18.174009
       this.user={
         name: JSON.parse(localStorage.getItem('currentUser')).name,
         surname: JSON.parse(localStorage.getItem('currentUser')).surname
       };
     this.nav.showNavStaff();
-
-  
-
+    console.log('test')
   //create search FormControl
   this.searchControl = new FormControl();
 
@@ -94,9 +94,8 @@ save(name, address) {
     this.valid =  false;
   } else {
     this.building = {
-      id:this.building.id,
-      name,
-      address,
+      name: name,
+      address: address,
       lat:this.building.lat,
       lng:this.building.lng,
       classrooms:this.building.classrooms}
@@ -172,6 +171,7 @@ aggClasse() {
   
   modalRef.result.then((result) => {
     if(result != undefined) {
+      this.building.classrooms = []
       this.building.classrooms.push(result);
     }
     

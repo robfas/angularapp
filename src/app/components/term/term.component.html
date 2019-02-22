@@ -24,7 +24,10 @@
     </table>
     <br>
     <h3>Corsi Attivi per l'Anno Accademico {{academicyears[0]?.year}}/{{academicyears[0]?.year + 1}}</h3>
-    <table id="courses" class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
+    <div *ngIf="coursesofthisyear.length == 0">
+      Nessun corso attivo.
+    </div>
+    <table *ngIf="coursesofthisyear.length > 0" id="courses" class="table table-hover dt-responsive" cellspacing="0" width="100%">                                       
         <thead>
             <tr>
               
@@ -44,7 +47,7 @@
   </div>
   <div *ngIf="!showterms" class="card card-body mb-3"  style="border-color:darkgray;
   box-shadow: 10px 10px 5px #aaaaaa;   ">
-      <h3>Periodi Anno Accademico {{academicyears[0].year}}/{{academicyears[0].year + 1}}:</h3>
+      <h3>Periodi Anno Accademico {{academicyears[0]?.year}}/{{academicyears[0]?.year + 1}}:</h3>
       <p>Non ancora definiti</p>
       <div class="col-sm-14">
       <button type="button" class="btn btn-success" data-toggle="modal" data-target="#termsmodal">
@@ -62,7 +65,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Definisci Periodi A.A. {{academicyears[0].year}}/{{academicyears[0].year + 1}}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Definisci Periodi A.A. {{academicyears[0]?.year}}/{{academicyears[0]?.year + 1}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

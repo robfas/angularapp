@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -11,10 +12,10 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class LoginService {
-  loginUrl: string = 'http://localhost:8080/SpringApp/public/login';
-  refreshTokenUrl: string = 'http://localhost:8080/SpringApp/refreshtoken';
+  loginUrl: string = 'http://' + this.global.address + ':80/SpringApp/public/login';
+  refreshTokenUrl: string = 'http://' + this.global.address + ':80/SpringApp/refreshtoken';
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
   login(email: string, password: string) {
       return this.http.post<any>(`${this.loginUrl}`, { email: email, password: password })

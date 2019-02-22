@@ -3,6 +3,7 @@ import { Class} from '../components/models/Class';
 import { TypeLesson } from '../components/models/TypeLesson';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -10,15 +11,15 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class ClassroomService {
-  getAllUrl: string = 'http://localhost:8080/SpringApp/classroom/getAll';
-  getByBuildingUrl: string = 'http://localhost:8080/SpringApp/classroom/getByIdBuilding/';
-  getByBuildingAndNameUrl: string = 'http://localhost:8080/SpringApp/classroom/getByIdBuildingAndName/';
-  getByNameUrl: string = 'http://localhost:8080/SpringApp/classroom/getByName/';
-  getByIdUrl: string = 'http://localhost:8080/SpringApp/classroom/getById/';
-  classroomSaveUrl: string = 'http://localhost:8080/SpringApp/classroom/save';
-  availableClassroomInBuildingUrl: string = 'http://localhost:8080/SpringApp/classroom/getAvailableByIdBuilding/';
+  getAllUrl: string = 'http://' + this.global.address + ':80/SpringApp/classroom/getAll';
+  getByBuildingUrl: string = 'http://' + this.global.address + ':80/SpringApp/classroom/getByIdBuilding/';
+  getByBuildingAndNameUrl: string = 'http://' + this.global.address + ':80/SpringApp/classroom/getByIdBuildingAndName/';
+  getByNameUrl: string = 'http://' + this.global.address + ':80/SpringApp/classroom/getByName/';
+  getByIdUrl: string = 'http://' + this.global.address + ':80/SpringApp/classroom/getById/';
+  classroomSaveUrl: string = 'http://' + this.global.address + ':80/SpringApp/classroom/save';
+  availableClassroomInBuildingUrl: string = 'http://' + this.global.address + ':80/SpringApp/classroom/getAvailableByIdBuilding/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
   getAllClassrooms(): Observable<Class[]>{
     return this.http.get<Class[]>(this.getAllUrl);

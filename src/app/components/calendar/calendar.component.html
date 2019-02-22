@@ -148,7 +148,7 @@
                   <label>{{s.name}}</label>
                 </td>
                 <td>
-                  <button *ngIf="this.scheduler.idScheduler == null"
+                  <button *ngIf="this.scheduler?.idScheduler == null"
                     class="btn btn-outline-success my-2 my-sm-0"
                     (click)="addEvent2(s)">
                     Aggiungi
@@ -168,7 +168,7 @@
     </div>
     <div class="col-sm-12">
       <button type="button" class="btn btn-danger float-left" (click)="back()">Indietro</button>
-      <button *ngIf="this.scheduler.idScheduler == null" type="button" class="btn btn-success float-right" (click)="saveScheduler()">Salva</button>
+      <button *ngIf="this.scheduler?.idScheduler == null" type="button" class="btn btn-success float-right" (click)="saveScheduler()">Salva</button>
     </div>
   </div>
 </div>
