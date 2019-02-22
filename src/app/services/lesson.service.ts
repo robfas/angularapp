@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Lesson } from '../components/models/Lesson';
 import { LessonFile } from '../components/models/LessonFile';
 import { Feedback } from '../components/models/feedback';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -11,16 +12,16 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class LessonService {
-  getAllTeacherLessonsUrl: string = 'http://localhost:8080/SpringApp/lesson/getAllTeacherLessons';
-  getLessonFilesUrl: string = 'http://localhost:8080/SpringApp/file/getLessonFiles';
-  fileLessonUploadUrl: string = 'http://localhost:8080/SpringApp/file/upload/filelesson';
-  getFileUrl: string = 'http://localhost:8080/SpringApp/file/download/filelesson';
-  getFeedbackFileUrl: string = 'http://localhost:8080/SpringApp/file/getFeedbackFile';
-  getFeedbackLessonUrl: string = 'http://localhost:8080/SpringApp/lesson/getFeedback';
-  getAllLessonsByCourseAndTermUrl: string = 'http://localhost:8080/SpringApp/lesson/getAllLessonsByCourseAndTerm';
-  editLessonsUrl: string = 'http://localhost:8080/SpringApp/lesson/edit';
+  getAllTeacherLessonsUrl: string = 'http://' + this.global.address + ':80/SpringApp/lesson/getAllTeacherLessons';
+  getLessonFilesUrl: string = 'http://' + this.global.address + ':80/SpringApp/file/getLessonFiles';
+  fileLessonUploadUrl: string = 'http://' + this.global.address + ':80/SpringApp/file/upload/filelesson';
+  getFileUrl: string = 'http://' + this.global.address + ':80/SpringApp/file/download/filelesson';
+  getFeedbackFileUrl: string = 'http://' + this.global.address + ':80/SpringApp/file/getFeedbackFile';
+  getFeedbackLessonUrl: string = 'http://' + this.global.address + ':80/SpringApp/lesson/getFeedback';
+  getAllLessonsByCourseAndTermUrl: string = 'http://' + this.global.address + ':80/SpringApp/lesson/getAllLessonsByCourseAndTerm';
+  editLessonsUrl: string = 'http://' + this.global.address + ':80/SpringApp/lesson/edit';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
   getAllTeacherLessons(idteacher: number): Observable<Lesson[]>{
     return this.http.get<Lesson[]>(this.getAllTeacherLessonsUrl + '/' + idteacher);

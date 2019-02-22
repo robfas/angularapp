@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Post } from '../components/models/Post';
 import { UserSE } from '../components/models/UserSE';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -12,11 +13,11 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 })
 export class PostService {
   postsUrl: string = 'https://jsonplaceholder.typicode.com/posts';
-  usersSEurl: string = 'http://localhost:8080/SpringApp/user/getAll';
-  userSEsaveUrl: string = 'http://localhost:8080/SpringApp/user/save';
-  loginUrl: string = 'http://localhost:8080/SpringApp/login';
+  usersSEurl: string = 'http://' + this.global.address + ':80/SpringApp/user/getAll';
+  userSEsaveUrl: string = 'http://' + this.global.address + ':80/SpringApp/user/save';
+  loginUrl: string = 'http://' + this.global.address + ':80/SpringApp/login';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
   getPosts(): Observable<Post[]>{
     return this.http.get<Post[]>(this.postsUrl);

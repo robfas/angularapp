@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AcademicYear } from '../components/models/AcademicYear';
 import { Term } from '../components/models/Term';
+import { GlobalService } from './global.service';
 
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
@@ -12,14 +13,14 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class AcademicYearService {
-  getAllUrl: string = 'http://localhost:8080/SpringApp/academicyear/getAll';
-  saveUrl: string = 'http://localhost:8080/SpringApp/academicyear/save';
-  getAllYearsOfCourseUrl: string = 'http://localhost:8080/SpringApp/academicyear/getAllYearsOfCourse';
-  getTermsByAcademicyearUrl: string = 'http://localhost:8080/SpringApp/academicyear/getTermsByAaId';
-  saveTermUrl: string = 'http://localhost:8080/SpringApp/academicyear/saveTerm';
-  saveAllTermUrl: string = 'http://localhost:8080/SpringApp/academicyear/saveAllTerm';
+  getAllUrl: string = 'http://' + this.global.address + ':80/SpringApp/academicyear/getAll';
+  saveUrl: string = 'http://' + this.global.address + ':80/SpringApp/academicyear/save';
+  getAllYearsOfCourseUrl: string = 'http://' + this.global.address + ':80/SpringApp/academicyear/getAllYearsOfCourse';
+  getTermsByAcademicyearUrl: string = 'http://' + this.global.address + ':80/SpringApp/academicyear/getTermsByAaId';
+  saveTermUrl: string = 'http://' + this.global.address + ':80/SpringApp/academicyear/saveTerm';
+  saveAllTermUrl: string = 'http://' + this.global.address + ':80/SpringApp/academicyear/saveAllTerm';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
   getAllYears(): Observable<AcademicYear[]>{
     return this.http.get<AcademicYear[]>(this.getAllUrl);

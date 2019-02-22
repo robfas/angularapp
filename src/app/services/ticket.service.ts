@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Ticket } from '../components/models/Ticket';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -9,12 +10,12 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class TicketService {
-  getAllUrl: string = 'http://localhost:8080/SpringApp/ticket/getAll';
-  getById: string = 'http://localhost:8080/SpringApp/ticket/getById';
-  saveUrl: string = 'http://localhost:8080/SpringApp/ticket/save';
+  getAllUrl: string = 'http://' + this.global.address + ':80/SpringApp/ticket/getAll';
+  getById: string = 'http://' + this.global.address + ':80/SpringApp/ticket/getById';
+  saveUrl: string = 'http://' + this.global.address + ':80/SpringApp/ticket/save';
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public global: GlobalService) {}
 
   getTickets(): Observable<Ticket[]>{
     return this.http.get<Ticket[]>(this.getAllUrl);

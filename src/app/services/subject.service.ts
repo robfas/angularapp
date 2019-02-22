@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SubjectStudy } from '../components/models/subjectstudy';
 import { TypeSubject } from '../components/models/TypeSubject';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -10,15 +11,15 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class SubjectService {
-  getAllUrl = 'http://localhost:8080/SpringApp/subject/getAll';
-  saveUrl = 'http://localhost:8080/SpringApp/subject/save';
-  saveAllUrl = 'http://localhost:8080/SpringApp/subject/saveAll';
-  getByIdCourseUrl = 'http://localhost:8080/SpringApp/subject/getByIdCourse';
-  getAllSubjectTypesUrl = 'http://localhost:8080/SpringApp/subject/getAllSubjectTypes';
-  getAllByTeacherUrl = 'http://localhost:8080/SpringApp/subject/getByIdTeacher';
-  saveTypeUrl = 'http://localhost:8080/SpringApp/subject/saveTypeSubject';
+  getAllUrl = 'http://' + this.global.address + ':80/SpringApp/subject/getAll';
+  saveUrl = 'http://' + this.global.address + ':80/SpringApp/subject/save';
+  saveAllUrl = 'http://' + this.global.address + ':80/SpringApp/subject/saveAll';
+  getByIdCourseUrl = 'http://' + this.global.address + ':80/SpringApp/subject/getByIdCourse';
+  getAllSubjectTypesUrl = 'http://' + this.global.address + ':80/SpringApp/subject/getAllSubjectTypes';
+  getAllByTeacherUrl = 'http://' + this.global.address + ':80/SpringApp/subject/getByIdTeacher';
+  saveTypeUrl = 'http://' + this.global.address + ':80/SpringApp/subject/saveTypeSubject';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
   getAll(): Observable<SubjectStudy[]>{
     return this.http.get<SubjectStudy[]>(this.getAllUrl, {headers: headers});

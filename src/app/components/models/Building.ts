@@ -1,7 +1,7 @@
 import { Class } from '../models/Class';
 
 export interface Building {
-    id: number;
+    id?: number;
 	name?: string;
 	address?: string;
 	lat?: number;

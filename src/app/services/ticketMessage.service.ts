@@ -3,6 +3,7 @@ import { TicketMessage } from '../components/models/TicketMessage';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Ticket } from '../components/models/Ticket';
+import { GlobalService } from './global.service';
 
 const headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
@@ -10,10 +11,10 @@ const headers = new HttpHeaders({'Content-Type' : 'application/json'});
   providedIn: 'root'
 })
 export class TicketMessageService {
-  getAllByIdUrl: string = 'http://localhost:8080/SpringApp/ticket/getMessages';
-  saveMessageUrl: string = 'http://localhost:8080/SpringApp/ticket/savemessage';
+  getAllByIdUrl: string = 'http://' + this.global.address + ':80/SpringApp/ticket/getMessages';
+  saveMessageUrl: string = 'http://' + this.global.address + ':80/SpringApp/ticket/savemessage';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public global: GlobalService) { }
 
 
   getMessages(id: number): Observable<TicketMessage[]>{

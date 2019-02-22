@@ -489,7 +489,9 @@ showScheduler(){
         
       }
         this.scheduler.typeLessons = this.selectedTypeLessons;
+        console.log(this.scheduler.typeLessons)
         this.calendarService.save(this.scheduler).subscribe(scheduler => {
+          console.log(scheduler)
           this.schedule = false;
           this.mySubjects = [];
           this.events = [];

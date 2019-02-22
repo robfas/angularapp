@@ -1,6 +1,6 @@
 
 <body style="background-color: rgb(226, 231, 236)"><div style="line-height:500%;"><br></div>
-<div class="card card-body mb-3 bg-transparent" style="width:80%; margin:0px auto; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;">
+<div class="card card-body mb-3" style="width:80%; margin:0px auto; border-color: lightgrey; box-shadow: 10px 10px 5px #aaaaaa;">
     <label><h3>Dettagli edificio {{building?.name}}</h3></label>                                                            
 
 
@@ -9,7 +9,7 @@
 </div>
 <div style="line-height:50%;"><br></div>
 <div style="padding:0; margin-left: 13px;  margin-right: 13px;">
-  <agm-map [latitude]="building?.lat" [longitude]="building?.lng" [zoom]="12" [mapTypeId]="'hybrid'">
+  <agm-map [latitude]="building?.lat" [longitude]="building?.lng" [zoom]="10" [mapTypeId]="'hybrid'">
       <agm-marker [markerDraggable]="true" [latitude]="building?.lat" [longitude]="building?.lng" (dragEnd)="markerDragEnd($event)"></agm-marker>
   </agm-map>
  </div>

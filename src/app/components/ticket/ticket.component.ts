@@ -14,6 +14,7 @@ import { User } from '../models/User';
 import { isEmpty } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-ticket',
@@ -35,6 +36,7 @@ export class TicketComponent implements OnInit {
   statusVisible: boolean;
   isTeacher: boolean;
   answerVisible: boolean;
+  newDate: any;
 
   constructor(public nav: NavbarService, private router: Router, public ticketMessageService: TicketMessageService, public ticketService: TicketService, public ticketStatusService: TicketStatusService, private route: ActivatedRoute,  private location: Location) {this.buttonVisible, this.textareaVisible, this.isTeacher, this.statusVisible}
 
@@ -85,7 +87,7 @@ export class TicketComponent implements OnInit {
         alert('Insert post!');
       }else{
         this.state.idstatus = parseInt(idstatus);
-        this.ticketService.saveTicket({id: this.ticket.id, title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.state, date: this.ticket.date, ticketmessages:this.ticket.ticketmessages} as Ticket).subscribe(ticket => {
+        this.ticketService.saveTicket({id: this.ticket.id, title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.state, date: this.ticket.date} as Ticket).subscribe(ticket => {
           window.location.reload();
         });
 
@@ -107,7 +109,7 @@ export class TicketComponent implements OnInit {
     this.ticket.employee.name = this.user.name;
     this.ticket.employee.surname = this.user.surname;
     
-    this.ticketService.saveTicket({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, ticketmessages: this.ticket.ticketmessages, date: this.ticket.date} as Ticket).subscribe(ticket => {
+    this.ticketService.saveTicket({id: this.ticket.id , title: this.ticket.title, teacher: this.ticket.teacher, employee: this.ticket.employee, classroom: this.ticket.classroom, ticketStatus:this.ticket.ticketStatus, date: this.ticket.date} as Ticket).subscribe(ticket => {
 
     });
     
@@ -118,8 +120,9 @@ export class TicketComponent implements OnInit {
     if(textmessage === undefined || !textmessage){
       alert('Inserisci messaggio!');
     }
-    else{      
-      this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.ticket.date} as TicketMessage).subscribe(message => {
+    else{
+      this.newDate = formatDate(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS", 'en'); 
+      this.ticketMessageService.saveMessage({idticket: this.ticket.id, user: this.user, text: textmessage, date: this.newDate} as TicketMessage).subscribe(message => {
       });
       window.location.reload();
     }
